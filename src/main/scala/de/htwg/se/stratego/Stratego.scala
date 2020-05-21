@@ -27,7 +27,8 @@ object Stratego {
     val board = new MatchField(sizeOfBoard, sizeOfBoard, true)
     val field = new Field(false)
     val up = board.fields.updateField(0, 2, field)
-    print(board)
+    println(board.fields)
+    println(board)
     val board2 = board.copy(up)
     print(board2)
 
