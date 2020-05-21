@@ -1,20 +1,35 @@
 package de.htwg.se.stratego
 
-import de.htwg.se.stratego.model.{CharacterList, Matchfield, Player}
+import de.htwg.se.stratego.model.{MatchField, CharacterList, Player, Field}
+
+import scala.io.StdIn.readLine
 
 object Stratego {
+
   def main(args: Array[String]): Unit = {
-    val list = new CharacterList(4)
-    val player1 = new Player("Player1", list.getCharacterList())
-    val player2 = new Player("Player2", list.getCharacterList())
-    val matchfield = new Matchfield(4, player1, player2)
-    println(matchfield)
+
+    println("Welcome to Stratego!")
+
+    print("Enter the size of the GameBoard: ")
+    val sizeOfBoard = readLine().toInt
+
+    val list = new CharacterList(sizeOfBoard.toInt)
+
+    print("Name of first PLAYER: ")
+
+    val playerA= new Player(readLine(), list.getCharacterList())
+
+    print("Name of second PLAYER: ")
+
+    val playerB = new Player(readLine(), list.getCharacterList())
 
 
-
-    val vector :Vector[Vector[String]] = Vector(Vector("+---+"),Vector("|||"))
-
-
+    val board = new MatchField(sizeOfBoard, sizeOfBoard, true)
+    val field = new Field(false)
+    val up = board.fields.updateField(0, 2, field)
+    print(board)
+    val board2 = board.copy(up)
+    print(board2)
 
   }
 }
