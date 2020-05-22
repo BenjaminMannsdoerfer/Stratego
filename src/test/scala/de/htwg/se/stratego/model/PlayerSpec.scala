@@ -8,7 +8,7 @@ class PlayerSpec extends WordSpec with Matchers {
       player.name should be("PlayerName")
     }
     "has a CharacterList" in {
-      player.characterList should be(Seq(Character(Figure.General),
+      player.characterList should be(List(Character(Figure.General),
         Character(Figure.Colonel),
         Character(Figure.Captain),
         Character(Figure.Flag)))

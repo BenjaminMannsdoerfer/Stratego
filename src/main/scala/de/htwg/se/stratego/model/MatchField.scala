@@ -12,13 +12,6 @@ case class MatchField(fields: Matrix[Field]) {
     return combine
   }
 
-  def content(row:Int): String = {
-    val pipe = "|"
-    val placeholder = "X"
-    val combine = s"$pipe  X  "
-    return combine
-  }
-
   override def toString:String = {
     val col = fields.matrixSize
     val row = fields.matrixSize
@@ -45,34 +38,4 @@ case class MatchField(fields: Matrix[Field]) {
     }
     return matchField
   }
-
-  /*
-  override def toString(): String = {
-    var matchField = ""
-
-    val col = fields.matrixSize
-    val row = fields.matrixSize
-
-    val frame = "+-----+" * row
-
-    for {
-      row <- 0 until row
-      col <- 0 until col
-
-    } {
-
-      if (col == 0){
-        matchField += "\n" + frame + "\n"
-      }
-      if (fields.field(row, col).isSet) {
-        matchField += "|  X  |"
-      } else {
-        matchField += "|     |"
-      }
-    }
-    matchField += "\n" + frame //End Frame
-
-    return matchField
-  }
-   */
 }

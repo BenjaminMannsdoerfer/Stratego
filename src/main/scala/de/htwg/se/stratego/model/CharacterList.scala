@@ -1,11 +1,11 @@
 package de.htwg.se.stratego.model
 
 case class CharacterList(size: Int){
-  var characterList = Seq[Character]()
+  var characterList = List[Character]()
 
   size match {
     case 10 =>
-      characterList ++= Seq(Character(Figure.Bomb),
+      characterList ++= List(Character(Figure.Bomb),
         Character(Figure.Bomb),
         Character(Figure.Bomb),
         Character(Figure.Bomb),
@@ -46,7 +46,7 @@ case class CharacterList(size: Int){
         Character(Figure.Spy),
         Character(Figure.Flag))
 
-    case 9 => characterList ++= Seq(Character(Figure.Bomb),
+    case 9 => characterList ++= List(Character(Figure.Bomb),
       Character(Figure.Bomb),
       Character(Figure.Bomb),
       Character(Figure.Bomb),
@@ -74,7 +74,7 @@ case class CharacterList(size: Int){
       Character(Figure.Spy),
       Character(Figure.Flag))
 
-    case 8 => characterList ++= Seq(Character(Figure.Bomb),
+    case 8 => characterList ++= List(Character(Figure.Bomb),
       Character(Figure.Bomb),
       Character(Figure.Bomb),
       Character(Figure.Marshal),
@@ -99,7 +99,7 @@ case class CharacterList(size: Int){
       Character(Figure.Spy),
       Character(Figure.Flag))
 
-    case 7 => characterList ++= Seq(Character(Figure.Bomb),
+    case 7 => characterList ++= List(Character(Figure.Bomb),
       Character(Figure.Bomb),
       Character(Figure.Marshal),
       Character(Figure.General),
@@ -114,7 +114,7 @@ case class CharacterList(size: Int){
       Character(Figure.Spy),
       Character(Figure.Flag))
 
-    case 6 => characterList ++= Seq(Character(Figure.Bomb),
+    case 6 => characterList ++= List(Character(Figure.Bomb),
       Character(Figure.Marshal),
       Character(Figure.General),
       Character(Figure.Colonel),
@@ -128,20 +128,20 @@ case class CharacterList(size: Int){
       Character(Figure.Spy),
       Character(Figure.Flag))
 
-    case 5 => characterList ++= Seq(Character(Figure.General),
+    case 5 => characterList ++= List(Character(Figure.General),
       Character(Figure.Colonel),
       Character(Figure.Major),
       Character(Figure.Captain),
       Character(Figure.Flag))
 
-    case 4 => characterList ++= Seq(Character(Figure.General),
+    case 4 => characterList ++= List(Character(Figure.General),
       Character(Figure.Colonel),
       Character(Figure.Captain),
       Character(Figure.Flag))
 
   }
 
-  def getCharacterList(): Seq[Character] = {
+  def getCharacterList(): List[Character] = {
     return characterList
   }
 

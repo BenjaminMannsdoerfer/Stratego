@@ -1,5 +1,5 @@
 package de.htwg.se.stratego.model
-
+// hier Map mit bspw. M = 10
 object Figure extends Enumeration {
   val Bomb = Value("B")
   val Marshal = Value("M")
