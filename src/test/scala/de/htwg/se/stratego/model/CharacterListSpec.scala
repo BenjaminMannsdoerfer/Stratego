@@ -10,6 +10,12 @@ class CharacterListSpec extends WordSpec with Matchers {
         Character(Figure.Captain),
         Character(Figure.Flag)))
     }
+    "can deliver the CharacterList" in{
+      characterlist.getCharacterList() should be (Seq(Character(Figure.General),
+        Character(Figure.Colonel),
+        Character(Figure.Captain),
+        Character(Figure.Flag)))
+    }
 
   }}
 }
