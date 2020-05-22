@@ -12,4 +12,10 @@ class FieldSpec extends WordSpec with Matchers {
       field.toString should be("true")
     }
   }}
+    "A Field" when { "new" should {
+      val field = Field(false)
+      "is not set"  in {
+        field.isSet should be(false)
+      }
+  }}
 }

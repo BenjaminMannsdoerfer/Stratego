@@ -138,7 +138,6 @@ case class CharacterList(size: Int){
       Character(Figure.Colonel),
       Character(Figure.Captain),
       Character(Figure.Flag))
-
   }
 
   def getCharacterList(): Seq[Character] = {
