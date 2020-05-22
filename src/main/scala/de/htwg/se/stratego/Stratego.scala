@@ -51,6 +51,8 @@ object Stratego {
     val board5 = board.copy(up5)
     print(board5)
 
+    println()
+
 
 
   }
