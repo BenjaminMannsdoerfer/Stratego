@@ -2,7 +2,7 @@ package de.htwg.se.stratego.model
 import org.scalatest.{Matchers, WordSpec}
 
 class FieldSpec extends WordSpec with Matchers {
-  "A Field" when { "new" should {
+  "A Field" when { "new and is set" should {
     val field = Field(true)
     "can be set"  in {
       field.isSet should be(true)
@@ -11,11 +11,11 @@ class FieldSpec extends WordSpec with Matchers {
     "has a nice String representation" in {
       field.toString should be("true")
     }
-  }}
-    "A Field" when { "new" should {
+  }
+  "new and is not set" should {
       val field = Field(false)
       "is not set"  in {
         field.isSet should be(false)
       }
-  }}
-}
+  }
+}}

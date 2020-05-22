@@ -13,7 +13,7 @@ class MatchFieldSpec extends WordSpec with Matchers {
     }
 
   }
-    "A MatchField" when { "created with size 4 an all fields empty" should {
+    "created with size 4 an all fields empty" should {
       val matchField = new MatchField(4,4,false)
       "has a Matrix"  in {
         matchField.fields should be(matchField.fields)
@@ -22,5 +22,5 @@ class MatchFieldSpec extends WordSpec with Matchers {
         matchField.toString should be("+-----+-----+-----+-----+\n|     |     |     |     |\n+-----+-----+-----+-----+\n|     |     |     |     |\n+-----+-----+-----+-----+\n|     |     |     |     |\n+-----+-----+-----+-----+\n|     |     |     |     |\n+-----+-----+-----+-----+\n")
       }
 
-    }}}
+    }}
 }

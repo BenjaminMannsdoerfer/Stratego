@@ -4,335 +4,336 @@ import org.scalatest.{Matchers, WordSpec}
 class CharacterListSpec extends WordSpec with Matchers {
   "A CharacterList" when { "new with size 4" should {
     val characterlist = CharacterList(4)
-    "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Captain),
-        Character(Figure.Flag)))
+    "have a list" in {
+      characterlist.characterList should be(Seq(GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Flag)))
     }
-    "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Captain),
-        Character(Figure.Flag)))
+    "can get the CharacterList" in {
+      characterlist.getCharacterList() should be(Seq(GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
-      characterlist.size should be (4)
+      characterlist.size should be(4)
     }
 
-  }}
-  "A CharacterList" when { "new with size 5" should {
+  }
+  "new with size 5" should {
     val characterlist = CharacterList(5)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (5)
     }
 
 
-  }}
-  "A CharacterList" when { "new with size 6" should {
+  }
+  "new with size 6" should {
     val characterlist = CharacterList(6)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (6)
     }
 
 
-  }}
-  "A CharacterList" when { "new with size 7" should {
+  }
+  "new with size 7" should {
     val characterlist = CharacterList(7)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (7)
     }
 
-  }}
-  "A CharacterList" when { "new with size 8" should {
+  }
+  "new with size 8" should {
     val characterlist = CharacterList(8)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (8)
     }
 
-  }}
-  "A CharacterList" when { "new with size 9" should {
+  }
+  "new with size 9" should {
     val characterlist = CharacterList(9)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (9)
     }
 
-  }}
-  "A CharacterList" when { "new with size 10" should {
+  }
+  "new with size 10" should {
     val characterlist = CharacterList(10)
     "have a list"  in {
-      characterlist.characterList should be(Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
-      characterlist.getCharacterList() should be (Seq(Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Bomb),
-        Character(Figure.Marshal),
-        Character(Figure.General),
-        Character(Figure.Colonel),
-        Character(Figure.Colonel),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Major),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Captain),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Lieutenant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Sergeant),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Miner),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Scout),
-        Character(Figure.Spy),
-        Character(Figure.Flag)))
+      characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.General),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Colonel),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Major),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Captain),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Lieutenant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Sergeant),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Scout),
+        GameCharacter(Figure.Spy),
+        GameCharacter(Figure.Flag)))
     }
     "has a size" in {
       characterlist.size should be (10)
     }
 
-  }}
-}
+  }
+
+}}

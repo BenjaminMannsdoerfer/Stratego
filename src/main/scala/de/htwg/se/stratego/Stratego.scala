@@ -1,6 +1,6 @@
 package de.htwg.se.stratego
 
-import de.htwg.se.stratego.model.{MatchField, CharacterList, Player, Field}
+import de.htwg.se.stratego.model.{CharacterList, Field, GameCharacter, MatchField, Player, Figure}
 
 import scala.io.StdIn.readLine
 
@@ -24,14 +24,34 @@ object Stratego {
     val playerB = new Player(readLine(), list.getCharacterList())
 
 
-    val board = new MatchField(sizeOfBoard, sizeOfBoard, true)
-    val field = new Field(false)
-    val up = board.fields.updateField(0, 2, field)
-    println(board.fields)
+    val board = new MatchField(sizeOfBoard, sizeOfBoard, false)
     println(board)
-    val board2 = board.copy(up)
+
+    val characterG = new GameCharacter(Figure.General)
+    val fieldG = new Field(true, Some(characterG))
+    val up1 = board.fields.updateField(0, 0, fieldG)
+    val board2 = board.copy(up1)
     print(board2)
-    println("test")
+
+    val characterF = new GameCharacter(Figure.Flag)
+    val fieldF = new Field(true, Some(characterF))
+    val up3 = board2.fields.updateField(0, 1, fieldF)
+    val board3 = board.copy(up3)
+    print(board3)
+
+    val characterCo = new GameCharacter(Figure.Colonel)
+    val fieldCo = new Field(true, Some(characterCo))
+    val up4 = board3.fields.updateField(0, 2, fieldCo)
+    val board4 = board.copy(up4)
+    print(board4)
+
+    val characterCa = new GameCharacter(Figure.Captain)
+    val fieldCa = new Field(true, Some(characterCa))
+    val up5 = board4.fields.updateField(0, 3, fieldCa)
+    val board5 = board.copy(up5)
+    print(board5)
+
+
 
   }
 }

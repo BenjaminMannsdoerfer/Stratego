@@ -1,9 +1,9 @@
 package de.htwg.se.stratego.model
 import org.scalatest.{Matchers, WordSpec}
 
-class CharacterSpec extends WordSpec with Matchers {
+class GameCharacterSpec extends WordSpec with Matchers {
   "A Character" when { "new" should {
-    val character = Character(Figure.Bomb)
+    val character = GameCharacter(Figure.Bomb)
     "has a figure"  in {
       character.figure should be(Figure.Bomb)
     }
