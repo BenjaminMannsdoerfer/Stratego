@@ -5,6 +5,9 @@ case class MatchField(fields: Matrix[Field]) {
 
   def this(rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
 
+  def addChar(row: Int, col: Int, char: GameCharacter): MatchField = copy(fields.updateField(row, col, Field(true, Some(char))))
+
+
   def frame(row:Int): String = {
     val plus = "+"
     val line = "-"
@@ -20,19 +23,18 @@ case class MatchField(fields: Matrix[Field]) {
     val new_line = "\n"
     var matchField = ""
 
-    matchField += frame(fields.matrixSize) + new_line
-    for {
-      row <- 0 until row
-      col <- 0 until col
-
-    } {
+    for(rowNumbers <- 0 until row) matchField += "   " + rowNumbers + "  "
+    matchField += new_line + frame(fields.matrixSize) + new_line
+    for { row <- 0 until row
+          col <- 0 until col }
+    {
       if (fields.field(row, col).isSet) {
         matchField += "|  "+ fields.field(row,col)+ "  "
       } else {
         matchField += "|     "
       }
       if (col == n) {
-        matchField += pipe + new_line
+        matchField += pipe + " " + row + new_line
         matchField += frame(fields.matrixSize) + new_line
       }
     }

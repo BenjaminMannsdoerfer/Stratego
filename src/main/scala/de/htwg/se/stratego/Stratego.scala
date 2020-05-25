@@ -1,6 +1,6 @@
 package de.htwg.se.stratego
 
-import de.htwg.se.stratego.model.{CharacterList, Field, GameCharacter, MatchField, Player, Figure}
+import de.htwg.se.stratego.model.{CharacterList, Field, Figure, Game, GameCharacter, MatchField, Player}
 
 import scala.io.StdIn.readLine
 
@@ -26,8 +26,11 @@ object Stratego {
 
     val board = new MatchField(sizeOfBoard, sizeOfBoard, false)
     println(board)
+    //val listB = playerB.characterList
+    //print(board.set(0,0,listB(0)))
 
-    val characterG = new GameCharacter(Figure.General)
+
+    /*val characterG = new GameCharacter(Figure.General)
     val fieldG = new Field(true, Some(characterG))
     val up1 = board.fields.updateField(0, 0, fieldG)
     val board2 = board.copy(up1)
@@ -51,7 +54,45 @@ object Stratego {
     val board5 = board.copy(up5)
     print(board5)
 
-    println()
+    println()*/
+
+
+    val game = new Game(playerA, playerB, sizeOfBoard, board)
+    var i = 0
+    var j = 0
+    var rowB: List[Int] = List()
+    var colB: List[Int] = List()
+    var rowR: List[Int] = List()
+    var colR: List[Int] = List()
+    var size = 0
+    sizeOfBoard match {
+      case 4 => size = sizeOfBoard
+      case 5 => size = sizeOfBoard
+      case 6 => size = sizeOfBoard*2
+      case 7 => size = sizeOfBoard*2
+      case 8 => size = sizeOfBoard*3
+      case 9 => size = sizeOfBoard*3
+      case 10 => size = sizeOfBoard*4
+    }
+    while (size > i) {
+      rowB ::= readLine().toInt
+      colB ::= readLine().toInt
+      i+=1
+    }
+    while (size > j) {
+      rowR ::= readLine().toInt
+      colR ::= readLine().toInt
+      j+=1
+    }
+    //row.foreach(println)
+    //col.foreach(println)
+    print(game.create(sizeOfBoard, rowB, colB, rowR, colR))
+
+
+
+
+
+
 
 
 
