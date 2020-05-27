@@ -24,7 +24,7 @@ object Stratego {
     val playerB = new Player(readLine(), list.getCharacterList())
 
 
-    val board = new MatchField(sizeOfBoard, sizeOfBoard, false)
+    var board = new MatchField(sizeOfBoard, sizeOfBoard, false)
     println(board)
     //val listB = playerB.characterList
     //print(board.set(0,0,listB(0)))
@@ -58,35 +58,41 @@ object Stratego {
 
 
     val game = new Game(playerA, playerB, sizeOfBoard, board)
-    var i = 0
-    var j = 0
+
     var rowB: List[Int] = List()
     var colB: List[Int] = List()
     var rowR: List[Int] = List()
     var colR: List[Int] = List()
-    var size = 0
-    sizeOfBoard match {
-      case 4 => size = sizeOfBoard
-      case 5 => size = sizeOfBoard
-      case 6 => size = sizeOfBoard*2
-      case 7 => size = sizeOfBoard*2
-      case 8 => size = sizeOfBoard*3
-      case 9 => size = sizeOfBoard*3
-      case 10 => size = sizeOfBoard*4
-    }
-    while (size > i) {
+
+    println(playerA.name + "!")
+    for (i <- playerA.characterList) {
+      println("Where do you want to put " + i + "? ")
+      println("Enter y value of field:")
       rowB ::= readLine().toInt
+      println("Enter x value of field:")
       colB ::= readLine().toInt
-      i+=1
+      println()
     }
-    while (size > j) {
+
+    println(playerB.name + "! You´re turn!")
+    for (j <- playerB.characterList) {
+      println("Where do you want to put " + j + "? ")
+      println("Enter y value of field:")
       rowR ::= readLine().toInt
+      println("Enter x value of field:")
       colR ::= readLine().toInt
-      j+=1
+      println()
     }
     //row.foreach(println)
     //col.foreach(println)
-    print(game.create(sizeOfBoard, rowB, colB, rowR, colR))
+    //print(game.create(sizeOfBoard, rowB, colB, rowR, colR))
+    board = game.create(sizeOfBoard, rowB, colB, rowR, colR)
+    //
+    board = game.moveDown(board, 0,0)
+    //board = board.removeChar(0,0)
+    //print(board)
+
+    print(board)
 
 
 

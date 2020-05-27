@@ -7,6 +7,10 @@ case class MatchField(fields: Matrix[Field]) {
 
   def addChar(row: Int, col: Int, char: GameCharacter): MatchField = copy(fields.updateField(row, col, Field(true, Some(char))))
 
+  /*def getChar(row: Int, col: Int, ):MatchField = {
+    fields.field(row,col).isSet
+  }*/
+  def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
 
   def frame(row:Int): String = {
     val plus = "+"

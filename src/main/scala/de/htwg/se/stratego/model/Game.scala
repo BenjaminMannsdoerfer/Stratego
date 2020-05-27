@@ -45,6 +45,8 @@ case class Game(playerRed: Player, playerBlue: Player, size: Int, var matchField
     //return matchfield.addChar(row,col,redList(idx))
   //}
 
-
-
+  def moveDown(matchField: MatchField, row:Int, col:Int): MatchField = {
+    val charac = matchField.fields.field(row,col).character.get
+    matchField.removeChar(row,col).addChar(row+1,col,charac)
+  }
 }
