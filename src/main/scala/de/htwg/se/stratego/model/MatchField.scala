@@ -7,16 +7,13 @@ case class MatchField(fields: Matrix[Field]) {
 
   def addChar(row: Int, col: Int, char: GameCharacter): MatchField = copy(fields.updateField(row, col, Field(true, Some(char))))
 
-  /*def getChar(row: Int, col: Int, ):MatchField = {
-    fields.field(row,col).isSet
-  }*/
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
 
   def frame(row:Int): String = {
     val plus = "+"
     val line = "-"
     val combine = (plus + line * 5) * row + plus
-    return combine
+    combine
   }
 
   override def toString:String = {
@@ -42,6 +39,6 @@ case class MatchField(fields: Matrix[Field]) {
         matchField += frame(fields.matrixSize) + new_line
       }
     }
-    return matchField
+    matchField
   }
 }

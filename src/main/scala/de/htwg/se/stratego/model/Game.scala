@@ -55,24 +55,24 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     //sets Characters of PlayerA
     var r = 0
     var c = 0
-    for(carac <- shuffle(aList)){
+    for(charac <- shuffle(aList)){
       if(r.equals(size)){
         c += 1
         r = 0
       }
-      matchField = matchField.addChar(c, r, carac)
+      matchField = matchField.addChar(c, r, charac)
       r += 1
     }
 
     //Sets Characters of PlayerB
     r=0
     c= size -1
-    for(carac <- shuffle(bList)){
+    for(charac <- shuffle(bList)){
       if(r.equals(size)){
         c -= 1
         r = 0
       }
-      matchField = matchField.addChar(c, r, carac)
+      matchField = matchField.addChar(c, r, charac)
       r += 1
     }
 
@@ -85,5 +85,30 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   def moveDown(matchField: MatchField, row:Int, col:Int): MatchField = {
     val charac = matchField.fields.field(row,col).character.get
     matchField.removeChar(row,col).addChar(row+1,col,charac)
+  }
+
+  def moveUp(matchField: MatchField, row:Int, col:Int): MatchField = {
+    val charac = matchField.fields.field(row,col).character.get
+    matchField.removeChar(row,col).addChar(row-1,col,charac)
+  }
+
+  def moveLeft(matchField: MatchField, row:Int, col:Int): MatchField = {
+    val charac = matchField.fields.field(row,col).character.get
+    matchField.removeChar(row,col).addChar(row,col-1,charac)
+  }
+
+  def moveRight(matchField: MatchField, row:Int, col:Int): MatchField = {
+    if (col == size-1) {
+      println("The Figure can not set out of bounds!")
+      return matchField
+    }
+    if (matchField.fields.field(row,col+1).isSet.equals(false)) {
+      val charac = matchField.fields.field(row, col).character.get
+      matchField.removeChar(row, col).addChar(row, col + 1, charac)
+    } else {
+      val f = matchField.fields.field(row,col+1)
+      println(s"Field ($row,${col+1}) is set with Figure $f!")
+      matchField
+    }
   }
 }
