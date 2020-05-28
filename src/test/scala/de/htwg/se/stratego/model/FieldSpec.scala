@@ -7,10 +7,6 @@ class FieldSpec extends WordSpec with Matchers {
     "can be set"  in {
       field.isSet should be(true)
     }
-
-    "has a nice String representation" in {
-      field.toString should be("true")
-    }
   }
   "new and is not set" should {
       val field = Field(false)

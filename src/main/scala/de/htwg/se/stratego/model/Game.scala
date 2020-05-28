@@ -7,7 +7,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   val aList = playerA.characterList
   val bList = playerB.characterList
 
-  def create(): MatchField = {
+  /*def create(): MatchField = {
     var rowA: List[Int] = List()
     var colA: List[Int] = List()
     var rowB: List[Int] = List()
@@ -47,33 +47,35 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       matchField = bChar(matchField, idx ,rowB(idx), colB(idx))
     }
     matchField
-  }
+  }*/
 
 
   def init(): MatchField ={
 
     //sets Characters of PlayerA
-    var r = 0
-    var c = 0
-    for(charac <- shuffle(aList)){
-      if(r.equals(size)){
-        c += 1
-        r = 0
+    var row = 0
+    var col = 0
+    // shuffle(aList)
+    for(charac <- aList){
+      if(row.equals(size)){
+        col += 1
+        row = 0
       }
-      matchField = matchField.addChar(c, r, charac)
-      r += 1
+      matchField = matchField.addChar(col, row, charac)
+      row += 1
     }
 
     //Sets Characters of PlayerB
-    r=0
-    c= size -1
-    for(charac <- shuffle(bList)){
-      if(r.equals(size)){
-        c -= 1
-        r = 0
+    row=0
+    col= size -1
+    // shuffle(bList)
+    for(charac <- bList){
+      if(row.equals(size)){
+        col -= 1
+        row = 0
       }
-      matchField = matchField.addChar(c, r, charac)
-      r += 1
+      matchField = matchField.addChar(col, row, charac)
+      row += 1
     }
 
     matchField
@@ -83,18 +85,15 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   def bChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,bList(idx))
 
   def moveDown(matchField: MatchField, row:Int, col:Int): MatchField = {
-    val charac = matchField.fields.field(row,col).character.get
-    matchField.removeChar(row,col).addChar(row+1,col,charac)
+    matchField.removeChar(row,col).addChar(row+1,col, matchField.fields.field(row,col).character.get)
   }
 
   def moveUp(matchField: MatchField, row:Int, col:Int): MatchField = {
-    val charac = matchField.fields.field(row,col).character.get
-    matchField.removeChar(row,col).addChar(row-1,col,charac)
+    matchField.removeChar(row,col).addChar(row-1,col, matchField.fields.field(row,col).character.get)
   }
 
   def moveLeft(matchField: MatchField, row:Int, col:Int): MatchField = {
-    val charac = matchField.fields.field(row,col).character.get
-    matchField.removeChar(row,col).addChar(row,col-1,charac)
+    matchField.removeChar(row,col).addChar(row,col-1, matchField.fields.field(row,col).character.get)
   }
 
   def moveRight(matchField: MatchField, row:Int, col:Int): MatchField = {
@@ -103,8 +102,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       return matchField
     }
     if (matchField.fields.field(row,col+1).isSet.equals(false)) {
-      val charac = matchField.fields.field(row, col).character.get
-      matchField.removeChar(row, col).addChar(row, col + 1, charac)
+      matchField.removeChar(row, col).addChar(row, col + 1, matchField.fields.field(row, col).character.get)
     } else {
       val f = matchField.fields.field(row,col+1)
       println(s"Field ($row,${col+1}) is set with Figure $f!")

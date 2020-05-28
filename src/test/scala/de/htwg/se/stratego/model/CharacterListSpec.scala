@@ -56,7 +56,6 @@ class CharacterListSpec extends WordSpec with Matchers {
         GameCharacter(Figure.Sergeant),
         GameCharacter(Figure.Miner),
         GameCharacter(Figure.Scout),
-        GameCharacter(Figure.Scout),
         GameCharacter(Figure.Spy),
         GameCharacter(Figure.Flag)))
     }
@@ -70,7 +69,6 @@ class CharacterListSpec extends WordSpec with Matchers {
         GameCharacter(Figure.Lieutenant),
         GameCharacter(Figure.Sergeant),
         GameCharacter(Figure.Miner),
-        GameCharacter(Figure.Scout),
         GameCharacter(Figure.Scout),
         GameCharacter(Figure.Spy),
         GameCharacter(Figure.Flag)))

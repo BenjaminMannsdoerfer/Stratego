@@ -46,7 +46,7 @@ class Tui {
 
     print("Name of first PLAYER: ")
 
-    val playerA= Player(readLine(), list.getCharacterList())
+    val playerA = Player(readLine(), list.getCharacterList())
 
     print("Name of second PLAYER: ")
 
@@ -61,10 +61,10 @@ class Tui {
     //board = game.create()
     board = game.init()
 
-    /* board = game.moveDown(board, 0,0)
+    board = game.moveDown(board, 0,0)
      /*board = game.moveUp(board, 3,0)
      board = game.moveUp(board, 3,3)
-     board = game.moveLeft(board,2 ,3)*/
+     board = game.moveLeft(board,2 ,3)
      board = game.moveRight(board, 0, 3)*/
 
     print(board)
