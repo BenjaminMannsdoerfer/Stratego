@@ -7,7 +7,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   val aList = playerA.characterList
   val bList = playerB.characterList
 
-  /*def create(): MatchField = {
+  def create(): MatchField = {
     var rowA: List[Int] = List()
     var colA: List[Int] = List()
     var rowB: List[Int] = List()
@@ -47,7 +47,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       matchField = bChar(matchField, idx ,rowB(idx), colB(idx))
     }
     matchField
-  }*/
+  }
 
 
   def init(): MatchField ={
