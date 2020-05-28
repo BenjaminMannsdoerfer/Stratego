@@ -1,12 +1,37 @@
 package de.htwg.se.stratego.model
+import de.htwg.se.stratego.model.{MatchField,Game, Player}
+import scala.io.StdIn.{readLine, readInt}
+import scala.util.Random.shuffle
 
-import scala.util.Random
+case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchField) {
+  val aList = playerA.characterList
+  val bList = playerB.characterList
 
-case class Game(playerRed: Player, playerBlue: Player, size: Int, var matchField: MatchField) {
-  val blueList = playerBlue.characterList
-  val redList = playerRed.characterList
+  def create(): MatchField = {
+    var rowA: List[Int] = List()
+    var colA: List[Int] = List()
+    var rowB: List[Int] = List()
+    var colB: List[Int] = List()
 
-  def create(size:Int, rowB:List[Int], colB:List[Int], rowR:List[Int], colR:List[Int]): MatchField = {
+    println(playerA.name + "!")
+    for (i <- aList.reverse) {
+      println("Where do you want to put " + i + "? ")
+      println("Enter y value of field:")
+      rowA ::= readLine().toInt
+      println("Enter x value of field:")
+      colA ::= readLine().toInt
+      println()
+    }
+
+    println(playerB.name + "! You´re turn!")
+    for (j <- bList.reverse) {
+      println("Where do you want to put " + j + "? ")
+      println("Enter y value of field:")
+      rowB ::= readLine().toInt
+      println("Enter x value of field:")
+      colB ::= readLine().toInt
+      println()
+    }
     var n = 0
     size match {
       case 4 => n = size-1
@@ -18,32 +43,44 @@ case class Game(playerRed: Player, playerBlue: Player, size: Int, var matchField
       case 10 => n = size*4-1
     }
     for (idx <- 0 to n) {
-      matchField = blueChar(matchField, idx ,rowB(idx), colB(idx))
-      matchField = redChar(matchField, idx ,rowR(idx), colR(idx))
+      matchField = aChar(matchField, idx ,rowA(idx), colA(idx))
+      matchField = bChar(matchField, idx ,rowB(idx), colB(idx))
     }
     matchField
   }
 
-  // immer direkt den Character ansprehcen anstatt über die Liste und dann in einer Methode prüfen ob Anazahl Charaktere bereits vergeben ist
-  def blueChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,blueList(idx))//{
-    //val col = Random.nextInt(size)
 
-    //val redList = playerRed.characterList
-    // hier switch case
-    /*size match {
+  def init(): MatchField ={
 
-    }*/
-    //return matchfield.addChar(row,col,blueList(idx))
-    //return matchfield.set(row,col,redList(idx))
-  //}
+    //sets Characters of PlayerA
+    var r = 0
+    var c = 0
+    for(carac <- shuffle(aList)){
+      if(r.equals(size)){
+        c += 1
+        r = 0
+      }
+      matchField = matchField.addChar(c, r, carac)
+      r += 1
+    }
 
-  def redChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,redList(idx)) //{
-    //val col = Random.nextInt(size)
-    //val blueList = playerBlue.characterList
+    //Sets Characters of PlayerB
+    r=0
+    c= size -1
+    for(carac <- shuffle(bList)){
+      if(r.equals(size)){
+        c -= 1
+        r = 0
+      }
+      matchField = matchField.addChar(c, r, carac)
+      r += 1
+    }
 
-    //return matchfield.set(0,col,blueList(idx))
-    //return matchfield.addChar(row,col,redList(idx))
-  //}
+    matchField
+  }
+
+  def aChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,aList(idx))
+  def bChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,bList(idx))
 
   def moveDown(matchField: MatchField, row:Int, col:Int): MatchField = {
     val charac = matchField.fields.field(row,col).character.get
