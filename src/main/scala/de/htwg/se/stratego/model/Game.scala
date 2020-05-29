@@ -30,7 +30,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       rowB ::= readLine().toInt
       println("Enter x value of field:")
       colB ::= readLine().toInt
-      println()
     }
     var n = 0
     size match {
