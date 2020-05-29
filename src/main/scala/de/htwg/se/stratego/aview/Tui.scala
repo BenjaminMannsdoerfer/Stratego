@@ -54,9 +54,7 @@ class Tui {
 
     println(board)
 
-    val game = Game(playerA, playerB, size, board)
-
-    //while()
+    val game = Game(playerA, playerB, size, matchField)
 
     //board = game.create()
     board = game.init()
@@ -64,8 +62,8 @@ class Tui {
     board = game.moveDown(board, 0,0)
      /*board = game.moveUp(board, 3,0)
      board = game.moveUp(board, 3,3)
-     board = game.moveLeft(board,2 ,3)
-     board = game.moveRight(board, 0, 3)*/
+     board = game.moveLeft(board,2 ,3)*/
+     //board = game.moveRight(board, 1, 0)
 
     print(board)
     matchField
