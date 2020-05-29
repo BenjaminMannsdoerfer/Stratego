@@ -9,6 +9,14 @@ case class MatchField(fields: Matrix[Field]) {
 
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
 
+  def legend():String = {
+    val welcome = "**********  WELCOME TO STRATEGO  **********\n\n"
+    val n = "n:   create a new machtfield of youre specified size \n"
+    val g = "g:   start the Game\n"
+    val q = "q:   quit the programm\n"
+    welcome + n + g + q
+  }
+
   def frame(row:Int): String = {
     val plus = "+"
     val line = "-"
@@ -39,6 +47,7 @@ case class MatchField(fields: Matrix[Field]) {
         matchField += frame(fields.matrixSize) + new_line
       }
     }
+    matchField += legend()
     matchField
   }
 }
