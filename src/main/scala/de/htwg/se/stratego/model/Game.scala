@@ -34,30 +34,30 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
     var n = 0
     size match {
-      case 4 => n = size-1
-      case 5 => n = size-1
-      case 6 => n = size*2-1
-      case 7 => n = size*2-1
-      case 8 => n = size*3-1
-      case 9 => n = size*3-1
-      case 10 => n = size*4-1
+      case 4 => n = size - 1
+      case 5 => n = size - 1
+      case 6 => n = size * 2 - 1
+      case 7 => n = size * 2 - 1
+      case 8 => n = size * 3 - 1
+      case 9 => n = size * 3 - 1
+      case 10 => n = size * 4 - 1
     }
     for (idx <- 0 to n) {
-      matchField = aChar(matchField, idx ,rowA(idx), colA(idx))
-      matchField = bChar(matchField, idx ,rowB(idx), colB(idx))
+      matchField = aChar(matchField, idx, rowA(idx), colA(idx))
+      matchField = bChar(matchField, idx, rowB(idx), colB(idx))
     }
     matchField
   }
 
 
-  def init(): MatchField ={
+  def init(): MatchField = {
 
     //sets Characters of PlayerA
     var row = 0
     var col = 0
     // shuffle(aList)
-    for(charac <- aList){
-      if(row.equals(size)){
+    for (charac <- aList) {
+      if (row.equals(size)) {
         col += 1
         row = 0
       }
@@ -66,47 +66,56 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
 
     //Sets Characters of PlayerB
-    row=0
-    col= size -1
+    row = 0
+    col = size - 1
     // shuffle(bList)
-    for(charac <- bList){
-      if(row.equals(size)){
+    for (charac <- bList) {
+      if (row.equals(size)) {
         col -= 1
         row = 0
       }
       matchField = matchField.addChar(col, row, charac)
       row += 1
     }
-
     matchField
   }
 
-  def aChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,aList(idx))
-  def bChar(matchfield:MatchField, idx:Int, row:Int, col:Int): MatchField = matchfield.addChar(row,col,bList(idx))
+  def aChar(matchfield: MatchField, idx: Int, row: Int, col: Int): MatchField = matchfield.addChar(row, col, aList(idx))
 
-  def moveDown(matchField: MatchField, row:Int, col:Int): MatchField = {
-    matchField.removeChar(row,col).addChar(row+1,col, matchField.fields.field(row,col).character.get)
+  def bChar(matchfield: MatchField, idx: Int, row: Int, col: Int): MatchField = matchfield.addChar(row, col, bList(idx))
+
+  def moveDown(matchField: MatchField, row: Int, col: Int): MatchField = {
+    matchField.removeChar(row, col).addChar(row + 1, col, matchField.fields.field(row, col).character.get)
   }
 
-  def moveUp(matchField: MatchField, row:Int, col:Int): MatchField = {
-    matchField.removeChar(row,col).addChar(row-1,col, matchField.fields.field(row,col).character.get)
+  def moveUp(matchField: MatchField, row: Int, col: Int): MatchField = {
+    matchField.removeChar(row, col).addChar(row - 1, col, matchField.fields.field(row, col).character.get)
   }
 
-  def moveLeft(matchField: MatchField, row:Int, col:Int): MatchField = {
-    matchField.removeChar(row,col).addChar(row,col-1, matchField.fields.field(row,col).character.get)
+  def moveLeft(matchField: MatchField, row: Int, col: Int): MatchField = {
+    matchField.removeChar(row, col).addChar(row, col - 1, matchField.fields.field(row, col).character.get)
   }
 
-  def moveRight(matchField: MatchField, row:Int, col:Int): MatchField = {
-    if (col == size-1) {
+  def moveRight(matchField: MatchField, row: Int, col: Int): MatchField = {
+    if (col == size - 1) {
       println("The Figure can not set out of bounds!")
       return matchField
     }
-    if (matchField.fields.field(row,col+1).isSet.equals(false)) {
+    if (matchField.fields.field(row, col + 1).isSet.equals(false)) {
       matchField.removeChar(row, col).addChar(row, col + 1, matchField.fields.field(row, col).character.get)
     } else {
-      val f = matchField.fields.field(row,col+1)
-      println(s"Field ($row,${col+1}) is set with Figure $f!")
+      val f = matchField.fields.field(row, col + 1)
+      println(s"Field ($row,${col + 1}) is set with Figure $f!")
       matchField
     }
   }
+
+  def outOfBounds(matchField: MatchField, row: Int, col: Int): String = {
+    if (col == size - 1) {
+      val s = "The Figure can not set out of bounds\n!" + matchField.toString
+      s
+    } else
+      moveRight(matchField,row,col).toString
+  }
 }
+

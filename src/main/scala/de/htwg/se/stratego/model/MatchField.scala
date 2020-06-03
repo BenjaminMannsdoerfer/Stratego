@@ -11,10 +11,14 @@ case class MatchField(fields: Matrix[Field]) {
 
   def legend():String = {
     val welcome = "**********  WELCOME TO STRATEGO  **********\n\n"
-    val n = "n:   create a new machtfield of youre specified size \n"
-    val g = "g:   start the Game\n"
+    val n = "n:   create a new empty machtfield\n"
+    val i = "i:   set all character on the matchfield\n"
     val q = "q:   quit the programm\n"
-    welcome + n + g + q
+    val u = "u:   move one character up\n"
+    val d = "d:   move one character down\n"
+    val r = "r:   move one character to the right\n"
+    val l = "l:   move one character to the left\n"
+    welcome + n + i + u + d + r + l + q
   }
 
   def frame(row:Int): String = {
@@ -38,7 +42,7 @@ case class MatchField(fields: Matrix[Field]) {
           col <- 0 until col }
     {
       if (fields.field(row, col).isSet) {
-        matchField += "|  "+ fields.field(row,col)+ "  "
+        matchField += "|  " + fields.field(row,col) + "  "
       } else {
         matchField += "|     "
       }
