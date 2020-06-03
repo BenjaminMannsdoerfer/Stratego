@@ -47,36 +47,5 @@ class Controller(var matchField:MatchField) extends Observable {
     notifyObservers()
   }
 
-
   def matchFieldToString: String = matchField.toString
-
-  def game(row:Int, col:Int): Unit = {
-    val size = matchField.fields.matrixSize
-    val list = CharacterList(size)
-
-    println("Welcome to Stratego!")
-
-    //print("Name of first PLAYER: ")
-
-    val playerBlue = Player("PlayerBlue", list.getCharacterList())
-
-    //print("Name of second PLAYER: ")
-
-    val playerRed = Player("PlayerRed", list.getCharacterList())
-
-    //println(board)
-
-    val game = Game(playerBlue, playerRed, size, matchField)
-
-    //board = game.create()
-    //var board = game.init()
-    matchField = game.moveDown(matchField, row, col)
-    //matchField = board
-    /*board = game.moveUp(board, 3,0)
-    board = game.moveUp(board, 3,3)
-    board = game.moveLeft(board,2 ,3)*/
-    //board = game.moveRight(board, 1, 0)
-    //matchField = board
-    notifyObservers()
-  }
 }
