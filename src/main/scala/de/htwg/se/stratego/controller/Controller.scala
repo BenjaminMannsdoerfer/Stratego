@@ -12,18 +12,13 @@ class Controller(var matchField:MatchField) extends Observable {
   val game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
 
 
-  def createEmptyMatchfield(size:Int):Unit = {
+  def createEmptyMatchfield(size:Int): Unit = {
     matchField = new MatchField(size,size,false)
     notifyObservers()
   }
 
   def initMatchfield(): Unit = {
     matchField = game.init()
-    notifyObservers()
-  }
-
-  def addChar(row:Int, col:Int, charac:GameCharacter):Unit = {
-    matchField = matchField.addChar(row,col,charac)
     notifyObservers()
   }
 

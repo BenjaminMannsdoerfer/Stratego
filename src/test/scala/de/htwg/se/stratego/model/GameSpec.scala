@@ -102,9 +102,7 @@ class GameSpec extends WordSpec with Matchers {
       val playerRed = Player("PlayerRed", characList.getCharacterList())
       val game = Game(playerBlue, playerRed, 4, matchField)
       var board = game.aChar(matchField, 3, 3, 3)
-      //board = game.aChar(matchField, 3, 3, 3)
       "and now one character moves to the right out of bounds" in {
-        //game.moveRight(board,3,2).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |  6  |  F  | 3\n+-----+-----+-----+-----+\n")
         game.moveRight(board, 3, 3).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |     |  F  | 3\n+-----+-----+-----+-----+\n**********  WELCOME TO STRATEGO  **********\n\nn:   create a new empty machtfield\ni:   set all character on the matchfield\nu:   move one character up\nd:   move one character down\nr:   move one character to the right\nl:   move one character to the left\nq:   quit the programm\n")
       }
     }

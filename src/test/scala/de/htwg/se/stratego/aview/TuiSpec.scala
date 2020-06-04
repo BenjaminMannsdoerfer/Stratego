@@ -1,4 +1,4 @@
-package de.htwg.se.sudoku.aview
+package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.aview.Tui
 import de.htwg.se.stratego.controller.Controller
