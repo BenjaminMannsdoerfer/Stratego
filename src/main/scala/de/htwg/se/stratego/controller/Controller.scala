@@ -3,8 +3,6 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.util.Observable
 import de.htwg.se.stratego.model.{CharacterList, Game, GameCharacter, MatchField, Player}
 
-import scala.io.StdIn.readLine
-
 class Controller(var matchField:MatchField) extends Observable {
   val list = CharacterList(matchField.fields.matrixSize)
   val playerBlue = Player("PlayerBlue", list.getCharacterList())
