@@ -22,6 +22,10 @@ class Controller(var matchField:MatchField) extends Observable {
     notifyObservers()
   }
 
+  def switchPlayer(): Unit = {
+
+  }
+
   def moveDown(row:Int, col:Int): Unit = {
     matchField = game.moveDown(matchField, row, col)
     notifyObservers()

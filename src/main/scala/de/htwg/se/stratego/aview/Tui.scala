@@ -14,7 +14,7 @@ class Tui(controller: Controller) extends Observer {
       case "n" => controller.createEmptyMatchfield(size)
       case "i" => controller.initMatchfield()
       case _ =>
-        input.toList.filter(c=> c != ' ') match{
+        input.toList.filter(c=> c != ' ') match {
           case 'd' :: row :: col :: Nil => controller.moveDown(row.toString.toInt, col.toString.toInt)
           case 'u' :: row :: col :: Nil => controller.moveUp(row.toString.toInt, col.toString.toInt)
           case 'r' :: row :: col :: Nil => controller.moveRight(row.toString.toInt, col.toString.toInt)

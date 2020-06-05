@@ -37,6 +37,9 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     matchField
   }
 
+  def switchPlayer(): Unit = {
+  }
+
   def aChar(matchfield: MatchField, idx: Int, row: Int, col: Int): MatchField = matchfield.addChar(row, col, aList(idx))
 
   def bChar(matchfield: MatchField, idx: Int, row: Int, col: Int): MatchField = matchfield.addChar(row, col, bList(idx))
