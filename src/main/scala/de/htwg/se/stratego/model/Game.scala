@@ -77,5 +77,19 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     } else
       moveRight(matchField,row,col).toString
   }
+
+  def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField={
+    if(matchField.fields.field(rowD, colD).isSet.equals(true)){
+      if(figureHasValue(rowA,colA).equals(11)|figureHasValue(rowA,colA).equals(0)){
+        return matchField
+      }
+
+    }
+    matchField
+  }
+
+  def figureHasValue(row: Int,col: Int): Int ={
+    matchField.fields.field(row,col).character.get.figure.value
+  }
 }
 
