@@ -20,8 +20,9 @@ class Controller(var matchField:MatchField) extends Observable {
     notifyObservers()
   }
 
-  def switchPlayer(): Unit = {
-
+  def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): Unit ={
+    matchField = game.attack(matchField, rowA, colA, rowD, colD)
+    notifyObservers()
   }
 
   def moveDown(row:Int, col:Int): Unit = {

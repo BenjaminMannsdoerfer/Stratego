@@ -8,7 +8,7 @@ import scala.io.StdIn.readLine
 
 object Stratego {
 
-  val controller = new Controller(new MatchField(4,4,false))
+  val controller = new Controller(new MatchField(8,8,false))
   val tui = new Tui(controller)
   controller.notifyObservers
 
