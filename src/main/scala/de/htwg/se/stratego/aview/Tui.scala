@@ -6,7 +6,7 @@ import de.htwg.se.stratego.controller.Controller
 class Tui(controller: Controller) extends Observer {
 
   controller.add(this)
-  val size = 8
+  val size = 4
 
   def processInputLine(input: String):Unit = {
     input match {
