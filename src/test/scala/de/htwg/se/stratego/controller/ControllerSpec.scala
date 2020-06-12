@@ -47,7 +47,7 @@ class ControllerSpec extends WordSpec with Matchers {
         observer.updated should be(true)
       }
       "notify its Observer after print matchfield" in {
-        controller.matchFieldToString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  8  |     |  6  |  F  | 0\n+-----+-----+-----+-----+\n|  9  |     |     |     | 1\n+-----+-----+-----+-----+\n|     |  9  |     |     | 2\n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  WELCOME TO STRATEGO  **********\n\nn:   create a new empty machtfield\ni:   set all character on the matchfield\nu:   move one character up\nd:   move one character down\nr:   move one character to the right\nl:   move one character to the left\nq:   quit the programm\n")
+        controller.matchFieldToString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  8  |     |  6  |  F  | 0\n+-----+-----+-----+-----+\n|  9  |     |     |     | 1\n+-----+-----+-----+-----+\n|  9  |     |     |     | 2\n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  WELCOME TO STRATEGO  **********\n\nn:   create a new empty machtfield\ni:   set all character on the matchfield\nu:   move one character up\nd:   move one character down\nr:   move one character to the right\nl:   move one character to the left\na:   attack the character next to you\no:   player one can set his characters\nt:   player two can set his characters\nq:   quit the programm\n")
         observer.updated should be(true)
       }
     }
