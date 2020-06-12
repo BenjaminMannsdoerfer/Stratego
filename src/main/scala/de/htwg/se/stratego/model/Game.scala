@@ -84,6 +84,14 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     false
   }
 
+  def set(player: Int, row:Int, col:Int, charac: String): MatchField = {
+    player match{
+      case 1 => return setBlue(row, col, charac)
+      case 2 => return setRed(row, col, charac)
+    }
+    matchField
+  }
+
   def setRed(row:Int, col:Int, charac: String): MatchField = {
     if (isRedChar(charac) && isRedField(row) && !matchField.fields.field(row,col).isSet) {
       matchField = matchField.addChar(row,col,rList(rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))))
@@ -102,12 +110,22 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def bChar(matchfield: MatchField, idx: Int, row: Int, col: Int): MatchField = matchfield.addChar(row, col, rList(idx))
 
+  def move(direction: Char, matchField: MatchField, row: Int, col: Int): MatchField = {
+    direction match {
+      case 'u' => return moveUp(matchField, row, col)
+      case 'd' => return moveDown(matchField, row, col)
+      case 'r' => return moveRight(matchField, row, col)
+      case 'l' => return moveLeft(matchField, row, col)
+    }
+    matchField
+  }
+
   def moveDown(matchField: MatchField, row: Int, col: Int): MatchField = {
     if (row == size - 1) {
       println("The Figure can not set out of bounds!")
       return matchField
     }
-    if (isFlagOrBomb(row,col)) {
+    if (isFlagOrBomb(matchField, row,col)) {
       println("Flag and Bombs can't move!")
       return matchField
     }
@@ -125,7 +143,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       println("The Figure can not set out of bounds!")
       return matchField
     }
-    if (isFlagOrBomb(row,col)) {
+    if (isFlagOrBomb(matchField, row,col)) {
       println("Flag and Bombs can't move!")
       return matchField
     }
@@ -143,7 +161,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       println("The Figure can not set out of bounds!")
       return matchField
     }
-    if (isFlagOrBomb(row,col)) {
+    if (isFlagOrBomb(matchField, row,col)) {
       println("Flag and Bombs can't move!")
       return matchField
     }
@@ -161,10 +179,12 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       println("The Figure can not set out of bounds!")
       return matchField
     }
-    if (isFlagOrBomb(row,col)) {
+
+    if (isFlagOrBomb(matchField,row,col)) {
       println("Flag and Bombs can't move!")
       return matchField
     }
+
     if (matchField.fields.field(row, col + 1).isSet.equals(false)) {
       matchField.removeChar(row, col).addChar(row, col + 1, matchField.fields.field(row, col).character.get)
     } else {
@@ -174,7 +194,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def isFlagOrBomb(row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
+  def isFlagOrBomb(matchField: MatchField, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
     matchField.fields.field(row,col).character.get.figure.value == 11) true else false
 
   def figureHasValue(matchF: MatchField, row: Int,col: Int): Int = {

@@ -25,33 +25,13 @@ class Controller(var matchField:MatchField) extends Observable {
     notifyObservers()
   }
 
-  def setRedField(row:Int, col:Int, charac:String): Unit = {
-    matchField = game.setRed(row,col,charac)
+  def set(player: Int, row:Int, col:Int, charac:String): Unit = {
+    matchField = game.set(player, row,col,charac)
     notifyObservers()
   }
 
-  def setBlueField(row:Int, col:Int, charac:String): Unit = {
-    matchField = game.setBlue(row,col,charac)
-    notifyObservers()
-  }
-
-  def moveDown(row:Int, col:Int): Unit = {
-    matchField = game.moveDown(matchField, row, col)
-    notifyObservers()
-  }
-
-  def moveUp(row:Int, col:Int): Unit = {
-    matchField = game.moveUp(matchField, row, col)
-    notifyObservers()
-  }
-
-  def moveRight(row:Int, col:Int): Unit = {
-    matchField = game.moveRight(matchField, row, col)
-    notifyObservers()
-  }
-
-  def moveLeft(row:Int, col:Int): Unit = {
-    matchField = game.moveLeft(matchField, row, col)
+  def move(dir: Char, row:Int, col:Int): Unit = {
+    matchField = game.move(dir, matchField, row, col)
     notifyObservers()
   }
 
