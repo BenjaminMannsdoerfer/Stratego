@@ -13,6 +13,8 @@ class Tui(controller: Controller) extends Observer {
       case "q" =>
       case "n" => controller.createEmptyMatchfield(size)
       case "i" => controller.initMatchfield()
+      case "z" => controller.undo
+      case "y" => controller.redo
       case _ =>
         input.toList.filter(c=> c != ' ') match {
           case 'm' :: dir :: row :: col :: Nil => controller.move(dir, row.toString.toInt, col.toString.toInt)

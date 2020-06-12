@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.controller
 
-import de.htwg.se.stratego.util.Observable
+import de.htwg.se.stratego.util.{Observable, UndoManager}
 import de.htwg.se.stratego.model.{CharacterList, Game, GameCharacter, MatchField, Player}
 
 class Controller(var matchField:MatchField) extends Observable {
@@ -8,6 +8,8 @@ class Controller(var matchField:MatchField) extends Observable {
   val playerBlue = Player("PlayerBlue", list.getCharacterList())
   val playerRed = Player("PlayerRed", list.getCharacterList())
   val game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
+
+  private val undoManager = new UndoManager
 
 
   def createEmptyMatchfield(size:Int): Unit = {
@@ -26,14 +28,24 @@ class Controller(var matchField:MatchField) extends Observable {
   }
 
   def set(player: Int, row:Int, col:Int, charac:String): Unit = {
-    matchField = game.set(player, row,col,charac)
+    undoManager.doStep(new SetCommand(player, row, col, charac, this))
     notifyObservers()
   }
 
   def move(dir: Char, row:Int, col:Int): Unit = {
-    matchField = game.move(dir, matchField, row, col)
+    undoManager.doStep(new MoveCommand(dir, matchField, row, col, this))
     notifyObservers()
   }
 
   def matchFieldToString: String = matchField.toString
+
+  def undo: Unit = {
+    undoManager.undoStep
+    notifyObservers()
+  }
+
+  def redo: Unit = {
+    undoManager.redoStep
+    notifyObservers()
+  }
 }
