@@ -3,8 +3,6 @@ package de.htwg.se.stratego.model
 case class CharacterList(size: Int){
   var characterList = Seq[GameCharacter]()
 
-
-
   size match {
     case 10 =>
       characterList ++= Seq(GameCharacter(Figure.Bomb),
@@ -125,7 +123,6 @@ case class CharacterList(size: Int){
       GameCharacter(Figure.Lieutenant),
       GameCharacter(Figure.Sergeant),
       GameCharacter(Figure.Miner),
-      //GameCharacter(Figure.Scout),
       GameCharacter(Figure.Scout),
       GameCharacter(Figure.Spy),
       GameCharacter(Figure.Flag))
@@ -141,10 +138,8 @@ case class CharacterList(size: Int){
       GameCharacter(Figure.Captain),
       GameCharacter(Figure.Flag))
   }
-
   def getCharacterList(): Seq[GameCharacter] = {
-    return characterList
+    characterList
   }
-
 }
 
