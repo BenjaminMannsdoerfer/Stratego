@@ -18,7 +18,10 @@ case class MatchField(fields: Matrix[Field]) {
     val d = "d:   move one character down\n"
     val r = "r:   move one character to the right\n"
     val l = "l:   move one character to the left\n"
-    welcome + n + i + u + d + r + l + q
+    val a = "a:   attack the character next to you\n"
+    val o = "o:   player one can set his characters\n"
+    val t = "t:   player two can set his characters\n"
+    welcome + n + i + u + d + r + l + a + o + t + q
   }
 
   def frame(row:Int): String = {

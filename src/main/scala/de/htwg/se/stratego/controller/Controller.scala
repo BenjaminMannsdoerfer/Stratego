@@ -11,7 +11,7 @@ class Controller(var matchField:MatchField) extends Observable {
 
 
   def createEmptyMatchfield(size:Int): Unit = {
-    matchField = new MatchField(size,size,false)
+    matchField = new MatchField(size, size, false)
     notifyObservers()
   }
 
@@ -20,8 +20,19 @@ class Controller(var matchField:MatchField) extends Observable {
     notifyObservers()
   }
 
-  def switchPlayer(): Unit = {
+  def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): Unit ={
+    matchField = game.attack(matchField, rowA, colA, rowD, colD)
+    notifyObservers()
+  }
 
+  def setRedField(row:Int, col:Int, charac:String): Unit = {
+    matchField = game.setRed(row,col,charac)
+    notifyObservers()
+  }
+
+  def setBlueField(row:Int, col:Int, charac:String): Unit = {
+    matchField = game.setBlue(row,col,charac)
+    notifyObservers()
   }
 
   def moveDown(row:Int, col:Int): Unit = {
