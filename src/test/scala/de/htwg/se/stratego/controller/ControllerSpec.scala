@@ -39,7 +39,7 @@ class ControllerSpec extends WordSpec with Matchers {
         observer.updated should be(true)
       }
       "notify its Observer after a character moved to the right" in {
-        controller.moveRight(2,0)
+        controller.moveRight(0,1)
         observer.updated should be(true)
       }
       "notify its Observer after a character moved to the left" in {
