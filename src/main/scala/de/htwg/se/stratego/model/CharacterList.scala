@@ -3,6 +3,8 @@ package de.htwg.se.stratego.model
 case class CharacterList(size: Int){
   var characterList = Seq[GameCharacter]()
 
+
+
   size match {
     case 10 =>
       characterList ++= Seq(GameCharacter(Figure.Bomb),

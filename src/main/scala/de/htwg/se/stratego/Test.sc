@@ -28,7 +28,6 @@ val game = Game(playerBlue, playerRed, 4, matchField)
 game.moveDown(matchField, 0, 0)
 
 
-
 /*
   def create(): MatchField = {
     var rowA: List[Int] = List()
@@ -72,6 +71,7 @@ game.moveDown(matchField, 0, 0)
     matchField
   }
    */
+
 
 
 
