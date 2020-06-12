@@ -173,40 +173,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       matchField
     }
   }
-  def figureHasValue(matchF: MatchField, row: Int,col: Int): Int ={
-    matchF.fields.field(row,col).character.get.figure.value
-  }
-
-  def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField={
-    println("Attack:" + matchField.fields.field(rowA,colA).character.get.figure.value)
-    println("Defence:" + matchField.fields.field(rowD,colD).character.get.figure.value)
-    println("rowDistance: "+ math.abs(rowA-rowD) + " colDistance: "+ math.abs(colA-colD))
-
-    if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))){ //field of attacked character is too far away
-      return matchField
-    }
-    if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set
-      if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)){ //flag and bomb are unable to attack
-        return matchField
-      }
-      if((figureHasValue(matchField, rowA,colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)){ //attacker is spy and attacked figure is marshal
-        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
-      }
-      if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) {
-        if(figureHasValue(matchField,rowD, colD)==0){ //attacked figure is flag
-          println("Flag has been found! Game finished!")
-        }
-        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
-      }
-      if(figureHasValue(matchField, rowD, colD).equals(11)){ //attacked figure is a bomb
-        if(figureHasValue(matchField, rowA, colD) == 3){ //attacker is miner => just remove bomb
-          return matchField.removeChar(rowD, colD)
-        }
-        return matchField.removeChar(rowA, colA).removeChar(rowD, colD) //else remove both figures
-      }
-    }
-    matchField
-  }
 
   def isFlagOrBomb(row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
     matchField.fields.field(row,col).character.get.figure.value == 11) true else false
@@ -232,7 +198,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       }
       if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) {
         if(figureHasValue(matchField,rowD, colD)==0){ //attacked figure is flag
-          println("Flag has been found! Game finished!")
+          println("Flag has been found! Game finished!!")
         }
         return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
       }
