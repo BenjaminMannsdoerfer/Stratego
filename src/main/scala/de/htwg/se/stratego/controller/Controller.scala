@@ -45,53 +45,63 @@ class Controller(var matchField:MatchField) extends Observable {
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
     notifyObservers()
-    "created new matchfield"
+    "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
   def initMatchfield(): String = {
     matchField = game.init()
     nextState
     notifyObservers()
-    "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col)"
+    "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
+    playerList(currentPlayerIndex) + " it's your turn!"
+
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    matchField = game.attack(matchField, rowA, colA, rowD, colD)
+    if(matchField.fields.field(rowD,colD).character.get.figure.value==0 && matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set and attacked figure is flag
+      matchField = game.attack(matchField, rowA, colA, rowD, colD)
+      nextState
+      currentPlayerIndex=0
+      return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+        "Game finished! Play new Game with (n)!"
+    }
     currentPlayerIndex= nextPlayer
 
     notifyObservers()
-    "attack figure"
+    playerList(currentPlayerIndex) + " it's your turn!"
   }
 
   def set(row:Int, col:Int, charac:String): String = {
     currentPlayerIndex match {
       case 0 =>
         if(game.bList.size == 0){
-        currentPlayerIndex=nextPlayer
+          currentPlayerIndex=nextPlayer
         }
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
       case 1 =>
-        if(game.rList.size == 0){
-        nextState
+        if(game.rList.size == 1){
+          undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+          nextState
         }
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+
     }
-    undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
-    println(currentPlayerIndex)
     notifyObservers()
-    /*
+    if(game.rList.size == 0){
+      return "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
+        playerList(currentPlayerIndex) + " it's your turn!"
+    }
     if(game.bList.size == 0){
       return playerList(1) + " it's your turn!"
     }
-     */
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
   def move(dir: Char, row:Int, col:Int): String = {
     undoManager.doStep(new MoveCommand(dir, matchField, row, col, this))
-    nextPlayer
+    currentPlayerIndex=nextPlayer
     notifyObservers()
-    "figure in row " + row + " col " + col + " has been moved"
+    playerList(currentPlayerIndex) + " it's your turn!"
   }
 
   def matchFieldToString: String = matchField.toString

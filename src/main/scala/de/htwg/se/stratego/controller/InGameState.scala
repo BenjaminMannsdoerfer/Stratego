@@ -12,5 +12,5 @@ case class InGameState(controller: Controller) extends ControllerState {
     }
   }
 
-  override def nextState(): ControllerState = GameOverState(controller)
+  override def nextState(): ControllerState = EnterPlayers(controller)
 }
