@@ -10,18 +10,12 @@ case class MatchField(fields: Matrix[Field]) {
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
 
   def legend():String = {
-    val welcome = "**********  WELCOME TO STRATEGO  **********\n\n"
+    val welcome = "**********  STRATEGO  **********\n\n"
     val n = "n:   create a new empty machtfield\n"
-    val i = "i:   set all character on the matchfield\n"
+    val z = "z:   undo\n"
+    val y = "y:   redo\n"
     val q = "q:   quit the programm\n"
-    val u = "u:   move one character up\n"
-    val d = "d:   move one character down\n"
-    val r = "r:   move one character to the right\n"
-    val l = "l:   move one character to the left\n"
-    val a = "a:   attack the character next to you\n"
-    val o = "o:   player one can set his characters\n"
-    val t = "t:   player two can set his characters\n"
-    welcome + n + i + u + d + r + l + a + o + t + q
+    welcome + n + z + y + q
   }
 
   def frame(row:Int): String = {

@@ -4,8 +4,8 @@ import de.htwg.se.stratego.model.{Game, MatchField, Player}
 
 
 case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchField) {
-  val bList = playerA.characterList
-  val rList = playerB.characterList
+  var bList = playerA.characterList
+  var rList = playerB.characterList
 
 
   def init(): MatchField = {
@@ -69,7 +69,10 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def setBlue(row:Int, col:Int, charac: String): MatchField = {
     if (isBlueChar(charac) && isBlueField(row) && !matchField.fields.field(row,col).isSet) {
-      matchField = matchField.addChar(row,col,bList(bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))))
+      val idx = bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
+      matchField = matchField.addChar(row,col,bList(idx))
+      bList = bList.patch(idx, Nil, 1)
+      println(bList)
       return matchField
     }
     matchField
@@ -86,16 +89,18 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def set(player: Int, row:Int, col:Int, charac: String): MatchField = {
     player match{
-      case 1 => return setBlue(row, col, charac)
-      case 2 => return setRed(row, col, charac)
+      case 0 => return setBlue(row, col, charac)
+      case 1 => return setRed(row, col, charac)
     }
     matchField
   }
 
   def setRed(row:Int, col:Int, charac: String): MatchField = {
     if (isRedChar(charac) && isRedField(row) && !matchField.fields.field(row,col).isSet) {
-      matchField = matchField.addChar(row,col,rList(rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))))
-      //bList.updated(idx, GameCharacter(Figure.FigureVal(charac,value)))
+      val idx = rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
+      matchField = matchField.addChar(row,col,rList(idx))
+      rList = rList.patch(idx, Nil, 1)
+      println(rList)
       return matchField
     }
     matchField

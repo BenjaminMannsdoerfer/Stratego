@@ -11,11 +11,10 @@ def down(a: Int, b: Int): Unit ={
   println(b)
 }
 
-val input = "d 2 4"
-input.toList.filter(c=> c != ' ') match{
-  case 'u' :: row :: col :: Nil => up(row.toString.toInt, col.toString.toInt)
-  case 'd' :: row :: col :: Nil => down(row.toString.toInt, col.toString.toInt)
-  case _ =>
+val input = "hallo hei"
+input.split(" ").map(_.trim).toList match{
+  case name1 :: name2 :: Nil => println(name1 + name2)
+  case _ => println("ne")
 }
 
 
