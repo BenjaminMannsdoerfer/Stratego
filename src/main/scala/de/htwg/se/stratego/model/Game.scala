@@ -4,8 +4,8 @@ import de.htwg.se.stratego.model.{Game, MatchField, Player}
 
 
 case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchField) {
-  val bList = playerA.characterList
-  val rList = playerB.characterList
+  var bList = playerA.characterList
+  var rList = playerB.characterList
 
 
   def init(): MatchField = {
@@ -69,7 +69,9 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def setBlue(row:Int, col:Int, charac: String): MatchField = {
     if (isBlueChar(charac) && isBlueField(row) && !matchField.fields.field(row,col).isSet) {
-      matchField = matchField.addChar(row,col,bList(bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))))
+      val idx = bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
+      matchField = matchField.addChar(row,col,bList(idx))
+      bList = bList.patch(idx, Nil, 1)
       return matchField
     }
     matchField
@@ -86,23 +88,24 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def set(player: Int, row:Int, col:Int, charac: String): MatchField = {
     player match{
-      case 1 => return setBlue(row, col, charac)
-      case 2 => return setRed(row, col, charac)
+      case 0 => return setBlue(row, col, charac)
+      case 1 => return setRed(row, col, charac)
     }
     matchField
   }
 
   def setRed(row:Int, col:Int, charac: String): MatchField = {
     if (isRedChar(charac) && isRedField(row) && !matchField.fields.field(row,col).isSet) {
-      matchField = matchField.addChar(row,col,rList(rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))))
-      //bList.updated(idx, GameCharacter(Figure.FigureVal(charac,value)))
+      val idx = rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
+      matchField = matchField.addChar(row,col,rList(idx))
+      rList = rList.patch(idx, Nil, 1)
       return matchField
     }
     matchField
   }
 
   def isRedChar(charac:String): Boolean = {
-    bList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false)
+    rList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false)
     false
   }
 
@@ -194,12 +197,70 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def isFlagOrBomb(matchField: MatchField, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
-    matchField.fields.field(row,col).character.get.figure.value == 11) true else false
-
   def figureHasValue(matchF: MatchField, row: Int,col: Int): Int = {
     matchF.fields.field(row,col).character.get.figure.value
   }
+
+  def isFlagOrBomb(matchField: MatchField, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
+    matchField.fields.field(row,col).character.get.figure.value == 11) true else false
+
+  /*def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
+    if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) { //field of attacked character is too far away
+      return matchField
+    }
+    if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set
+      if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)){ //flag and bomb are unable to attack
+        return matchField
+      }
+      if((figureHasValue(matchField, rowA,colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)){ //attacker is spy and attacked figure is marshal
+        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
+      }
+      if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) {
+        if(figureHasValue(matchField,rowD, colD)==0){ //attacked figure is flag
+          println("Flag has been found! Game finished!")
+        }
+        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
+      }
+      if(figureHasValue(matchField, rowD, colD).equals(11)){ //attacked figure is a bomb
+        if(figureHasValue(matchField, rowA, colD) == 3) { //attacker is miner => just remove bomb
+          return matchField.removeChar(rowD, colD)
+        }
+      }
+      if (figureHasValue(matchField, rowA,colA) < figureHasValue(matchField,rowD, colD)) {
+        return matchField.removeChar(rowA, colA)
+      }
+      return matchField.removeChar(rowA, colA).removeChar(rowD, colD) //else remove both figures
+    }
+    matchField
+  }*/
+
+  object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchField) {
+    override def figureHasValue(matchF: MatchField, row: Int, col: Int): Int = super.figureHasValue(matchF, row, col)
+    def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
+      def strategy1:MatchField = matchField
+      def strategy3:MatchField = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
+      def stragey4:MatchField = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
+      def strategy5 = println("Flag has been found! Game finished!")
+      def strategy6:MatchField = matchField.removeChar(rowD, colD)
+      def strategy7:MatchField = matchField.removeChar(rowA, colA)
+      def strategy8:MatchField = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
+
+      val attackToFarAway = if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) return strategy1
+      val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)) strategy1 else return strategy1
+      val isFlagOrBomb = if(matchField.fields.field(rowA,colA).character.get.figure.value == 0 || matchField.fields.field(rowA,colA).character.get.figure.value == 11) return strategy1
+      val defenceIsStronger = if (figureHasValue(matchField, rowA,colA) < figureHasValue(matchField,rowD, colD)) return strategy7
+      val minerAttackTheBomb = if(figureHasValue(matchField, rowA, colA) == 3 && figureHasValue(matchField, rowD, colD) == 11) return strategy6
+      val attackFlag = if(figureHasValue(matchField,rowD, colD)==0) strategy5
+      val attackIsStronger = if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) return stragey4
+      val spyAttackMarshal = if((figureHasValue(matchField, rowA,colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)) return strategy3
+      val unableToAttack = if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)) return strategy1
+      val attackEqualsDefence = if(figureHasValue(matchField, rowA,colA) == figureHasValue(matchField,rowD, colD)) return strategy8
+      matchField
+    }
+  }
+
+  /*
+
 
   def attackToFarAway(rowA: Int, colA: Int, rowD: Int, colD: Int): Boolean = {
     if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1)))
@@ -209,8 +270,8 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def fieldIsSet(rowA: Int, colA: Int, rowD: Int, colD: Int): Boolean = {
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true))
-      return true
-    false
+      return false
+    true
   }
 
   def unableToAttack(rowA: Int, colA: Int, rowD: Int, colD: Int) : Boolean = {
@@ -253,37 +314,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     if (figureHasValue(matchField, rowA,colA) < figureHasValue(matchField,rowD, colD))
       return true
     false
-  }
+  }*/
 
-  def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
-
-    if(attackToFarAway(rowA,colA,rowD,colD)) { //field of attacked character is too far away
-      return matchField
-    }
-    if(fieldIsSet(rowA: Int, colA: Int, rowD: Int, colD: Int)){ //both fields are set
-      if(unableToAttack(rowA,colA,rowD,colD)){ //flag and bomb are unable to attack
-        return matchField
-      }
-      if(spyAttackMarshal(rowA,colA,rowD,colD)){ //attacker is spy and attacked figure is marshal
-        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
-      }
-      if(attackIsStronger(rowA,colA,rowD,colD)) {
-        if(attackFlag(rowD,colD)){ //attacked figure is flag
-          println("Flag has been found! Game finished!")
-        }
-        return matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
-      }
-      if(attackTheBomb(matchField,rowD,colD)){ //attacked figure is a bomb
-        if(minerAttackTheBomb(matchField,rowA,colA)) { //attacker is miner => just remove bomb
-          return matchField.removeChar(rowD, colD)
-        }
-      }
-      if (defenceIsStronger(rowA,colA,rowD,colD)) {
-        return matchField.removeChar(rowA, colA)
-      }
-      return matchField.removeChar(rowA, colA).removeChar(rowD, colD) //else remove both figures
-    }
-    matchField
-  }
 }
 

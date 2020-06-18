@@ -13,10 +13,11 @@ object Stratego {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
+    println(controller.welcome())
     var input = ""
     do {
       input = readLine()
-      tui.processInputLine(input)
+      println(tui.processInputLine(input))
     } while (!input.equals("q"))
   }
 }
