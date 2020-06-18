@@ -1,6 +1,7 @@
 package de.htwg.se.stratego.model
 import de.htwg.se.stratego.model
 import de.htwg.se.stratego.model.{Game, MatchField, Player}
+import de.htwg.se.stratego.util.Strategy
 
 
 case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchField) {
@@ -107,7 +108,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   }
 
   def isRedChar(charac:String): Boolean = {
-    bList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false)
+    rList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false)
     false
   }
 
@@ -259,7 +260,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       return true
     false
   }
-
+  
   def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
     if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) { //field of attacked character is too far away
       return matchField

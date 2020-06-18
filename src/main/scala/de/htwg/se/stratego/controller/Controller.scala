@@ -66,13 +66,15 @@ class Controller(var matchField:MatchField) extends Observable {
   def set(row:Int, col:Int, charac:String): String = {
     currentPlayerIndex match {
       case 0 =>
-        if(game.bList.isEmpty){
+        if(game.bList.size == 0){
         currentPlayerIndex=nextPlayer
         }
+        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
       case 1 =>
-        if(game.rList.isEmpty){
+        if(game.rList.size == 0){
         nextState
         }
+        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
     }
     undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
     println(currentPlayerIndex)
