@@ -59,12 +59,13 @@ class Controller(var matchField:MatchField) extends Observable {
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
     if(matchField.fields.field(rowD,colD).character.get.figure.value==0 && matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set and attacked figure is flag
-      matchField = game.attack(matchField, rowA, colA, rowD, colD)
+      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD)
       nextState
       currentPlayerIndex=0
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
+    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD)
     currentPlayerIndex= nextPlayer
 
     notifyObservers()
