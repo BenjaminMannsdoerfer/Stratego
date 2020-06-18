@@ -72,7 +72,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       val idx = bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
       matchField = matchField.addChar(row,col,bList(idx))
       bList = bList.patch(idx, Nil, 1)
-      println(bList)
       return matchField
     }
     matchField
@@ -100,7 +99,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       val idx = rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
       matchField = matchField.addChar(row,col,rList(idx))
       rList = rList.patch(idx, Nil, 1)
-      println(rList)
       return matchField
     }
     matchField
@@ -206,7 +204,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   def isFlagOrBomb(matchField: MatchField, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
     matchField.fields.field(row,col).character.get.figure.value == 11) true else false
 
-  def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
+  /*def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
     if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) { //field of attacked character is too far away
       return matchField
     }
@@ -234,12 +232,11 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       return matchField.removeChar(rowA, colA).removeChar(rowD, colD) //else remove both figures
     }
     matchField
-  }
-
+  }*/
 
   object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchField) {
     override def figureHasValue(matchF: MatchField, row: Int, col: Int): Int = super.figureHasValue(matchF, row, col)
-    override def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
+    def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int): MatchField = {
       def strategy1:MatchField = matchField
       def strategy3:MatchField = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)
       def stragey4:MatchField = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get).removeChar(rowA,colA)

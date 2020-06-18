@@ -17,5 +17,6 @@ class Tui(controller: Controller) extends Observer {
       case _ => controller.handle(input)
     }
   }
+
   override def update: Unit = println(controller.matchFieldToString)
 }
