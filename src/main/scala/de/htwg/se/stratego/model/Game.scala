@@ -10,7 +10,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
 
   def init(): MatchField = {
 
-    //sets Characters of PlayerA
     var row = 0
     var col = 0
     // shuffle(aList)
@@ -23,7 +22,6 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       row += 1
     }
 
-    //Sets Characters of PlayerB
     row = 0
     col = size - 1
     // shuffle(bList)
