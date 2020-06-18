@@ -126,5 +126,4 @@ class Controller(var matchField:MatchField) extends Observable {
 
   private def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
 
-  private def nextPlayerMessage: String = playerList(currentPlayerIndex).name + " it's your turn!"
 }

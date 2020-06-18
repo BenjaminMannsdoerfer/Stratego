@@ -15,16 +15,6 @@ class TuiSpec  extends WordSpec with Matchers{
       tui.processInputLine("n")
       controller.matchField should be(new MatchField(4, 4, false))
     }
-    "set all Characters on Matchfield" in {
-      tui.processInputLine("i")
-      controller.initMatchfield() should be()
-    }
-
-    "attack a Characters on input 'a 0 0 0 1" in {
-      controller.initMatchfield()
-      tui.processInputLine("a 0 0 0 1")
-      controller.attack(0, 1, 0, 2) should be()
-    }
     "quit" in {
       tui.processInputLine("q")
     }
