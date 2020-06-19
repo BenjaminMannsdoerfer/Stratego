@@ -15,7 +15,7 @@ class Controller(var matchField:MatchField) extends Observable {
 
   var currentPlayerIndex: Int = 0
 
-  var state: ControllerState = EnterPlayers(this)
+  var state: ControllerState = EnterPlayer(this)
 
   private val undoManager = new UndoManager
 

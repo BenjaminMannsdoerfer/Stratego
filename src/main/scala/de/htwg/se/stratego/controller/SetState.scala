@@ -11,6 +11,6 @@ case class SetState(controller: Controller) extends ControllerState{
     }
   }
 
-  override def nextState(): ControllerState = InGameState(controller)
+  override def nextState(): ControllerState = GameState(controller)
 
 }

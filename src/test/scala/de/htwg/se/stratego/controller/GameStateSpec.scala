@@ -4,12 +4,12 @@ import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
 import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}
 
-class InGameStateSpec extends WordSpec with Matchers {
+class GameStateSpec extends WordSpec with Matchers {
   "A InGameState" when {
     val matchField = new MatchField(4, 4, false)
     val controller = new Controller(matchField)
     controller.initMatchfield()
-    val state = InGameState(controller)
+    val state = GameState(controller)
     "created" should {
       "handle" in {
         state.handle("m d 0 0") should be("PlayerRed it's your turn!")
