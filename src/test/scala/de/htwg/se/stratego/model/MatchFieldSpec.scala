@@ -29,7 +29,7 @@ class MatchFieldSpec extends WordSpec with Matchers {
       val matchField = new MatchField(4, 4, true)
       val charac = GameCharacter(Figure.Flag)
       "has been added to the Matchfield" in {
-        matchField.addChar(0, 0, charac).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  F  |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        matchField.addChar(0, 0, charac,Colour.FigureCol(0)).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  F  |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
     "created with size 4 and a set Character" should {

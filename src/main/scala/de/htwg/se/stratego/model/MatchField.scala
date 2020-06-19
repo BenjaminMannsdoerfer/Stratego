@@ -5,7 +5,7 @@ case class MatchField(fields: Matrix[Field]) {
 
   def this(rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
 
-  def addChar(row: Int, col: Int, char: GameCharacter): MatchField = copy(fields.updateField(row, col, Field(true, Some(char))))
+  def addChar(row: Int, col: Int, char: GameCharacter, colour: Colour.FigureCol): MatchField = copy(fields.updateField(row, col, Field(true, Some(char), Some(colour))))
 
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
 

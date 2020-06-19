@@ -3,7 +3,8 @@ import org.scalatest.{Matchers, WordSpec}
 
 class PlayerSpec extends WordSpec with Matchers {
   "A Player" when { "new" should {
-    val player = Player("PlayerName", new CharacterList(4).getCharacterList())
+    val list = new CharacterList(4)
+    val player = Player("PlayerName", list.getCharacterList())
     "has a name"  in {
       player.name should be("PlayerName")
     }
