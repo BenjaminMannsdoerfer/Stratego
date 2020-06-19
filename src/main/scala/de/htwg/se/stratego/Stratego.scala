@@ -9,7 +9,7 @@ import scala.io.StdIn.readLine
 
 object Stratego {
 
-  val defaultsize = 10
+  val defaultsize = 4
   val controller = new Controller(new MatchField(defaultsize,defaultsize,false))
   val tui = new Tui(controller)
   val gui = new SwingGui(controller)

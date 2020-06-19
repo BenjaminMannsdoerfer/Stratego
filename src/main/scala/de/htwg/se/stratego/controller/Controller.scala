@@ -61,13 +61,13 @@ class Controller(var matchField:MatchField) extends Publisher {
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
     if(matchField.fields.field(rowD,colD).character.get.figure.value==0 && matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set and attacked figure is flag
-      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD)
+      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       nextState
       currentPlayerIndex=0
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
-    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD)
+    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
     currentPlayerIndex= nextPlayer
 
     publish(new CellChanged)
@@ -82,11 +82,13 @@ class Controller(var matchField:MatchField) extends Publisher {
         }
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
       case 1 =>
-        if(game.rList.size == 1){
-          undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+        if(game.rList.size == 0){
+          currentPlayerIndex=nextPlayer
           nextState
         }
-        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+
+
 
     }
     publish(new CellChanged)
@@ -101,7 +103,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   }
 
   def move(dir: Char, row:Int, col:Int): String = {
-    undoManager.doStep(new MoveCommand(dir, matchField, row, col, this))
+    undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
     currentPlayerIndex=nextPlayer
     publish(new CellChanged)
     playerList(currentPlayerIndex) + " it's your turn!"

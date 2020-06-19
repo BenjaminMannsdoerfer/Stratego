@@ -1,5 +1,7 @@
 package de.htwg.se.stratego.aview.gui
 
+import java.net.URL
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
@@ -15,14 +17,31 @@ class SwingGui(controller:Controller) extends Frame{
   val matchFieldSize = controller.matchField.fields.matrixSize
 
 
-  val label =new Label{ icon= new ImageIcon("C:\\Users\\walte\\OneDrive\\Dokumente\\Sonstiges\\Stratego\\src\\main\\scala\\de\\htwg\\se\\stratego\\aview\\gui\\matchfield.JPG")}
+  val pane = new BoxPanel(Orientation.Horizontal) {
+    val label = new Label {
+      icon = new ImageIcon("C:\\Users\\walte\\OneDrive\\Dokumente\\Sonstiges\\Stratego\\src\\main\\scala\\de\\htwg\\se\\stratego\\aview\\gui\\test.JPG")
+    }
+    contents += label
+  }
 
+
+
+  /*contents = new GridPanel(rows0=200,cols0=200) {
+    /*
+    }*/
+
+      contents+=new GridPanel(200,200) {
+        val label = new Label {
+          icon = new ImageIcon("test.JPG")}
+        contents += label
+    }
+  }*/
   iconImage = toolkit.getImage("C:\\Users\\walte\\OneDrive\\Dokumente\\Sonstiges\\Stratego\\src\\main\\scala\\de\\htwg\\se\\stratego\\aview\\gui\\matchfield.JPG")
+  //ImageIO.read("matchfield.JPG")
 
-  val img = toolkit.getImage("matchfield.JPG")//ImageIO.read("matchfield.JPG")
-
-  val panel = new Panel{
+  contents = new GridPanel(200,200){
     override def paint(g:Graphics2D): Unit ={
+      val img = toolkit.getImage("test.JPG")
       g.drawImage(img,100,100,null)
     }
     preferredSize = new Dimension(500,500)
