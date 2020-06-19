@@ -19,7 +19,6 @@ class SwingGui(controller:Controller) extends Frame{
   val matchFieldSize = controller.matchField.fields.matrixSize
 
 
-  //controller.initMatchfield()
 
   def enterNamesDialog(){
     Dialog.showMessage(null,"WELCOME TO STRATEGO!", title = "Stratego")
