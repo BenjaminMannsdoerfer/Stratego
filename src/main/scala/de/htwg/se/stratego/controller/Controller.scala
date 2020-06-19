@@ -3,8 +3,10 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.util.{Observable, UndoManager}
 import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
 
+import scala.swing.Publisher
 
-class Controller(var matchField:MatchField) extends Observable {
+
+class Controller(var matchField:MatchField) extends Publisher {
 
 
   val list = CharacterList(matchField.fields.matrixSize)
@@ -44,14 +46,14 @@ class Controller(var matchField:MatchField) extends Observable {
 
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
-    notifyObservers()
+    publish(new CellChanged)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
   def initMatchfield(): String = {
     matchField = game.init()
     nextState
-    notifyObservers()
+    publish(new CellChanged)
     "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
     playerList(currentPlayerIndex) + " it's your turn!"
 
@@ -68,7 +70,7 @@ class Controller(var matchField:MatchField) extends Observable {
     matchField = game.Context.attack(matchField, rowA, colA, rowD, colD)
     currentPlayerIndex= nextPlayer
 
-    notifyObservers()
+    publish(new CellChanged)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -87,7 +89,7 @@ class Controller(var matchField:MatchField) extends Observable {
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
 
     }
-    notifyObservers()
+    publish(new CellChanged)
     if(game.rList.size == 0){
       return "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
@@ -101,7 +103,7 @@ class Controller(var matchField:MatchField) extends Observable {
   def move(dir: Char, row:Int, col:Int): String = {
     undoManager.doStep(new MoveCommand(dir, matchField, row, col, this))
     currentPlayerIndex=nextPlayer
-    notifyObservers()
+    publish(new CellChanged)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -109,19 +111,19 @@ class Controller(var matchField:MatchField) extends Observable {
 
   def undo: String = {
     undoManager.undoStep
-    notifyObservers()
+    publish(new CellChanged)
     "undo"
   }
 
   def redo: String = {
     undoManager.redoStep
-    notifyObservers()
+    publish(new CellChanged)
     "redo"
   }
 
   def nextState: Unit = {
     state = state.nextState()
-    notifyObservers()
+    publish(new CellChanged)
   }
 
 

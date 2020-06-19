@@ -1,12 +1,14 @@
 package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.util.Observer
-import de.htwg.se.stratego.controller.Controller
+import de.htwg.se.stratego.controller.{CandidatesChanged, CellChanged, Controller, MatchFieldSizeChanged}
 
-class Tui(controller: Controller) extends Observer {
+import scala.swing.Reactor
 
-  controller.add(this)
-  val size = 4
+class Tui(controller: Controller) extends Reactor {
+
+  listenTo(controller)
+  val size = controller.matchField.fields.matrixSize
 
   def processInputLine(input: String):String = {
     input match {
@@ -18,5 +20,19 @@ class Tui(controller: Controller) extends Observer {
     }
   }
 
-  override def update: Unit = println(controller.matchFieldToString)
+  reactions +={
+    case event: MatchFieldSizeChanged => printTui
+    case event: CellChanged => printTui
+    case event: CandidatesChanged => printCandidates
+  }
+
+  def printTui: Unit = {
+    println(controller.matchFieldToString)
+  }
+  def printCandidates: Unit = {
+    println("Candidates: ")
+    for (row <- 0 until size; col <- 0 until size) {
+      if (controller.matchField.fields.field(row, col).isSet) println("("+row+","+col+"):"+controller.matchField.fields.field(row, col).isSet)
+    }
+  }
 }
