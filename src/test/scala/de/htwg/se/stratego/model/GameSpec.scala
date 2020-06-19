@@ -59,7 +59,7 @@ class GameSpec extends WordSpec with Matchers {
 
     "gets a matchfield with red Fields" should {
       "set a character" in {
-        game6.setRed(5,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|  F  |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game6.setRed(5,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|  F  |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|  F  |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
 
@@ -71,14 +71,19 @@ class GameSpec extends WordSpec with Matchers {
         game.moveDown(board, 0, 0).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|  9  |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
         game.moveDown(board,3,0).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
         game.moveDown(board,0,3).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
-        //game.moveDown(board2,2,0).toString should be()
+        game.moveDown(board2,2,0).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|  9  |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
 
     "gets a matchfield with a red and a blue List each with filled characters" should {
       val board = game.init()
+      val board1 = game.moveUp(board,3,0)
+      val board2 = game.moveUp(board1,2,0)
       "and now one character moves up" in {
         game.moveUp(board, 3, 0).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|  9  |     |     |     | 2\n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game.moveUp(board,3,3).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game.moveUp(board,0,3).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game.moveUp(board2,1,0).toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|  9  |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
 
