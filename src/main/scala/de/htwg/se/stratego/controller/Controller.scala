@@ -89,8 +89,6 @@ class Controller(var matchField:MatchField) extends Publisher {
           nextState
         }
 
-
-
     }
     publish(new CellChanged)
     if(game.rList.size == 0){

@@ -21,13 +21,14 @@ class SwingGui(controller:Controller) extends Frame{
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
+  /*
   def enterNamesDialog(){
     Dialog.showMessage(null,"WELCOME TO STRATEGO!", title = "Stratego")
     controller.setPlayers(JOptionPane.showInputDialog(null, "Spieler 1 Name:", JOptionPane.DEFAULT_OPTION) +
     " " + JOptionPane.showInputDialog(null,"Spieler 2 Name:",title="Stratego"))
     Dialog.showMessage(null, "Hello " + controller.playerList(0) + " and " + controller.playerList(1))
   }
-
+   */
   //enterNamesDialog()
   controller.initMatchfield()
 
@@ -46,46 +47,67 @@ class SwingGui(controller:Controller) extends Frame{
     }
   }
 
+
+  //controller.move('d', 0 , 0)
+  //redraw
+
+  contents = matchfieldPanel
+  /*
+  contents = new BorderPanel{
+    add(matchfieldPanel, BorderPanel.Position.Center)
+  }
+
+   */
+  visible = true
+  redraw
+
+  menuBar = new MenuBar {
+    contents += new Menu("File") {
+      mnemonic = Key.F
+      contents += new MenuItem(Action("New Game") {
+        controller.createEmptyMatchfield(matchFieldSize)
+        val playerFrame = new PlayerFrame(controller)
+        visible = false
+        dispose()
+      })
+      contents += new MenuItem(Action("Quit") {
+        System.exit(0)
+      })
+    }
+    contents += new Menu("Edit"){
+        mnemonic = Key.E
+        contents+= new MenuItem(Action("Undo") {
+          controller.undo
+          redraw
+        })
+        contents += new MenuItem(Action("Redo") {
+          controller.redo
+          redraw
+        })
+    }
+  }
+
   def redraw = {
     for {
       row <- 0 until matchFieldSize
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
 
-    repaint()
+    repaint
   }
 
-  //controller.move('d', 0 , 0)
-  //redraw
-
-  contents = new BorderPanel{
-    add(matchfieldPanel, BorderPanel.Position.Center)
+  reactions += {
+    case event: CellChanged     => redraw
   }
-
-    menuBar = new MenuBar {
-    contents += new Menu("File") {
-      mnemonic = Key.F
-      contents += new MenuItem(Action("New") {
-        controller.createEmptyMatchfield(matchFieldSize)
-      })
-      contents += new MenuItem(Action("Quit") {
-        System.exit(0)
-      })
-    }
-      contents += new Menu("Edit"){
-        mnemonic = Key.E
-        contents+= new MenuItem(Action("Undo") { controller.undo })
-        contents += new MenuItem(Action("Redo") { controller.redo })
-      }
-  }
-
-  matchfieldPanel.visible=true
-
 
 
   size = new Dimension(800, 600)
 
-  visible = true
+  /*
+  controller.move('d', 0, 0)
+  redraw
+
+   */
 
 
 }

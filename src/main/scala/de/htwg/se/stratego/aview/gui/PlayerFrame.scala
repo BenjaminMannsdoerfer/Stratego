@@ -28,9 +28,10 @@ class PlayerFrame(controller:Controller) extends Frame{
   reactions += {
     case ButtonClicked(`next`) =>
       listenTo(controller)
-      controller.setPlayers(player1.text+ " "+ player2.text)
+      controller.handle(player1.text+ " "+ player2.text)
       val mainFrame = new SwingGui(controller)
       visible = false
+      dispose()
   }
 
 
