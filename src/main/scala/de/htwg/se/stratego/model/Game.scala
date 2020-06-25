@@ -236,7 +236,8 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       def strategy7:MatchField = matchField.removeChar(rowA, colA)
       def strategy8:MatchField = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
 
-      val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex) return strategy1
+      val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1
+      val enemyAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
       val attackToFarAway = if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) return strategy1
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)) strategy1 else return strategy1
       val isFlagOrBomb = if(matchField.fields.field(rowA,colA).character.get.figure.value == 0 || matchField.fields.field(rowA,colA).character.get.figure.value == 11) return strategy1

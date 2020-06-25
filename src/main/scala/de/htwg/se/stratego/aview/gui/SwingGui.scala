@@ -18,6 +18,7 @@ class SwingGui(controller:Controller) extends Frame{
 
   title = "Stratego"
   val matchFieldSize = controller.matchField.fields.matrixSize
+  var optionAttack = false //if set to false -> move, else attack
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
@@ -38,8 +39,149 @@ class SwingGui(controller:Controller) extends Frame{
     }
   }
 
+  val upButton = new Button{
+    text = "\u2191"
+  }
+  val downButton = new Button{
+    text = "\u2193"
+  }
+  val rightButton = new Button{
+    text = "\u2192"
+  }
+  val leftButton = new Button{
+    text = "\u2190"
+  }
 
-  contents = matchfieldPanel
+  def directionsPanel = new BorderPanel{
+    add(upButton, BorderPanel.Position.North)
+    add(downButton, BorderPanel.Position.South)
+    add(rightButton, BorderPanel.Position.East)
+    add(leftButton, BorderPanel.Position.West)
+
+
+    listenTo(upButton)
+    reactions += {
+      case ButtonClicked(`upButton`) =>
+        for(r<- fields){
+          for(c<- r){
+            if(c.isClicked){
+              if(optionAttack){
+                controller.attack(c.r,c.c,c.r+1,c.c)
+                c.isClicked=false
+                repaint
+              }else{
+                controller.move('u', c.r, c.c)
+                c.isClicked= false
+                repaint
+              }
+            }
+          }
+        }
+    }
+
+    listenTo(downButton)
+    reactions += {
+      case ButtonClicked(`downButton`) =>
+        for(r<- fields){
+          for(c<- r){
+            if(c.isClicked){
+              if(optionAttack){
+                controller.attack(c.r,c.c,c.r-1,c.c)
+                c.isClicked=false
+                repaint
+              }else{
+                controller.move('d', c.r, c.c)
+                c.isClicked= false
+                repaint
+              }
+            }
+          }
+        }
+    }
+    listenTo(leftButton)
+    reactions += {
+      case ButtonClicked(`leftButton`) =>
+        for(r<- fields){
+          for(c<- r){
+            if(c.isClicked){
+              if(optionAttack){
+                controller.attack(c.r,c.c,c.r,c.c-1)
+                c.isClicked=false
+                repaint
+              }else{
+                controller.move('l', c.r, c.c)
+                c.isClicked= false
+                repaint
+              }
+            }
+          }
+        }
+    }
+    listenTo(rightButton)
+    reactions += {
+      case ButtonClicked(`rightButton`) =>
+        for(r<- fields){
+          for(c<- r){
+            if(c.isClicked){
+              if(optionAttack){
+                controller.attack(c.r,c.c,c.r,c.c+1)
+                c.isClicked=false
+                repaint
+              }else{
+                controller.move('r', c.r, c.c)
+                c.isClicked= false
+                repaint
+              }
+            }
+          }
+        }
+    }
+  }
+
+  val moveButton = new RadioButton{
+    text = "move"
+    selected = true
+  }
+
+  val attackButton = new RadioButton{
+    text = "attack"
+  }
+
+  val radioButtons = List(moveButton, attackButton)
+  val radioPanel = new BoxPanel(Orientation.Vertical) {
+    contents ++= radioButtons
+    listenTo(moveButton)
+    reactions += {
+      case ButtonClicked(`moveButton`) =>
+        attackButton.selected = false
+        optionAttack=false
+    }
+    listenTo(attackButton)
+    reactions += {
+      case ButtonClicked(`attackButton`) =>
+        moveButton.selected = false
+        optionAttack= true
+    }
+
+  }
+
+  def optionPanel = new BorderPanel{
+    add(radioPanel, BorderPanel.Position.Center)
+
+  }
+
+  def controllPanel = new GridPanel(1,2){
+    contents += directionsPanel
+    contents += optionPanel
+  }
+
+  val mainPanel = new GridPanel(2,1){
+    contents+= matchfieldPanel
+    contents+= controllPanel
+  }
+
+  contents = mainPanel
+
   /*
   contents = new BorderPanel{
     add(matchfieldPanel, BorderPanel.Position.Center)
