@@ -5,7 +5,7 @@ import de.htwg.se.stratego.controller.Controller
 import scala.swing.FlowPanel.Alignment
 import scala.swing.Swing.LineBorder
 import scala.swing.event.{ButtonClicked, MouseClicked}
-import scala.swing.{BoxPanel, Button, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
+import scala.swing.{BorderPanel, BoxPanel, Button, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
 
 class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
 
@@ -25,6 +25,7 @@ class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
   val figureText = new Label{
     text = fieldText(row,col)
     font = new Font("Verdana", 1, 20)
+    preferredSize = new Dimension(51, 51)
   }
 
   val upButton = new Button{
@@ -37,7 +38,7 @@ class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
     text = "\u2192"
   }
   val leftButton = new Button{
-    text = "\2190"
+    text = "\u2190"
   }
 
   /*
@@ -51,13 +52,12 @@ class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
 
 
 
-  val field = new BoxPanel(Orientation.Vertical){
-    contents += upButton
-
-    contents += figureText
-    contents += downButton
-    //preferredSize = new Dimension(51, 51)
-    //border = Swing.BeveledBorder(Swing.Raised)
+  val field = new BorderPanel{
+    add(upButton, BorderPanel.Position.North)
+    add(figureText, BorderPanel.Position.Center)
+    add(downButton, BorderPanel.Position.South)
+    add(rightButton, BorderPanel.Position.East)
+    add(leftButton, BorderPanel.Position.West)
 
 
     listenTo(upButton)
@@ -72,28 +72,27 @@ class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
         controller.move('d', row, col)
         repaint
     }
+    listenTo(leftButton)
+    reactions += {
+      case ButtonClicked(`leftButton`) =>
+        controller.move('l', row, col)
+        repaint
+    }
+    listenTo(rightButton)
+    reactions += {
+      case ButtonClicked(`rightButton`) =>
+        controller.move('r', row, col)
+        repaint
+    }
+
 
 
   }
 
 
-  contents += leftButton
-  listenTo(leftButton)
-  reactions += {
-    case ButtonClicked(`leftButton`) =>
-      controller.move('l', row, col)
-      repaint
-  }
 
   contents += field
 
-  contents += rightButton
-  listenTo(rightButton)
-  reactions += {
-    case ButtonClicked(`rightButton`) =>
-      controller.move('r', row, col)
-      repaint
-  }
 
 
   def redraw ={

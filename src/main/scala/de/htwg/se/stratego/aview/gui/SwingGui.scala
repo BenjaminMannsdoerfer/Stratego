@@ -21,15 +21,6 @@ class SwingGui(controller:Controller) extends Frame{
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
-  /*
-  def enterNamesDialog(){
-    Dialog.showMessage(null,"WELCOME TO STRATEGO!", title = "Stratego")
-    controller.setPlayers(JOptionPane.showInputDialog(null, "Spieler 1 Name:", JOptionPane.DEFAULT_OPTION) +
-    " " + JOptionPane.showInputDialog(null,"Spieler 2 Name:",title="Stratego"))
-    Dialog.showMessage(null, "Hello " + controller.playerList(0) + " and " + controller.playerList(1))
-  }
-   */
-  //enterNamesDialog()
   controller.initMatchfield()
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
@@ -47,9 +38,6 @@ class SwingGui(controller:Controller) extends Frame{
     }
   }
 
-
-  //controller.move('d', 0 , 0)
-  //redraw
 
   contents = matchfieldPanel
   /*
@@ -102,12 +90,5 @@ class SwingGui(controller:Controller) extends Frame{
 
 
   size = new Dimension(800, 600)
-
-  /*
-  controller.move('d', 0, 0)
-  redraw
-
-   */
-
 
 }
