@@ -1,7 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
 import scala.swing._
-import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.Controller

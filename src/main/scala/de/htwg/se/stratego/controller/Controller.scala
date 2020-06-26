@@ -67,8 +67,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
 
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
-      && matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex &&
-      matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
+      && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       //matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       nextState
       currentPlayerIndex=0
