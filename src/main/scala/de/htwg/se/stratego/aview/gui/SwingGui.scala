@@ -3,8 +3,9 @@ package de.htwg.se.stratego.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
-import de.htwg.se.stratego.controller.Controller
-import de.htwg.se.stratego.controller.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 class CellClicked(val row:Int, val column: Int) extends Event
 

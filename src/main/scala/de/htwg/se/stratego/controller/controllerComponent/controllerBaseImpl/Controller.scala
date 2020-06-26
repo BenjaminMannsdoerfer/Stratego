@@ -1,14 +1,17 @@
-package de.htwg.se.stratego.controller
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.stratego.aview.gui.SwingGui
-import de.htwg.se.stratego.controller.GameStatus._
-import de.htwg.se.stratego.util.{Observable, UndoManager}
-import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.controller.{ControllerState, EnterPlayer}
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.playerComponent.Player
+import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
 
-class Controller(var matchField:MatchField) extends Publisher {
+class Controller(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
 
   val list = CharacterList(matchField.fields.matrixSize)
@@ -136,7 +139,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   }
 
   def statusString:String = GameStatus.getMessage(gameStatus)
-  private def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
+  def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
 
 
 }

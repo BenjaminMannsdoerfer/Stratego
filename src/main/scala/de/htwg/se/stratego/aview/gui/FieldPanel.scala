@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
-import de.htwg.se.stratego.controller.Controller
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.FlowPanel.Alignment
 import scala.swing.Swing.LineBorder

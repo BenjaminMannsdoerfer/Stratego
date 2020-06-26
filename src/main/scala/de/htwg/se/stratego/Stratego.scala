@@ -1,9 +1,10 @@
 package de.htwg.se.stratego
 
 import de.htwg.se.stratego.aview.Tui
-import de.htwg.se.stratego.aview.gui.{PlayerFrame}
-import de.htwg.se.stratego.controller.{FieldChanged, Controller}
-import de.htwg.se.stratego.model.MatchField
+import de.htwg.se.stratego.aview.gui.PlayerFrame
+import de.htwg.se.stratego.controller.controllerComponent.FieldChanged
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 
 import scala.io.StdIn.readLine
 

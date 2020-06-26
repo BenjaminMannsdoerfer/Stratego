@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
 case class Matrix[Field](rows: Vector[Vector[Field]]) {
 

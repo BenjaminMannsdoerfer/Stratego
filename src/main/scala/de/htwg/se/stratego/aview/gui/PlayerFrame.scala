@@ -1,6 +1,7 @@
 package de.htwg.se.stratego.aview.gui
 
-import de.htwg.se.stratego.controller.{CellChanged, Controller, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.PlayerChanged
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, FlowPanel, Frame, Label, Swing, TextField}

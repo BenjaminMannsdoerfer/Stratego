@@ -1,7 +1,8 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 
-case class MatchField(fields: Matrix[Field]) {
+case class MatchField(fields: Matrix[Field]) extends MatchFieldInterface {
 
   def this(rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
 

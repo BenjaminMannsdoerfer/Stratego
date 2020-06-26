@@ -1,8 +1,8 @@
 package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.aview.Tui
-import de.htwg.se.stratego.controller.Controller
-import de.htwg.se.stratego.model.MatchField
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import org.scalatest.{Matchers, WordSpec}
 
 class TuiSpec  extends WordSpec with Matchers{

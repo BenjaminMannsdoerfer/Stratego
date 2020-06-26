@@ -1,10 +1,13 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchField) {
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
+import de.htwg.se.stratego.model.playerComponent.Player
+
+case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchFieldInterface) {
   var bList = playerA.characterList
   var rList = playerB.characterList
 
-  def init(): MatchField = {
+  def init(): MatchFieldInterface = {
 
     var row = 0
     var col = 0
@@ -61,7 +64,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def setBlue(row:Int, col:Int, charac: String): MatchField = {
+  def setBlue(row:Int, col:Int, charac: String): MatchFieldInterface = {
     if (isBlueChar(charac) && isBlueField(row) && !matchField.fields.field(row,col).isSet) {
       val idx = bList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
       matchField = matchField.addChar(row,col,bList(idx),Colour.FigureCol(0))
@@ -80,7 +83,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     false
   }
 
-  def set(player: Int, row:Int, col:Int, charac: String): MatchField = {
+  def set(player: Int, row:Int, col:Int, charac: String): MatchFieldInterface = {
     player match{
       case 0 => return setBlue(row, col, charac)
       case 1 => return setRed(row, col, charac)
@@ -88,7 +91,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     matchField
   }
 
-  def setRed(row:Int, col:Int, charac: String): MatchField = {
+  def setRed(row:Int, col:Int, charac: String): MatchFieldInterface = {
     if (isRedChar(charac) && isRedField(row) && !matchField.fields.field(row,col).isSet) {
       val idx = rList.indexOf(GameCharacter(Figure.FigureVal(charac,characValue(charac))))
       matchField = matchField.addChar(row,col,rList(idx),Colour.FigureCol(1))
@@ -103,7 +106,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     false
   }
 
-  def move(direction: Char, matchField: MatchField, row: Int, col: Int, currentPlayerIndex: Int): MatchField = {
+  def move(direction: Char, matchField: MatchFieldInterface, row: Int, col: Int, currentPlayerIndex: Int): MatchFieldInterface = {
     if (matchField.fields.field(row,col).isSet.equals(true) && matchField.fields.field(row,col).colour.get.value == currentPlayerIndex) {
       direction match {
         case 'u' => return moveUp(matchField, row, col)
@@ -115,7 +118,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     matchField
   }
 
-  def moveDown(matchField: MatchField, row: Int, col: Int): MatchField = {
+  def moveDown(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
     if (row == size - 1) {
       println("The Figure can not set out of bounds!")
       return matchField
@@ -133,7 +136,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def moveUp(matchField: MatchField, row: Int, col: Int): MatchField = {
+  def moveUp(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
     if (row == 0) {
       println("The Figure can not set out of bounds!")
       return matchField
@@ -151,7 +154,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def moveLeft(matchField: MatchField, row: Int, col: Int): MatchField = {
+  def moveLeft(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
     if (col == 0) {
       println("The Figure can not set out of bounds!")
       return matchField
@@ -169,7 +172,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def moveRight(matchField: MatchField, row: Int, col: Int): MatchField = {
+  def moveRight(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
     if (col == size - 1) {
       println("The Figure can not set out of bounds!")
       return matchField
@@ -189,22 +192,22 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 
-  def figureHasValue(matchF: MatchField, row: Int,col: Int): Int = {
+  def figureHasValue(matchF: MatchFieldInterface, row: Int,col: Int): Int = {
     matchF.fields.field(row,col).character.get.figure.value
   }
 
-  def isFlagOrBomb(matchField: MatchField, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
+  def isFlagOrBomb(matchField: MatchFieldInterface, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
     matchField.fields.field(row,col).character.get.figure.value == 11) true else false
 
-  object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchField) {
-    override def figureHasValue(matchF: MatchField, row: Int, col: Int): Int = super.figureHasValue(matchF, row, col)
-    def attack(matchField: MatchField, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchField = {
-      def strategy1:MatchField = matchField
-      def strategy3:MatchField = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get,matchField.fields.field(rowA,colA).colour.get).removeChar(rowA,colA)
+  object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFieldInterface) {
+    override def figureHasValue(matchF: MatchFieldInterface, row: Int, col: Int): Int = super.figureHasValue(matchF, row, col)
+    def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = {
+      def strategy1:MatchFieldInterface = matchField
+      def strategy3:MatchFieldInterface = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get,matchField.fields.field(rowA,colA).colour.get).removeChar(rowA,colA)
       def strategy5 = println("Flag has been found! Game finished!")
-      def strategy6:MatchField = matchField.removeChar(rowD, colD)
-      def strategy7:MatchField = matchField.removeChar(rowA, colA)
-      def strategy8:MatchField = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
+      def strategy6:MatchFieldInterface = matchField.removeChar(rowD, colD)
+      def strategy7:MatchFieldInterface = matchField.removeChar(rowA, colA)
+      def strategy8:MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
 
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
       val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1
@@ -223,4 +226,3 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
     }
   }
 }
-

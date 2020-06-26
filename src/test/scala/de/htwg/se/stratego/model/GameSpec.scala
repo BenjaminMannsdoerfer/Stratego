@@ -1,4 +1,7 @@
 package de.htwg.se.stratego.model
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.playerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class GameSpec extends WordSpec with Matchers {
@@ -13,19 +16,19 @@ class GameSpec extends WordSpec with Matchers {
     val characList6 = CharacterList(6)
     val playerBlue6 = Player("PlayerBlue", characList6.getCharacterList())
     val playerRed6 = Player("PlayerRed", characList6.getCharacterList())
-    val game6 = Game(playerBlue6, playerRed6, 6, matchField6)
+    val game6 = matchFieldBaseImpl.Game(playerBlue6, playerRed6, 6, matchField6)
 
     val matchField8 = new MatchField(8, 8, false)
     val characList8 = CharacterList(8)
     val playerBlue8 = Player("PlayerBlue", characList8.getCharacterList())
     val playerRed8 = Player("PlayerRed", characList8.getCharacterList())
-    val game8 = Game(playerBlue8, playerRed8, 8, matchField8)
+    val game8 = matchFieldBaseImpl.Game(playerBlue8, playerRed8, 8, matchField8)
 
     val matchField10 = new MatchField(10, 10, false)
     val characList10 = CharacterList(10)
     val playerBlue10 = Player("PlayerBlue", characList10.getCharacterList())
     val playerRed10 = Player("PlayerRed", characList10.getCharacterList())
-    val game10 = Game(playerBlue10, playerRed10, 10, matchField10)
+    val game10 = matchFieldBaseImpl.Game(playerBlue10, playerRed10, 10, matchField10)
     "created with two Players and a empty Matchfield" should {
       "fill the Matchfield with Characters" in {
         game.init().toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")

@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.controller
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.stratego.util.Command
 
