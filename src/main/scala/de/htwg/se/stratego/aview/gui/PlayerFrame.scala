@@ -29,10 +29,9 @@ class PlayerFrame(controller:Controller) extends Frame{
     case ButtonClicked(`next`) =>
       listenTo(controller)
       controller.handle(player1.text+ " "+ player2.text)
+      controller.nextState
       new SwingGui(controller)
       visible = false
       dispose()
   }
-
-
 }

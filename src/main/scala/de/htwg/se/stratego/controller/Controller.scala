@@ -37,7 +37,7 @@ class Controller(var matchField:MatchField) extends Publisher {
     input.split(" ").map(_.trim).toList match{
       case player1 :: player2 :: Nil =>
         playerBlue = playerBlue.copy(player1, list.getCharacterList())
-        playerRed= playerRed.copy(player2, list.getCharacterList())
+        playerRed = playerRed.copy(player2, list.getCharacterList())
         playerList = List[Player](playerBlue,playerRed)
         nextState
 
@@ -65,10 +65,8 @@ class Controller(var matchField:MatchField) extends Publisher {
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
-      //matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       nextState
       currentPlayerIndex=0
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +

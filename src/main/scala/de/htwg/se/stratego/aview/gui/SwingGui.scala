@@ -211,7 +211,7 @@ class SwingGui(controller:Controller) extends Frame{
     }
   }
 
-  def redraw = {
+  def redraw: Unit = {
     for {
       row <- 0 until matchFieldSize
       column <- 0 until matchFieldSize
