@@ -65,8 +65,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
-    gameStatus = ATTACK
+
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex &&
       matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
@@ -76,6 +75,8 @@ class Controller(var matchField:MatchField) extends Publisher {
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
+    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
+    gameStatus = ATTACK
     currentPlayerIndex= nextPlayer
 
     publish(new CellChanged)

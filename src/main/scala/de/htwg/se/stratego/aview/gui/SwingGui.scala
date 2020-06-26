@@ -26,7 +26,6 @@ class SwingGui(controller:Controller) extends Frame{
   def statusString:String = GameStatus.getMessage(gameStatus)
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
-    //border = LineBorder(C 2)
     background = java.awt.Color.GRAY
 
     for{
