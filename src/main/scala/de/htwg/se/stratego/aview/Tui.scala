@@ -1,7 +1,7 @@
 package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.util.Observer
-import de.htwg.se.stratego.controller.{CellChanged, Controller, GameStatus, MatchFieldSizeChanged, PlayerChanged}
+import de.htwg.se.stratego.controller.{FieldChanged, Controller, GameStatus, MatchFieldSizeChanged, PlayerChanged}
 
 import scala.swing.Reactor
 
@@ -22,7 +22,7 @@ class Tui(controller: Controller) extends Reactor {
 
   reactions +={
     case event: MatchFieldSizeChanged => printTui
-    case event: CellChanged => printTui
+    case event: FieldChanged => printTui
     case event: PlayerChanged => "Player Changed"
   }
 

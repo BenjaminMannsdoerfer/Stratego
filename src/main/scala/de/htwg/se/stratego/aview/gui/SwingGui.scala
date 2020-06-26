@@ -222,7 +222,7 @@ class SwingGui(controller:Controller) extends Frame{
   }
 
   reactions += {
-    case event: CellChanged     => redraw
+    case event: FieldChanged     => redraw
   }
 
 

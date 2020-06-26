@@ -53,7 +53,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
     gameStatus=NEW
-    publish(new CellChanged)
+    publish(new FieldChanged)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -61,7 +61,7 @@ class Controller(var matchField:MatchField) extends Publisher {
     matchField = game.init()
     gameStatus=INIT
     nextState
-    publish(new CellChanged)
+    publish(new FieldChanged)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -77,7 +77,7 @@ class Controller(var matchField:MatchField) extends Publisher {
     gameStatus = ATTACK
     currentPlayerIndex= nextPlayer
 
-    publish(new CellChanged)
+    publish(new FieldChanged)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -96,7 +96,7 @@ class Controller(var matchField:MatchField) extends Publisher {
         }
 
     }
-    publish(new CellChanged)
+    publish(new FieldChanged)
     if(game.rList.size == 0){
       return "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
@@ -110,7 +110,7 @@ class Controller(var matchField:MatchField) extends Publisher {
   def move(dir: Char, row:Int, col:Int): String = {
     undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
     currentPlayerIndex=nextPlayer
-    publish(new CellChanged)
+    publish(new FieldChanged)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -119,20 +119,20 @@ class Controller(var matchField:MatchField) extends Publisher {
   def undo: String = {
     undoManager.undoStep
     gameStatus = UNDO
-    publish(new CellChanged)
+    publish(new FieldChanged)
     "undo"
   }
 
   def redo: String = {
     undoManager.redoStep
     gameStatus = REDO
-    publish(new CellChanged)
+    publish(new FieldChanged)
     "redo"
   }
 
   def nextState: Unit = {
     state = state.nextState()
-    publish(new CellChanged)
+    publish(new FieldChanged)
   }
 
   def statusString:String = GameStatus.getMessage(gameStatus)
