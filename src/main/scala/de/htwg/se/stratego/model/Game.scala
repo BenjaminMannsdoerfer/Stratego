@@ -104,7 +104,7 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   }
 
   def move(direction: Char, matchField: MatchField, row: Int, col: Int, currentPlayerIndex: Int): MatchField = {
-    if (matchField.fields.field(row,col).colour.get.value == currentPlayerIndex) {
+    if (matchField.fields.field(row,col).isSet.equals(true) && matchField.fields.field(row,col).colour.get.value == currentPlayerIndex) {
       direction match {
         case 'u' => return moveUp(matchField, row, col)
         case 'd' => return moveDown(matchField, row, col)
