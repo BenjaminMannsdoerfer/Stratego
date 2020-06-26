@@ -7,7 +7,7 @@ import scala.swing.Swing.LineBorder
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import scala.swing.{BorderPanel, BoxPanel, Button, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
 
-class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel{
+class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel {
 
   var fieldText = " "
   var isClicked = false

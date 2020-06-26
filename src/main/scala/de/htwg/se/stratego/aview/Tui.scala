@@ -1,7 +1,7 @@
 package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.util.Observer
-import de.htwg.se.stratego.controller.{CandidatesChanged, CellChanged, Controller, MatchFieldSizeChanged}
+import de.htwg.se.stratego.controller.{CandidatesChanged, CellChanged, Controller, GameStatus, MatchFieldSizeChanged}
 
 import scala.swing.Reactor
 
@@ -28,6 +28,7 @@ class Tui(controller: Controller) extends Reactor {
 
   def printTui: Unit = {
     println(controller.matchFieldToString)
+    println(GameStatus.getMessage(controller.gameStatus))
   }
   def printCandidates: Unit = {
     println("Candidates: ")

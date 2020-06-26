@@ -1,14 +1,11 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.image.BufferedImage
-
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.Controller
-import javax.imageio.ImageIO
-import javax.swing.{ImageIcon, JOptionPane}
+import de.htwg.se.stratego.controller.GameStatus._
 
 class CellClicked(val row:Int, val column: Int) extends Event
 
@@ -23,9 +20,13 @@ class SwingGui(controller:Controller) extends Frame{
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
   controller.initMatchfield()
+  var gameStatus: GameStatus = IDLE
+  controller.gameStatus=INIT
+
+  def statusString:String = GameStatus.getMessage(gameStatus)
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
-    border = LineBorder(java.awt.Color.ORANGE, 2)
+    //border = LineBorder(C 2)
     background = java.awt.Color.GRAY
 
     for{
@@ -60,13 +61,17 @@ class SwingGui(controller:Controller) extends Frame{
 
 
     listenTo(upButton)
+    listenTo(downButton)
+    listenTo(leftButton)
+    listenTo(rightButton)
     reactions += {
       case ButtonClicked(`upButton`) =>
         for(r<- fields){
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r+1,c.c)
+                controller.attack(c.r,c.c,c.r-1,c.c)
+                gameStatus=ATTACK
                 c.isClicked=false
                 repaint
               }else{
@@ -77,16 +82,12 @@ class SwingGui(controller:Controller) extends Frame{
             }
           }
         }
-    }
-
-    listenTo(downButton)
-    reactions += {
       case ButtonClicked(`downButton`) =>
         for(r<- fields){
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r-1,c.c)
+                controller.attack(c.r,c.c,c.r+1,c.c)
                 c.isClicked=false
                 repaint
               }else{
@@ -97,15 +98,12 @@ class SwingGui(controller:Controller) extends Frame{
             }
           }
         }
-    }
-    listenTo(leftButton)
-    reactions += {
       case ButtonClicked(`leftButton`) =>
         for(r<- fields){
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c-1)
+                controller.attack(c.r,c.c,c.r,c.c+1)
                 c.isClicked=false
                 repaint
               }else{
@@ -116,15 +114,12 @@ class SwingGui(controller:Controller) extends Frame{
             }
           }
         }
-    }
-    listenTo(rightButton)
-    reactions += {
       case ButtonClicked(`rightButton`) =>
         for(r<- fields){
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c+1)
+                controller.attack(c.r,c.c,c.r,c.c-1)
                 c.isClicked=false
                 repaint
               }else{
@@ -137,6 +132,7 @@ class SwingGui(controller:Controller) extends Frame{
         }
     }
   }
+
 
   val moveButton = new RadioButton{
     text = "move"
@@ -165,9 +161,14 @@ class SwingGui(controller:Controller) extends Frame{
 
   }
 
+  val status = new TextField(controller.statusString, 20)
+
   def optionPanel = new BorderPanel{
     add(radioPanel, BorderPanel.Position.Center)
+  }
 
+  def statusPanel = new BorderPanel {
+    add(status, BorderPanel.Position.Center)
   }
 
   def controllPanel = new GridPanel(1,2){
@@ -175,19 +176,14 @@ class SwingGui(controller:Controller) extends Frame{
     contents += optionPanel
   }
 
-  val mainPanel = new GridPanel(2,1){
-    contents+= matchfieldPanel
-    contents+= controllPanel
+  val mainPanel = new BorderPanel{
+    add(matchfieldPanel, BorderPanel.Position.North)
+    add(controllPanel, BorderPanel.Position.Center)
+    add(statusPanel, BorderPanel.Position.South)
   }
 
   contents = mainPanel
 
-  /*
-  contents = new BorderPanel{
-    add(matchfieldPanel, BorderPanel.Position.Center)
-  }
-
-   */
   visible = true
   redraw
 
@@ -222,6 +218,7 @@ class SwingGui(controller:Controller) extends Frame{
       row <- 0 until matchFieldSize
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
+    status.text = controller.statusString
 
     repaint
   }

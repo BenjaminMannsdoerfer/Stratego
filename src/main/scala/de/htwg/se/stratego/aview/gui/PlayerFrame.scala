@@ -17,9 +17,9 @@ class PlayerFrame(controller:Controller) extends Frame{
   visible= true
 
   contents = new FlowPanel{
-    contents += new Label("Player 1:")
+    contents += new Label("Set your name Player 1:")
     contents += player1
-    contents += new Label("Player 2:")
+    contents += new Label("Set your name Player 2:")
     contents += player2
     contents += next
     border = Swing.EmptyBorder(15, 10 , 10, 10)
@@ -29,7 +29,7 @@ class PlayerFrame(controller:Controller) extends Frame{
     case ButtonClicked(`next`) =>
       listenTo(controller)
       controller.handle(player1.text+ " "+ player2.text)
-      val mainFrame = new SwingGui(controller)
+      new SwingGui(controller)
       visible = false
       dispose()
   }

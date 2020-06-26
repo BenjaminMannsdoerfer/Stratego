@@ -1,5 +1,7 @@
 package de.htwg.se.stratego.controller
 
+import de.htwg.se.stratego.aview.gui.SwingGui
+import de.htwg.se.stratego.controller.GameStatus._
 import de.htwg.se.stratego.util.{Observable, UndoManager}
 import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
 
@@ -14,6 +16,8 @@ class Controller(var matchField:MatchField) extends Publisher {
   var playerRed = Player("PlayerRed", list.getCharacterList())
   val game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
   var playerList = List[Player](playerBlue,playerRed)
+
+  var gameStatus: GameStatus = IDLE
 
   var currentPlayerIndex: Int = 0
 
@@ -47,28 +51,31 @@ class Controller(var matchField:MatchField) extends Publisher {
 
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
+    gameStatus=NEW
     publish(new CellChanged)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
   def initMatchfield(): String = {
     matchField = game.init()
+    gameStatus=INIT
     nextState
     publish(new CellChanged)
-    "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
     playerList(currentPlayerIndex) + " it's your turn!"
-
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    if(matchField.fields.field(rowD,colD).character.get.figure.value==0 && matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)){ //both fields are set and attacked figure is flag
-      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
+    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
+    gameStatus = ATTACK
+    if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
+      && matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex &&
+      matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
+      //matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       nextState
       currentPlayerIndex=0
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
-    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
     currentPlayerIndex= nextPlayer
 
     publish(new CellChanged)
@@ -112,12 +119,14 @@ class Controller(var matchField:MatchField) extends Publisher {
 
   def undo: String = {
     undoManager.undoStep
+    gameStatus = UNDO
     publish(new CellChanged)
     "undo"
   }
 
   def redo: String = {
     undoManager.redoStep
+    gameStatus = REDO
     publish(new CellChanged)
     "redo"
   }
@@ -127,7 +136,8 @@ class Controller(var matchField:MatchField) extends Publisher {
     publish(new CellChanged)
   }
 
-
+  def statusString:String = GameStatus.getMessage(gameStatus)
   private def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
+
 
 }

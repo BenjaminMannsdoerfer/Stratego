@@ -1,7 +1,7 @@
 package de.htwg.se.stratego
 
 import de.htwg.se.stratego.aview.Tui
-import de.htwg.se.stratego.aview.gui.{PlayerFrame, SwingGui}
+import de.htwg.se.stratego.aview.gui.{PlayerFrame}
 import de.htwg.se.stratego.controller.{CellChanged, Controller}
 import de.htwg.se.stratego.model.MatchField
 
