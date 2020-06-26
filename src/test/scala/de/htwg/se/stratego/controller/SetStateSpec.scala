@@ -12,7 +12,7 @@ class SetStateSpec extends WordSpec with Matchers {
     val state = SetState(controller)
     "created" should {
       "handle" in {
-        state.handle("i") should be("matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\nPlayerBlue it's your turn!")
+        state.handle("i") should be("PlayerBlue it's your turn!")
         state.handle("s") should be("initialize matchfield with (i) or set a figure with (s row col figure) ")
         state.handle("bullshit") should be("initialize matchfield with (i) or set a figure with (s row col figure) ")
       }

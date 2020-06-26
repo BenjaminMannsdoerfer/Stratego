@@ -40,6 +40,7 @@ class Controller(var matchField:MatchField) extends Publisher {
         playerRed = playerRed.copy(player2, list.getCharacterList())
         playerList = List[Player](playerBlue,playerRed)
         nextState
+        publish(new PlayerChanged)
 
         "Hello " + player1 + " and " + player2 + "!\n" + "Set your figures automatically with (i) " +
           "or manually with (s row col figure)\n" +

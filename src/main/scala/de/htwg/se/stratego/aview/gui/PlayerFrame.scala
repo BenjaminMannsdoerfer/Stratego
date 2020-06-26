@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
-import de.htwg.se.stratego.controller.Controller
+import de.htwg.se.stratego.controller.{CellChanged, Controller, PlayerChanged}
 
 import scala.swing.event.ButtonClicked
 import scala.swing.{Button, FlowPanel, Frame, Label, Swing, TextField}
@@ -30,6 +30,13 @@ class PlayerFrame(controller:Controller) extends Frame{
       listenTo(controller)
       controller.handle(player1.text+ " "+ player2.text)
       controller.nextState
+      new SwingGui(controller)
+      visible = false
+      dispose()
+  }
+  reactions += {
+    case event: PlayerChanged     =>
+      //controller.nextState
       new SwingGui(controller)
       visible = false
       dispose()
