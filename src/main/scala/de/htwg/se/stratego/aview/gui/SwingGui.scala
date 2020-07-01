@@ -3,7 +3,7 @@ package de.htwg.se.stratego.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus}
+import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameFinished, GameStatus, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
@@ -192,9 +192,6 @@ class SwingGui(controller:Controller) extends Frame{
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
         controller.createEmptyMatchfield(matchFieldSize)
-        val playerFrame = new PlayerFrame(controller)
-        visible = false
-        dispose()
       })
       contents += new MenuItem(Action("Quit") {
         System.exit(0)
@@ -225,6 +222,11 @@ class SwingGui(controller:Controller) extends Frame{
 
   reactions += {
     case event: FieldChanged     => redraw
+    case event: GameFinished     => new PlayerFrame(controller)
+    case event: NewGame          =>
+      new PlayerFrame(controller)
+      visible = false
+      dispose()
   }
 
 

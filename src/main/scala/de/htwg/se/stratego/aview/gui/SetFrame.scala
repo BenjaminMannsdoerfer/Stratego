@@ -1,13 +1,18 @@
 package de.htwg.se.stratego.aview.gui
 
+import java.awt
+import java.awt.event.{KeyEvent, KeyListener}
+import java.nio.Buffer
+
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MachtfieldInitialized}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
-class SetFrame(controller:Controller) extends Frame{
+import scala.collection.mutable
+
+class SetFrame(controller:Controller) extends Frame {
 
   listenTo(controller)
 
@@ -17,7 +22,6 @@ class SetFrame(controller:Controller) extends Frame{
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
   var gameStatus: GameStatus = IDLE
-
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
@@ -45,6 +49,18 @@ class SetFrame(controller:Controller) extends Frame{
       controller.gameStatus=INIT
   }
 
+  val label = new Label {
+    text = "No click yet"
+  }
+  val a = new BoxPanel(Orientation.Vertical) {
+    listenTo(keys)
+    reactions += {
+      case KeyTyped(_, 'T', _, _) =>
+        print("test2")
+        new SwingGui(controller)
+    }
+  }
+
   val status = new TextField(controller.statusString, 20)
 
 
@@ -63,6 +79,7 @@ class SetFrame(controller:Controller) extends Frame{
     add(statusPanel, BorderPanel.Position.South)
   }
 
+  mainPanel.requestFocus()
   contents = mainPanel
 
   visible = true

@@ -34,56 +34,11 @@ class PlayerFrame(controller:Controller) extends Frame{
     case ButtonClicked(`next`) =>
         listenTo(controller)
         controller.handle(player1.text+ " "+ player2.text)
-        //controller.nextState
-      /*if (optionSet) {
-        controller.initMatchfield()
-        controller.handle("i")
-        controller.gameStatus=INIT
-      } else {
-
-      }*/
-
   }
   reactions += {
     case event: PlayerChanged     =>
-      //controller.nextState
-      //new SwingGui(controller)
       new SetFrame(controller)
       visible = false
       dispose()
   }
-
-
-
-  /*val initButton = new RadioButton{
-    text = "automatically"
-    selected = true
-  }
-
-  val setButton = new RadioButton{
-    text = "manually"
-  }
-
-  val radioButtons = List(initButton, setButton)
-  val radioPanel = new BoxPanel(Orientation.Vertical) {
-    contents ++= radioButtons
-    listenTo(initButton)
-    reactions += {
-      case ButtonClicked(`initButton`) =>
-        setButton.selected = false
-        optionSet=true
-    }
-    listenTo(setButton)
-    reactions += {
-      case ButtonClicked(`setButton`) =>
-        initButton.selected = false
-        optionSet=false
-    }
-  }
-  val playerPanel = new BorderPanel{
-    add(setPanel, BorderPanel.Position.North)
-    add(radioPanel, BorderPanel.Position.South)
-  }
-
-  contents = playerPanel*/
 }

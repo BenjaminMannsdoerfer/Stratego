@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerChanged, MachtfieldInitialized}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.{ControllerState, EnterPlayer}
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
@@ -55,7 +55,8 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
     gameStatus=NEW
-    publish(new FieldChanged)
+    publish(new NewGame)
+    state = EnterPlayer(this)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -72,7 +73,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       currentPlayerIndex=0
       nextState
-      publish(new FieldChanged)
+      publish(new GameFinished)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
@@ -98,6 +99,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
         if(game.rList.size == 0){
           currentPlayerIndex=nextPlayer
           nextState
+          publish(new MachtfieldInitialized)
         }
 
     }

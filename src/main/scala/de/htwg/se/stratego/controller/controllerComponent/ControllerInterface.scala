@@ -22,9 +22,11 @@ trait ControllerInterface extends Publisher{
 
 import scala.swing.event.Event
 
+class NewGame extends Event
 class FieldChanged extends Event
 class PlayerChanged extends Event
 class MachtfieldInitialized extends Event
+class GameFinished extends Event
 case class MatchFieldSizeChanged(newSize: Int) extends Event
 
 
