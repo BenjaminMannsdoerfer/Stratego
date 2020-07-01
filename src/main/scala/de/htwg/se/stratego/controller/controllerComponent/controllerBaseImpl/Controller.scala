@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, PlayerChanged, MachtfieldInitialized}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.{ControllerState, EnterPlayer}
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
@@ -46,8 +46,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
         publish(new PlayerChanged)
 
         "Hello " + player1 + " and " + player2 + "!\n" + "Set your figures automatically with (i) " +
-          "or manually with (s row col figure)\n" +
-          "Player " + playerList(currentPlayerIndex) + " it's your turn!"
+          "or manually with (s row col figure)\n"
 
       case _ => "Please enter the names like (player1 player2)"
     }
@@ -64,7 +63,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
     matchField = game.init()
     gameStatus=INIT
     nextState
-    publish(new FieldChanged)
+    publish(new MachtfieldInitialized)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 

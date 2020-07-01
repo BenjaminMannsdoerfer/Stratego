@@ -7,7 +7,7 @@ import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameSta
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
-class CellClicked(val row:Int, val column: Int) extends Event
+//class CellClicked(val row:Int, val column: Int) extends Event
 
 class SwingGui(controller:Controller) extends Frame{
 
@@ -19,9 +19,10 @@ class SwingGui(controller:Controller) extends Frame{
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
-  controller.initMatchfield()
+  //controller.initMatchfield()
+  //controller.handle("i")
   var gameStatus: GameStatus = IDLE
-  controller.gameStatus=INIT
+  //controller.gameStatus=INIT
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 

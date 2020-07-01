@@ -24,6 +24,7 @@ import scala.swing.event.Event
 
 class FieldChanged extends Event
 class PlayerChanged extends Event
+class MachtfieldInitialized extends Event
 case class MatchFieldSizeChanged(newSize: Int) extends Event
 
 

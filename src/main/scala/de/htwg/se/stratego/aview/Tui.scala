@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.aview
 
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MatchFieldSizeChanged, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MatchFieldSizeChanged, PlayerChanged, MachtfieldInitialized}
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.Reactor
@@ -24,6 +24,7 @@ class Tui(controller: Controller) extends Reactor {
     case event: MatchFieldSizeChanged => printTui
     case event: FieldChanged => printTui
     case event: PlayerChanged => "Player Changed"
+    case event: MachtfieldInitialized => "matchfield initialized"
   }
 
   def printTui: Unit = {
