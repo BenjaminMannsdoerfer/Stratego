@@ -6,6 +6,7 @@ import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameFinished, GameStatus, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.swing.JOptionPane
 
 //class CellClicked(val row:Int, val column: Int) extends Event
 
@@ -222,7 +223,10 @@ class SwingGui(controller:Controller) extends Frame{
 
   reactions += {
     case event: FieldChanged     => redraw
-    case event: GameFinished     => new PlayerFrame(controller)
+    case event: GameFinished     =>
+      JOptionPane.showMessageDialog(null, controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
+      visible = false
+      dispose()
     case event: NewGame          =>
       new PlayerFrame(controller)
       visible = false

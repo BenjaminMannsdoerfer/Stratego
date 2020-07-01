@@ -72,8 +72,9 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       currentPlayerIndex=0
-      nextState
       publish(new GameFinished)
+      nextState
+      createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
