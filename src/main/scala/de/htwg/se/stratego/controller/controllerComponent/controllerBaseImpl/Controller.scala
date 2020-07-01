@@ -71,16 +71,19 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
-      nextState
       currentPlayerIndex=0
+      nextState
+      publish(new FieldChanged)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
-    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
-    gameStatus = ATTACK
-    currentPlayerIndex= nextPlayer
-
-    publish(new FieldChanged)
+    if (matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
+      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
+      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
+      gameStatus = ATTACK
+      currentPlayerIndex= nextPlayer
+      publish(new FieldChanged)
+    }
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
@@ -111,9 +114,13 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   }
 
   def move(dir: Char, row:Int, col:Int): String = {
-    undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
-    currentPlayerIndex=nextPlayer
-    publish(new FieldChanged)
+    if (matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex) {
+        undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
+        if (!matchField.fields.field(row,col).isSet) {
+          currentPlayerIndex = nextPlayer
+          publish(new FieldChanged)
+        }
+      }
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 

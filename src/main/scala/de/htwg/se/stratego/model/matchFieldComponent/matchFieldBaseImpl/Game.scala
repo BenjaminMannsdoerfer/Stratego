@@ -214,13 +214,13 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       val enemyAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
       val wrongPlayerAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
       val attackToFarAway = if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) return strategy1
+      val unableToAttack = if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)) return strategy1
       val isFlagOrBomb = if(matchField.fields.field(rowA,colA).character.get.figure.value == 0 || matchField.fields.field(rowA,colA).character.get.figure.value == 11) return strategy1
       val minerAttackTheBomb = if(figureHasValue(matchField, rowA, colA) == 3 && figureHasValue(matchField, rowD, colD) == 11) return strategy6
       val attackFlag = if(figureHasValue(matchField,rowD, colD)==0) strategy5
       val spyAttackMarshal = if((figureHasValue(matchField, rowA,colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)) return strategy3
       val defenceIsStronger = if (figureHasValue(matchField, rowA,colA) < figureHasValue(matchField,rowD, colD)) return strategy7
       val attackIsStronger = if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) return strategy3
-      val unableToAttack = if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)) return strategy1
       val attackEqualsDefence = if(figureHasValue(matchField, rowA,colA) == figureHasValue(matchField,rowD, colD)) return strategy8
       matchField
     }

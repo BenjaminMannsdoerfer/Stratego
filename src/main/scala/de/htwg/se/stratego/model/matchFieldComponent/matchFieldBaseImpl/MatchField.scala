@@ -8,7 +8,7 @@ case class MatchField(fields: Matrix[Field]) extends MatchFieldInterface {
 
   def addChar(row: Int, col: Int, char: GameCharacter, colour: Colour.FigureCol): MatchField = copy(fields.updateField(row, col, Field(true, Some(char), Some(colour))))
 
-  def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
+  def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false,None,None)))
 
   def legend():String = {
     val welcome = "**********  STRATEGO  **********\n\n"
