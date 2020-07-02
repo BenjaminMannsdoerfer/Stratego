@@ -46,21 +46,31 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
     listenTo(keys)
     reactions += {
-      case KeyPressed(_, Key.F, _, _) =>
-        println("pressed F")
-        controller.handle("s" + r + c + "F")
+
+      case KeyPressed(_, Key.B, _, _) =>
+        controller.handle("s" + r + c + "B")
+      case KeyPressed(_, Key.M, _, _) =>
+        controller.handle("s" + r + c + "M")
       case KeyPressed(_, Key.Key9, _, _) =>
-        println("pressed 9")
         controller.handle("s" + r + c + "9")
       case KeyPressed(_, Key.Key8, _, _) =>
-        println("pressed 8")
         controller.handle("s" + r + c + "8")
+      case KeyPressed(_, Key.Key7, _, _) =>
+        controller.handle("s" + r + c + "7")
       case KeyPressed(_, Key.Key6, _, _) =>
-        println("pressed 6")
         controller.handle("s" + r + c + "6")
+      case KeyPressed(_, Key.Key5, _, _) =>
+        controller.handle("s" + r + c + "5")
+      case KeyPressed(_, Key.Key4, _, _) =>
+        controller.handle("s" + r + c + "4")
+      case KeyPressed(_, Key.Key3, _, _) =>
+        controller.handle("s" + r + c + "3")
+      case KeyPressed(_, Key.Key2, _, _) =>
+        controller.handle("s" + r + c + "2")
       case KeyPressed(_, Key.Key1, _, _) =>
-        println("pressed 1")
         controller.handle("s" + r + c + "1")
+      case KeyPressed(_, Key.F, _, _) =>
+        controller.handle("s" + r + c + "F")
     }
   }
 

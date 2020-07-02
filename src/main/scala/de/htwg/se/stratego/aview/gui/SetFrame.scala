@@ -120,5 +120,6 @@ class SetFrame(controller:ControllerInterface) extends Frame {
 
       new PlayerFrame(controller)
   }
-  size = new Dimension(800, 600)
+  pack()
+  //size = new Dimension(800, 600)
 }

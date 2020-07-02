@@ -197,6 +197,7 @@ class SwingGui(controller:ControllerInterface) extends Frame{
   }
 
 
-  size = new Dimension(800, 600)
+  pack()
+  //size = new Dimension(800, 600)
 
 }
