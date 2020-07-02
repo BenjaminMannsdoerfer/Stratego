@@ -31,7 +31,7 @@ class GameSpec extends WordSpec with Matchers {
     val game10 = matchFieldBaseImpl.Game(playerBlue10, playerRed10, 10, matchField10)
     "created with two Players and a empty Matchfield" should {
       "fill the Matchfield with Characters" in {
-        game.init().toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game.init().toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  \u001B[0;34m9\u001B[0m  |  \u001B[0;34m8\u001B[0m  |  \u001B[0;34m6\u001B[0m  |  \u001B[0;34mF\u001B[0m  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  \u001B[0;31m9\u001B[0m  |  \u001B[0;31m8\u001B[0m  |  \u001B[0;31m6\u001B[0m  |  \u001B[0;31mF\u001B[0m  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
 
