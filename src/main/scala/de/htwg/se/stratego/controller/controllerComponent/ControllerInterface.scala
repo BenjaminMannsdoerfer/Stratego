@@ -35,6 +35,8 @@ class FieldChanged extends Event
 class PlayerChanged extends Event
 class MachtfieldInitialized extends Event
 class GameFinished extends Event
+class PlayerSwitch extends Event
 case class MatchFieldSizeChanged(newSize: Int) extends Event
+
 
 

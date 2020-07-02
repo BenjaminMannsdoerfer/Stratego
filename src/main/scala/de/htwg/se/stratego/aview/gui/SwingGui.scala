@@ -3,7 +3,7 @@ package de.htwg.se.stratego.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.JOptionPane
@@ -193,6 +193,7 @@ class SwingGui(controller:ControllerInterface) extends Frame{
     case event: NewGame          =>
       this.close()
       new PlayerFrame(controller)
+    case event: PlayerSwitch => redraw
   }
 
 

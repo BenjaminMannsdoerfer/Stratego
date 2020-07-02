@@ -2,7 +2,7 @@ package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject}
 import de.htwg.se.stratego.StrategoModule
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
@@ -85,18 +85,21 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK
       currentPlayerIndex= nextPlayer
+      publish(new PlayerSwitch)
       publish(new FieldChanged)
     }
-    playerList(currentPlayerIndex) + " it's your turn!"
+    ""
   }
 
   def set(row:Int, col:Int, charac:String): String = {
     currentPlayerIndex match {
       case 0 =>
+        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
         if(game.bList.size == 0){
           currentPlayerIndex=nextPlayer
+          publish(new PlayerSwitch)
         }
-        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+
       case 1 =>
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
         if(game.rList.size == 0){
@@ -112,9 +115,9 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
         playerList(currentPlayerIndex) + " it's your turn!"
     }
     if(game.bList.size == 0){
-      return playerList(1) + " it's your turn!"
+      return ""
     }
-    playerList(currentPlayerIndex) + " it's your turn!"
+    ""
   }
 
   def move(dir: Char, row:Int, col:Int): String = {
@@ -123,9 +126,10 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
         if (!matchField.fields.field(row,col).isSet) {
           currentPlayerIndex = nextPlayer
           publish(new FieldChanged)
+          publish(new PlayerSwitch)
         }
       }
-    playerList(currentPlayerIndex) + " it's your turn!"
+    ""
   }
 
   def matchFieldToString: String = matchField.toString

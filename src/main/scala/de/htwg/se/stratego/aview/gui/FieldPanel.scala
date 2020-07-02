@@ -2,7 +2,7 @@ package de.htwg.se.stratego.aview.gui
 
 import java.awt.{Color, Font}
 
-import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.FlowPanel.Alignment
@@ -79,7 +79,19 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   def redraw ={
     contents.clear()
 
-    figureText.text = fieldText(row,col)
+    if(controller.getField.field(row,col).isSet){
+      if(controller.getField.field(row, col).colour.get.value == controller.currentPlayerIndex){
+        figureText.text=fieldText(row,col)
+      } else{
+        figureText.text=""
+      }
+    }else{
+      figureText.text=""
+    }
+
+    //figureText.text=fieldText(row,col)
+
+
 
     if(controller.getField.field(row,col).isSet) {
       if (controller.getField.field(row, col).colour.get.value == 0) {
@@ -94,5 +106,6 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
     contents += field
     repaint
   }
+
 
 }
