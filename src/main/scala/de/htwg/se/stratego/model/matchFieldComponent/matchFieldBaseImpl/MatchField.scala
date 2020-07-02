@@ -44,7 +44,11 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
           col <- 0 until col }
     {
       if (fields.field(row, col).isSet) {
-        matchField += "|  " + fields.field(row,col) + "  "
+        if (fields.field(row,col).colour.get.value==0) {
+          matchField += "|  " + "\033[0;34m" + fields.field(row,col) + Console.RESET + "  "
+        } else {
+          matchField += "|  " + "\033[0;31m" + fields.field(row,col) + Console.RESET + "  "
+        }
       } else {
         matchField += "|     "
       }
