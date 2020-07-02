@@ -54,6 +54,23 @@ class SwingGui(controller:Controller) extends Frame{
     text = "\u2190"
   }
 
+  def attackOrMove(direction: String, rowD:Int, colD:Int):Unit = {
+    fields.foreach(r => for(c<- r){
+      if(c.isClicked) {
+        if(optionAttack){
+          controller.handle("a"+(c.r).toString+(c.c).toString+(c.r+rowD).toString+(c.c+colD).toString)
+          gameStatus=ATTACK
+          c.isClicked=false
+          repaint
+        }else{
+          controller.handle("m" + direction + c.r.toString+ c.c.toString)
+          c.isClicked= false
+          repaint
+        }
+      }
+    })
+  }
+
   def directionsPanel = new BorderPanel{
 
     add(upButton, BorderPanel.Position.North)
@@ -68,70 +85,13 @@ class SwingGui(controller:Controller) extends Frame{
     listenTo(rightButton)
     reactions += {
       case ButtonClicked(`upButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.handle("a"+c.r.toString+c.c.toString+(c.r-1).toString+c.c.toString)
-                gameStatus=ATTACK
-                c.isClicked=false
-                repaint
-              }else{
-                controller.handle("mu"+ c.r.toString+ c.c.toString)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("u", -1,0)
       case ButtonClicked(`downButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.handle("a"+ c.r.toString+c.c.toString+(c.r+1).toString+c.c.toString)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.handle("md"+ c.r.toString+ c.c.toString)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("d",1,0)
       case ButtonClicked(`leftButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.handle("a"+ c.r.toString+c.c.toString+c.r.toString+(c.c-1).toString)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.handle("ml"+ c.r.toString+ c.c.toString)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("l",0,-1)
       case ButtonClicked(`rightButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.handle("a"+c.r.toString+c.c.toString+c.r.toString+(c.c+1).toString)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.handle("mr"+ c.r.toString+ c.c.toString)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("r", 0,1)
     }
   }
 
