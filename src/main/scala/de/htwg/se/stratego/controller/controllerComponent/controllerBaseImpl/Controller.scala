@@ -2,7 +2,6 @@ package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
-import de.htwg.se.stratego.controller.{ControllerState, EnterPlayer}
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player

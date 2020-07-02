@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.controller
 
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, SetState}
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
 import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}

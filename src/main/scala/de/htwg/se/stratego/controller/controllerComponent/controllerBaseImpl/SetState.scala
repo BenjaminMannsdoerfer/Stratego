@@ -1,6 +1,4 @@
-package de.htwg.se.stratego.controller
-
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 case class SetState(controller: Controller) extends ControllerState{
   override def handle(input: String): String = fixInput(input)
