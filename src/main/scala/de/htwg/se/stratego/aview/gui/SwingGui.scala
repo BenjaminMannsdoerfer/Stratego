@@ -55,6 +55,7 @@ class SwingGui(controller:Controller) extends Frame{
   }
 
   def directionsPanel = new BorderPanel{
+
     add(upButton, BorderPanel.Position.North)
     add(downButton, BorderPanel.Position.South)
     add(rightButton, BorderPanel.Position.East)
@@ -71,12 +72,12 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r-1,c.c)
+                controller.handle("a"+c.r.toString+c.c.toString+(c.r-1).toString+c.c.toString)
                 gameStatus=ATTACK
                 c.isClicked=false
                 repaint
               }else{
-                controller.move('u', c.r, c.c)
+                controller.handle("mu"+ c.r.toString+ c.c.toString)
                 c.isClicked= false
                 repaint
               }
@@ -88,11 +89,11 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r+1,c.c)
+                controller.handle("a"+ c.r.toString+c.c.toString+(c.r+1).toString+c.c.toString)
                 c.isClicked=false
                 repaint
               }else{
-                controller.move('d', c.r, c.c)
+                controller.handle("md"+ c.r.toString+ c.c.toString)
                 c.isClicked= false
                 repaint
               }
@@ -104,11 +105,11 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c-1)
+                controller.handle("a"+ c.r.toString+c.c.toString+c.r.toString+(c.c-1).toString)
                 c.isClicked=false
                 repaint
               }else{
-                controller.move('l', c.r, c.c)
+                controller.handle("ml"+ c.r.toString+ c.c.toString)
                 c.isClicked= false
                 repaint
               }
@@ -120,11 +121,11 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c+1)
+                controller.handle("a"+c.r.toString+c.c.toString+c.r.toString+(c.c+1).toString)
                 c.isClicked=false
                 repaint
               }else{
-                controller.move('r', c.r, c.c)
+                controller.handle("mr"+ c.r.toString+ c.c.toString)
                 c.isClicked= false
                 repaint
               }
@@ -227,9 +228,10 @@ class SwingGui(controller:Controller) extends Frame{
       JOptionPane.showMessageDialog(null, controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
       visible = false
       dispose()
+      close()
+      closeOperation()
     case event: NewGame          =>
-      visible = false
-      dispose()
+      this.close()
       new PlayerFrame(controller)
   }
 

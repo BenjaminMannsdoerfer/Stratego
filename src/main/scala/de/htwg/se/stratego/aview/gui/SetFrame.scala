@@ -12,6 +12,7 @@ import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Con
 
 class SetFrame(controller:Controller) extends Frame {
 
+
   listenTo(controller)
 
   title = "Stratego"
@@ -47,17 +48,6 @@ class SetFrame(controller:Controller) extends Frame {
       controller.gameStatus=INIT
   }
 
-  val label = new Label {
-    text = "No click yet"
-  }
-  val a = new BoxPanel(Orientation.Vertical) {
-    listenTo(keys)
-    reactions += {
-      case KeyTyped(_, 'T', _, _) =>
-        print("test2")
-        new SwingGui(controller)
-    }
-  }
 
   val status = new TextField(controller.statusString, 20)
 
@@ -124,7 +114,11 @@ class SetFrame(controller:Controller) extends Frame {
       new SwingGui(controller)
     case event: NewGame =>
       visible = false
-      dispose()
+      this.close()
+    case event: NewGame =>
+      new PlayerFrame(controller)
+      this.close()
+
       new PlayerFrame(controller)
   }
   size = new Dimension(800, 600)

@@ -55,8 +55,8 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
     gameStatus=NEW
-    publish(new NewGame)
     state = EnterPlayer(this)
+    publish(new NewGame)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -106,7 +106,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
     }
     publish(new FieldChanged)
     if(game.rList.size == 0){
-      return "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
+      return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
     }
     if(game.bList.size == 0){

@@ -38,7 +38,7 @@ class PlayerFrame(controller:Controller) extends Frame{
   reactions += {
     case event: PlayerChanged     =>
       visible = false
-      dispose()
+      this.close()
       new SetFrame(controller)
   }
 }
