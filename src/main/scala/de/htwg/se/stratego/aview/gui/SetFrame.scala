@@ -6,11 +6,9 @@ import java.nio.Buffer
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MachtfieldInitialized}
+import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
-
-import scala.collection.mutable
 
 class SetFrame(controller:Controller) extends Frame {
 
@@ -90,9 +88,6 @@ class SetFrame(controller:Controller) extends Frame {
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
         controller.createEmptyMatchfield(matchFieldSize)
-        val playerFrame = new PlayerFrame(controller)
-        visible = false
-        dispose()
       })
       contents += new MenuItem(Action("Quit") {
         System.exit(0)
@@ -123,12 +118,14 @@ class SetFrame(controller:Controller) extends Frame {
 
   reactions += {
     case event: FieldChanged     => redraw
-    case event: MachtfieldInitialized => new SwingGui(controller)
+    case event: MachtfieldInitialized =>
       visible = false
       dispose()
+      new SwingGui(controller)
+    case event: NewGame =>
+      visible = false
+      dispose()
+      new PlayerFrame(controller)
   }
-
-
   size = new Dimension(800, 600)
-
 }

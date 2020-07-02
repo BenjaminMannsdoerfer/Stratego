@@ -104,7 +104,7 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c+1)
+                controller.attack(c.r,c.c,c.r,c.c-1)
                 c.isClicked=false
                 repaint
               }else{
@@ -120,7 +120,7 @@ class SwingGui(controller:Controller) extends Frame{
           for(c<- r){
             if(c.isClicked){
               if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c-1)
+                controller.attack(c.r,c.c,c.r,c.c+1)
                 c.isClicked=false
                 repaint
               }else{
@@ -228,9 +228,9 @@ class SwingGui(controller:Controller) extends Frame{
       visible = false
       dispose()
     case event: NewGame          =>
-      new PlayerFrame(controller)
       visible = false
       dispose()
+      new PlayerFrame(controller)
   }
 
 

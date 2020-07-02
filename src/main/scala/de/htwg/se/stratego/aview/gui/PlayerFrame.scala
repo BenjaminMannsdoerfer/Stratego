@@ -4,7 +4,7 @@ import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.PlayerChanged
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, WindowClosing}
 import scala.swing.{BorderPanel, BoxPanel, Button, FlowPanel, Frame, Label, Orientation, RadioButton, Swing, TextField}
 
 class PlayerFrame(controller:Controller) extends Frame{
@@ -37,8 +37,8 @@ class PlayerFrame(controller:Controller) extends Frame{
   }
   reactions += {
     case event: PlayerChanged     =>
-      new SetFrame(controller)
       visible = false
       dispose()
+      new SetFrame(controller)
   }
 }

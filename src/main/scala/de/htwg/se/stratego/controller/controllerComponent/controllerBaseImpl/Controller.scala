@@ -71,8 +71,8 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
-      currentPlayerIndex=0
       publish(new GameFinished)
+      currentPlayerIndex=0
       nextState
       createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
