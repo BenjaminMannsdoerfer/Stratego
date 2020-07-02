@@ -1,6 +1,10 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-case class Matrix[Field](rows: Vector[Vector[Field]]) {
+import com.google.inject.Inject
+
+
+case class Matrix[Field] (rows: Vector[Vector[Field]]) {
+
 
   def this(rowSize: Int, colSize: Int, field: Field) = this(Vector.tabulate(rowSize, colSize) { (row, col) => field })
 

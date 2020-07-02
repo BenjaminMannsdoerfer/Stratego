@@ -8,5 +8,6 @@ trait MatchFieldInterface {
   def removeChar(row:Int,col:Int):MatchFieldInterface
   def legend:String
   def frame(row:Int):String
+  def createNewMatchField:MatchFieldInterface
 
 }

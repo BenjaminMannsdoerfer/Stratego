@@ -1,5 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
+import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.FlowPanel.Alignment
@@ -7,7 +8,7 @@ import scala.swing.Swing.LineBorder
 import scala.swing.event.{ButtonClicked, Key, KeyPressed, MouseClicked}
 import scala.swing.{BorderPanel, BoxPanel, Button, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
 
-class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel {
+class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends FlowPanel {
 
   var fieldText = " "
   var isClicked = false
@@ -15,8 +16,8 @@ class FieldPanel (row:Int, col: Int, controller: Controller) extends FlowPanel {
   val c = col
 
   def fieldText(row:Int, col:Int): String ={
-    if(controller.matchField.fields.field(row,col).isSet){
-      fieldText= controller.matchField.fields.field(row, col).character.get.figure.name
+    if(controller.getField.field(row,col).isSet){
+      fieldText= controller.getField.field(row, col).character.get.figure.name
       fieldText
     }
     else " "

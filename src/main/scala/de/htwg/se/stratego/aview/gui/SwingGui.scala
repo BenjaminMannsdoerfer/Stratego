@@ -3,19 +3,19 @@ package de.htwg.se.stratego.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameFinished, GameStatus, NewGame}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.swing.JOptionPane
 
 //class CellClicked(val row:Int, val column: Int) extends Event
 
-class SwingGui(controller:Controller) extends Frame{
+class SwingGui(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
   title = "Stratego"
-  val matchFieldSize = controller.matchField.fields.matrixSize
+  val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)

@@ -1,17 +1,20 @@
 package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
 import de.htwg.se.stratego.model.playerComponent.Player
 import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
 
-class Controller(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
+class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
+  val injector = Guice.createInjector(new StrategoModule)
 
   val list = CharacterList(matchField.fields.matrixSize)
   var playerBlue = Player("PlayerBlue", list.getCharacterList())
@@ -149,5 +152,7 @@ class Controller(var matchField:MatchFieldInterface) extends ControllerInterface
   def statusString:String = GameStatus.getMessage(gameStatus)
   def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
 
+  override def getSize: Int = matchField.fields.matrixSize
 
+  override def getField: Matrix[Field] = matchField.fields
 }

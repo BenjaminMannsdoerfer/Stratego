@@ -1,5 +1,9 @@
 package de.htwg.se.stratego.controller.controllerComponent
 
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus.GameStatus
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Field, MatchField, Matrix}
+import de.htwg.se.stratego.model.playerComponent.Player
+
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher{
@@ -17,7 +21,11 @@ trait ControllerInterface extends Publisher{
   def nextState:Unit
   def statusString:String
   def nextPlayer:Int
-
+  def getSize:Int
+  def gameStatus:GameStatus
+  def playerList:List[Player]
+  def currentPlayerIndex:Int
+  def getField:Matrix[Field]
 }
 
 import scala.swing.event.Event

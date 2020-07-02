@@ -1,14 +1,14 @@
 package de.htwg.se.stratego.aview
 
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, MatchFieldSizeChanged, NewGame, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, MatchFieldSizeChanged, NewGame, PlayerChanged}
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.Reactor
 
-class Tui(controller: Controller) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
-  val size = controller.matchField.fields.matrixSize
+  val size = controller.getSize
 
   def processInputLine(input: String):String = {
     input match {

@@ -6,17 +6,17 @@ import java.nio.Buffer
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.stratego.controller.controllerComponent.{FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
-class SetFrame(controller:Controller) extends Frame {
+class SetFrame(controller:ControllerInterface) extends Frame {
 
 
   listenTo(controller)
 
   title = "Stratego"
-  val matchFieldSize = controller.matchField.fields.matrixSize
+  val matchFieldSize = controller.getSize
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
@@ -43,9 +43,8 @@ class SetFrame(controller:Controller) extends Frame {
   listenTo(initializeButton)
   reactions += {
     case ButtonClicked(`initializeButton`) =>
-      controller.initMatchfield()
       controller.handle("i")
-      controller.gameStatus=INIT
+      //controller.gameStatus=INIT
   }
 
 

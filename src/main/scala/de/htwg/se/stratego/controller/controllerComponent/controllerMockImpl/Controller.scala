@@ -1,8 +1,10 @@
 package de.htwg.se.stratego.controller.controllerComponent.controllerMockImpl
 
-import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Field, MatchField, Matrix}
+import de.htwg.se.stratego.model.playerComponent.Player
 
 class Controller(var matchField: MatchFieldInterface) extends ControllerInterface{
   override def handle(input: String): String = ""
@@ -32,4 +34,14 @@ class Controller(var matchField: MatchFieldInterface) extends ControllerInterfac
   override def statusString: String = ""
 
   override def nextPlayer: Int = 0
+
+  override def getSize: Int = 0
+
+  override def gameStatus: GameStatus = IDLE
+
+  override def playerList: List[Player] = List[Player]()
+
+  override def currentPlayerIndex: Int = 0
+
+  override def getField: Matrix[Field] = ???
 }

@@ -1,10 +1,14 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
+import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 
-case class MatchField(fields: Matrix[Field]) extends MatchFieldInterface {
+case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterface {
 
-  def this(rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
+  def this (rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
+
+  //val injector = Guice.createInjector(new StrategoModule)
 
   def addChar(row: Int, col: Int, char: GameCharacter, colour: Colour.FigureCol): MatchField = copy(fields.updateField(row, col, Field(true, Some(char), Some(colour))))
 
@@ -52,4 +56,6 @@ case class MatchField(fields: Matrix[Field]) extends MatchFieldInterface {
     matchField += legend()
     matchField
   }
+
+  override def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
 }

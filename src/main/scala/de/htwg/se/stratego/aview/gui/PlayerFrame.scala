@@ -1,13 +1,13 @@
 package de.htwg.se.stratego.aview.gui
 
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
-import de.htwg.se.stratego.controller.controllerComponent.PlayerChanged
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerChanged}
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.event.{ButtonClicked, WindowClosing}
 import scala.swing.{BorderPanel, BoxPanel, Button, FlowPanel, Frame, Label, Orientation, RadioButton, Swing, TextField}
 
-class PlayerFrame(controller:Controller) extends Frame{
+class PlayerFrame(controller:ControllerInterface) extends Frame{
   listenTo(controller)
   title = "Stratego"
 
