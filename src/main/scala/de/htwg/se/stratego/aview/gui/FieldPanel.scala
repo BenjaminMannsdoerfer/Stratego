@@ -1,5 +1,7 @@
 package de.htwg.se.stratego.aview.gui
 
+import java.awt.{Color, Font}
+
 import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
@@ -28,7 +30,19 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   val figureText = new Button{
     text = fieldText(row,col)
     font = new Font("Verdana", 1, 20)
+    foreground = Color.WHITE
+
     preferredSize = new Dimension(51, 51)
+
+    if(controller.getField.field(row,col).isSet) {
+      if (controller.getField.field(row, col).colour.get.value == 0) {
+        background = Color.BLUE
+      } else if (controller.getField.field(row, col).colour.get.value == 1) {
+        background = Color.RED
+      }
+      }else{
+        background = Color.GRAY
+    }
 
     listenTo(keys)
     reactions += {
@@ -64,7 +78,19 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
   def redraw ={
     contents.clear()
+
     figureText.text = fieldText(row,col)
+
+    if(controller.getField.field(row,col).isSet) {
+      if (controller.getField.field(row, col).colour.get.value == 0) {
+        figureText.background = Color.BLUE
+      } else if (controller.getField.field(row, col).colour.get.value == 1) {
+        figureText.background = Color.RED
+      }
+    }else{
+      figureText.background = Color.GRAY
+    }
+
     contents += field
     repaint
   }
