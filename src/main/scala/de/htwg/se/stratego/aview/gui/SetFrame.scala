@@ -101,7 +101,6 @@ class SetFrame(controller:ControllerInterface) extends Frame {
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
     status.text = controller.statusString
-
     repaint
   }
 
@@ -109,15 +108,12 @@ class SetFrame(controller:ControllerInterface) extends Frame {
     case event: FieldChanged     => redraw
     case event: MachtfieldInitialized =>
       visible = false
-      dispose()
-      new SwingGui(controller)
+      deafTo(controller)
+      close()
+      new GameFrame(controller)
     case event: NewGame =>
-      visible = false
-      this.close()
-    case event: NewGame =>
-      new PlayerFrame(controller)
-      this.close()
-
+      deafTo(controller)
+      close()
       new PlayerFrame(controller)
   }
   pack()

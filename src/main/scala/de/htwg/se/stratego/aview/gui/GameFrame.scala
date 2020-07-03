@@ -10,7 +10,7 @@ import javax.swing.JOptionPane
 
 //class CellClicked(val row:Int, val column: Int) extends Event
 
-class SwingGui(controller:ControllerInterface) extends Frame{
+class GameFrame(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
@@ -187,11 +187,12 @@ class SwingGui(controller:ControllerInterface) extends Frame{
     case event: GameFinished     =>
       JOptionPane.showMessageDialog(null, controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
       visible = false
-      dispose()
+      deafTo(controller)
       close()
-      closeOperation()
+      new PlayerFrame(controller)
     case event: NewGame          =>
-      this.close()
+      deafTo(controller)
+      close()
       new PlayerFrame(controller)
     case event: PlayerSwitch => redraw
   }

@@ -38,7 +38,8 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   reactions += {
     case event: PlayerChanged     =>
       visible = false
-      this.close()
+      deafTo(controller)
+      close()
       new SetFrame(controller)
   }
 }
