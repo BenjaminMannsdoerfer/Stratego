@@ -8,8 +8,6 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def this (rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
 
-  //val injector = Guice.createInjector(new StrategoModule)
-
   def addChar(row: Int, col: Int, char: GameCharacter, colour: Colour.FigureCol): MatchField = copy(fields.updateField(row, col, Field(true, Some(char), Some(colour))))
 
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false,None,None)))
@@ -32,7 +30,7 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
 
-  override def toString:String = {
+   override def toString:String = {
     val col = fields.matrixSize
     val row = fields.matrixSize
     val n = fields.matrixSize - 1

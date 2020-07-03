@@ -9,5 +9,4 @@ trait MatchFieldInterface {
   def legend:String
   def frame(row:Int):String
   def createNewMatchField:MatchFieldInterface
-
 }
