@@ -30,6 +30,8 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
     combine
   }
 
+  def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
+
   override def toString:String = {
     val col = fields.matrixSize
     val row = fields.matrixSize
@@ -61,5 +63,4 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
     matchField
   }
 
-  override def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
 }
