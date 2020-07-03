@@ -4,6 +4,7 @@ import com.google.inject.{Guice, Inject}
 import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
 import de.htwg.se.stratego.model.playerComponent.Player
@@ -15,6 +16,7 @@ import scala.swing.Publisher
 class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
   val injector = Guice.createInjector(new StrategoModule)
+  val fileIO = injector.getInstance(classOf[FileIOInterface])
 
   val list = CharacterList(matchField.fields.matrixSize)
   var playerBlue = Player("PlayerBlue", list.getCharacterList())
@@ -159,4 +161,18 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   override def getSize: Int = matchField.fields.matrixSize
 
   override def getField: Matrix[Field] = matchField.fields
+
+  override def load: String = {
+    matchField = fileIO.load
+    //gameStatus= LOADED
+    publish(new FieldChanged)
+    "load"
+  }
+
+  override def save: String = {
+    fileIO.save(matchField)
+    //gameStatus = SAVED
+    publish(new FieldChanged)
+    "save"
+  }
 }

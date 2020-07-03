@@ -26,7 +26,11 @@ trait ControllerInterface extends Publisher{
   def playerList:List[Player]
   def currentPlayerIndex:Int
   def getField:Matrix[Field]
+  def load:String
+  def save:String
 }
+
+
 
 import scala.swing.event.Event
 

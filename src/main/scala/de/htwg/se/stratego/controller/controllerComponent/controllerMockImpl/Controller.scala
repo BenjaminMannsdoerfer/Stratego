@@ -44,4 +44,8 @@ class Controller(var matchField: MatchFieldInterface) extends ControllerInterfac
   override def currentPlayerIndex: Int = 0
 
   override def getField: Matrix[Field] = ???
+
+  override def load: String = "load"
+
+  override def save: String = "save"
 }

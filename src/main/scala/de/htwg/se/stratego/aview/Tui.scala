@@ -16,6 +16,8 @@ class Tui(controller: ControllerInterface) extends Reactor {
       case "n" => controller.createEmptyMatchfield(size)
       case "z" => controller.undo
       case "y" => controller.redo
+      case "s" => controller.save.toString
+      case "l" => controller.load.toString
       case _ => controller.handle(input)
     }
   }
