@@ -1,11 +1,13 @@
 package de.htwg.se.stratego.aview.gui
 
-import de.htwg.se.stratego.controller.{CellChanged, Controller, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerChanged}
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
-import scala.swing.event.ButtonClicked
-import scala.swing.{Button, FlowPanel, Frame, Label, Swing, TextField}
+import scala.swing.event.{ButtonClicked, WindowClosing}
+import scala.swing.{BorderPanel, BoxPanel, Button, FlowPanel, Frame, Label, Orientation, RadioButton, Swing, TextField}
 
-class PlayerFrame(controller:Controller) extends Frame{
+class PlayerFrame(controller:ControllerInterface) extends Frame{
   listenTo(controller)
   title = "Stratego"
 
@@ -15,6 +17,9 @@ class PlayerFrame(controller:Controller) extends Frame{
   object next extends Button("next")
 
   visible= true
+
+  var optionSet = true
+  var gameStatus: GameStatus = IDLE
 
   contents = new FlowPanel{
     contents += new Label("Set your name Player 1:")
@@ -27,18 +32,13 @@ class PlayerFrame(controller:Controller) extends Frame{
   listenTo(next)
   reactions += {
     case ButtonClicked(`next`) =>
-      listenTo(controller)
-      controller.handle(player1.text+ " "+ player2.text)
-      controller.nextState
-      new SwingGui(controller)
-      visible = false
-      dispose()
+        listenTo(controller)
+        controller.handle(player1.text+ " "+ player2.text)
   }
   reactions += {
     case event: PlayerChanged     =>
-      //controller.nextState
-      new SwingGui(controller)
       visible = false
-      dispose()
+      this.close()
+      new SetFrame(controller)
   }
 }

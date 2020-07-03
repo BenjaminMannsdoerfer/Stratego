@@ -3,24 +3,27 @@ package de.htwg.se.stratego.aview.gui
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
-import de.htwg.se.stratego.controller.Controller
-import de.htwg.se.stratego.controller.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.swing.JOptionPane
 
-class CellClicked(val row:Int, val column: Int) extends Event
+//class CellClicked(val row:Int, val column: Int) extends Event
 
-class SwingGui(controller:Controller) extends Frame{
+class SwingGui(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
   title = "Stratego"
-  val matchFieldSize = controller.matchField.fields.matrixSize
+  val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
-  controller.initMatchfield()
+  //controller.initMatchfield()
+  //controller.handle("i")
   var gameStatus: GameStatus = IDLE
-  controller.gameStatus=INIT
+  //controller.gameStatus=INIT
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
@@ -51,7 +54,25 @@ class SwingGui(controller:Controller) extends Frame{
     text = "\u2190"
   }
 
+  def attackOrMove(direction: String, rowD:Int, colD:Int):Unit = {
+    fields.foreach(r => for(c<- r){
+      if(c.isClicked) {
+        if(optionAttack){
+          controller.handle("a"+(c.r).toString+(c.c).toString+(c.r+rowD).toString+(c.c+colD).toString)
+          gameStatus=ATTACK
+          c.isClicked=false
+          repaint
+        }else{
+          controller.handle("m" + direction + c.r.toString+ c.c.toString)
+          c.isClicked= false
+          repaint
+        }
+      }
+    })
+  }
+
   def directionsPanel = new BorderPanel{
+
     add(upButton, BorderPanel.Position.North)
     add(downButton, BorderPanel.Position.South)
     add(rightButton, BorderPanel.Position.East)
@@ -64,70 +85,13 @@ class SwingGui(controller:Controller) extends Frame{
     listenTo(rightButton)
     reactions += {
       case ButtonClicked(`upButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.attack(c.r,c.c,c.r-1,c.c)
-                gameStatus=ATTACK
-                c.isClicked=false
-                repaint
-              }else{
-                controller.move('u', c.r, c.c)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("u", -1,0)
       case ButtonClicked(`downButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.attack(c.r,c.c,c.r+1,c.c)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.move('d', c.r, c.c)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("d",1,0)
       case ButtonClicked(`leftButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c+1)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.move('l', c.r, c.c)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("l",0,-1)
       case ButtonClicked(`rightButton`) =>
-        for(r<- fields){
-          for(c<- r){
-            if(c.isClicked){
-              if(optionAttack){
-                controller.attack(c.r,c.c,c.r,c.c-1)
-                c.isClicked=false
-                repaint
-              }else{
-                controller.move('r', c.r, c.c)
-                c.isClicked= false
-                repaint
-              }
-            }
-          }
-        }
+        attackOrMove("r", 0,1)
     }
   }
 
@@ -190,9 +154,6 @@ class SwingGui(controller:Controller) extends Frame{
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
         controller.createEmptyMatchfield(matchFieldSize)
-        val playerFrame = new PlayerFrame(controller)
-        visible = false
-        dispose()
       })
       contents += new MenuItem(Action("Quit") {
         System.exit(0)
@@ -222,10 +183,21 @@ class SwingGui(controller:Controller) extends Frame{
   }
 
   reactions += {
-    case event: CellChanged     => redraw
+    case event: FieldChanged     => redraw
+    case event: GameFinished     =>
+      JOptionPane.showMessageDialog(null, controller.playerList(controller.currentPlayerIndex) + " you have won the game!")
+      visible = false
+      dispose()
+      close()
+      closeOperation()
+    case event: NewGame          =>
+      this.close()
+      new PlayerFrame(controller)
+    case event: PlayerSwitch => redraw
   }
 
 
-  size = new Dimension(800, 600)
+  pack()
+  //size = new Dimension(800, 600)
 
 }

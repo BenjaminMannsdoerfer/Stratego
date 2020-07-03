@@ -1,13 +1,16 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
+import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.stratego.StrategoModule
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 
-case class MatchField(fields: Matrix[Field]) {
+case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterface {
 
-  def this(rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
+  def this (rowSize: Int, colSize: Int, isSet: Boolean) = this(new Matrix[Field](rowSize, colSize, Field(isSet)))
 
   def addChar(row: Int, col: Int, char: GameCharacter, colour: Colour.FigureCol): MatchField = copy(fields.updateField(row, col, Field(true, Some(char), Some(colour))))
 
-  def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false)))
+  def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false,None,None)))
 
   def legend():String = {
     val welcome = "**********  STRATEGO  **********\n\n"
@@ -25,7 +28,9 @@ case class MatchField(fields: Matrix[Field]) {
     combine
   }
 
-  override def toString:String = {
+  def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
+
+   override def toString:String = {
     val col = fields.matrixSize
     val row = fields.matrixSize
     val n = fields.matrixSize - 1
@@ -39,7 +44,11 @@ case class MatchField(fields: Matrix[Field]) {
           col <- 0 until col }
     {
       if (fields.field(row, col).isSet) {
-        matchField += "|  " + fields.field(row,col) + "  "
+        if (fields.field(row,col).colour.get.value==0) {
+          matchField += "|  " + "\033[0;34m" + fields.field(row,col) + Console.RESET + "  "
+        } else {
+          matchField += "|  " + "\033[0;31m" + fields.field(row,col) + Console.RESET + "  "
+        }
       } else {
         matchField += "|     "
       }
@@ -51,4 +60,5 @@ case class MatchField(fields: Matrix[Field]) {
     matchField += legend()
     matchField
   }
+
 }

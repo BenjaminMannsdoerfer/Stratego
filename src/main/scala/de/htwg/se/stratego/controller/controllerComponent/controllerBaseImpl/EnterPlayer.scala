@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.controller
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 case class EnterPlayer(controller: Controller) extends ControllerState{
   override def handle(input: String): String = controller.setPlayers(input)

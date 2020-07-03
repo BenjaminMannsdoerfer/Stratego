@@ -1,4 +1,5 @@
 package de.htwg.se.stratego.model
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Field
 import org.scalatest.{Matchers, WordSpec}
 
 class FieldSpec extends WordSpec with Matchers {

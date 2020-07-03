@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
 object Colour extends Enumeration {
   sealed case class FigureCol(value:Int) {

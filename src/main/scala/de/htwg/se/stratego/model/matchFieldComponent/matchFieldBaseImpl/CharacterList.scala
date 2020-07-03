@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
 case class CharacterList(size: Int){
   var characterList = Seq[GameCharacter]()
@@ -142,4 +142,3 @@ case class CharacterList(size: Int){
     characterList
   }
 }
-

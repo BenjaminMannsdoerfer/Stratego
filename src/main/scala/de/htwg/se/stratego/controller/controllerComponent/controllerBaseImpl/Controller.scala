@@ -1,15 +1,20 @@
-package de.htwg.se.stratego.controller
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.stratego.aview.gui.SwingGui
-import de.htwg.se.stratego.controller.GameStatus._
-import de.htwg.se.stratego.util.{Observable, UndoManager}
-import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
+import com.google.inject.{Guice, Inject}
+import de.htwg.se.stratego.StrategoModule
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Field, Game, MatchField, Matrix}
+import de.htwg.se.stratego.model.playerComponent.Player
+import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
 
-class Controller(var matchField:MatchField) extends Publisher {
+class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
+  val injector = Guice.createInjector(new StrategoModule)
 
   val list = CharacterList(matchField.fields.matrixSize)
   var playerBlue = Player("PlayerBlue", list.getCharacterList())
@@ -43,8 +48,7 @@ class Controller(var matchField:MatchField) extends Publisher {
         publish(new PlayerChanged)
 
         "Hello " + player1 + " and " + player2 + "!\n" + "Set your figures automatically with (i) " +
-          "or manually with (s row col figure)\n" +
-          "Player " + playerList(currentPlayerIndex) + " it's your turn!"
+          "or manually with (s row col figure)\n"
 
       case _ => "Please enter the names like (player1 player2)"
     }
@@ -53,7 +57,8 @@ class Controller(var matchField:MatchField) extends Publisher {
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
     gameStatus=NEW
-    publish(new CellChanged)
+    state = EnterPlayer(this)
+    publish(new NewGame)
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -61,57 +66,70 @@ class Controller(var matchField:MatchField) extends Publisher {
     matchField = game.init()
     gameStatus=INIT
     nextState
-    publish(new CellChanged)
+    publish(new MachtfieldInitialized)
     playerList(currentPlayerIndex) + " it's your turn!"
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
     if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
-      nextState
+      publish(new GameFinished)
       currentPlayerIndex=0
+      nextState
+      createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }
-    matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
-    gameStatus = ATTACK
-    currentPlayerIndex= nextPlayer
-
-    publish(new CellChanged)
-    playerList(currentPlayerIndex) + " it's your turn!"
+    if (matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
+      && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
+      matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
+      gameStatus = ATTACK
+      currentPlayerIndex= nextPlayer
+      publish(new PlayerSwitch)
+      publish(new FieldChanged)
+    }
+    ""
   }
 
   def set(row:Int, col:Int, charac:String): String = {
     currentPlayerIndex match {
       case 0 =>
+        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
         if(game.bList.size == 0){
           currentPlayerIndex=nextPlayer
+          publish(new PlayerSwitch)
         }
-        undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
+
       case 1 =>
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
         if(game.rList.size == 0){
           currentPlayerIndex=nextPlayer
           nextState
+          publish(new MachtfieldInitialized)
         }
 
     }
-    publish(new CellChanged)
+    publish(new FieldChanged)
     if(game.rList.size == 0){
-      return "matchfield initialized\nMove Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
+      return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
     }
     if(game.bList.size == 0){
-      return playerList(1) + " it's your turn!"
+      return ""
     }
-    playerList(currentPlayerIndex) + " it's your turn!"
+    ""
   }
 
   def move(dir: Char, row:Int, col:Int): String = {
-    undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
-    currentPlayerIndex=nextPlayer
-    publish(new CellChanged)
-    playerList(currentPlayerIndex) + " it's your turn!"
+    if (matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex) {
+        undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
+        if (!matchField.fields.field(row,col).isSet) {
+          currentPlayerIndex = nextPlayer
+          publish(new FieldChanged)
+          publish(new PlayerSwitch)
+        }
+      }
+    ""
   }
 
   def matchFieldToString: String = matchField.toString
@@ -119,24 +137,26 @@ class Controller(var matchField:MatchField) extends Publisher {
   def undo: String = {
     undoManager.undoStep
     gameStatus = UNDO
-    publish(new CellChanged)
+    publish(new FieldChanged)
     "undo"
   }
 
   def redo: String = {
     undoManager.redoStep
     gameStatus = REDO
-    publish(new CellChanged)
+    publish(new FieldChanged)
     "redo"
   }
 
   def nextState: Unit = {
     state = state.nextState()
-    publish(new CellChanged)
+    publish(new FieldChanged)
   }
 
   def statusString:String = GameStatus.getMessage(gameStatus)
-  private def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
+  def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
 
+  override def getSize: Int = matchField.fields.matrixSize
 
+  override def getField: Matrix[Field] = matchField.fields
 }

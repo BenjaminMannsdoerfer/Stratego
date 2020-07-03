@@ -1,4 +1,4 @@
-package de.htwg.se.stratego.model
+package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
 object Figure extends Enumeration {
   sealed case class FigureVal(name: String, value: Int){

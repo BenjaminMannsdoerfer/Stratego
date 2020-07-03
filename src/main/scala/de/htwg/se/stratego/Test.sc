@@ -1,4 +1,5 @@
-import de.htwg.se.stratego.model.{CharacterList, Game, MatchField, Player}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.playerComponent.Player
 
 def up(a: Int, b: Int): Unit ={
   println("up")

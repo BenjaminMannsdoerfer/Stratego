@@ -1,7 +1,8 @@
 package de.htwg.se.stratego.controller
 
-import de.htwg.se.stratego.model.Figure.FigureVal
-import de.htwg.se.stratego.model.{CharacterList, Colour, Game, GameCharacter, MatchField, Player}
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.{Controller, MoveCommand}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.Figure.FigureVal
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, GameCharacter, MatchField}
 import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}
 

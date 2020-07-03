@@ -1,5 +1,4 @@
-package de.htwg.se.stratego.controller
-
+package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 abstract class ControllerState {
 
