@@ -1,13 +1,17 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
+import java.lang.System
+
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.playerComponent.Player
 
-case class Game(playerA: Player, playerB: Player, size: Int, var matchField: MatchFieldInterface) {
+import scala.util.Random
+
+case class Game(var playerA: Player, var playerB: Player, size: Int, var matchField: MatchFieldInterface) {
   var bList = playerA.characterList
   var rList = playerB.characterList
 
-  def init(): MatchFieldInterface = {
+  /*def init(): MatchFieldInterface = {
 
     var row = 0
     var col = 0
@@ -31,6 +35,27 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       }
       matchField = matchField.addChar(col, row, charac,Colour.FigureCol(1))
       row += 1
+    }
+    matchField
+  }*/
+
+  def init(): MatchFieldInterface = {
+    var bIdx = 0
+    var rIdx = 0
+    bList = Random.shuffle(bList)
+    rList = Random.shuffle(rList)
+    for { row <- 0 until matchField.fields.matrixSize
+          col <- 0 until matchField.fields.matrixSize }
+    {
+      if(isBlueField(col)) {
+        matchField = matchField.addChar(col, row, bList(bIdx),Colour.FigureCol(0))
+        bIdx+=1
+      } else if (isRedField(col)) {
+        matchField = matchField.addChar(col, row, rList(rIdx),Colour.FigureCol(1))
+        rIdx+=1
+      } else {
+
+      }
     }
     matchField
   }
@@ -104,6 +129,41 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
   def isRedChar(charac:String): Boolean = {
     rList.map(GameCharacter => if(GameCharacter.figure.name.equals(charac)) return true else false)
     false
+  }
+
+  def onlyBombAndFlag(board: MatchFieldInterface): Boolean = {
+    for { row <- 0 until board.fields.matrixSize
+          col <- 0 until board.fields.matrixSize } {
+          if (board.fields.field(row,col).isSet) {
+            if (board.fields.field(row, col).character.get.figure.value == 1 ||
+              board.fields.field(row, col).character.get.figure.value == 2 ||
+              board.fields.field(row, col).character.get.figure.value == 3 ||
+              board.fields.field(row, col).character.get.figure.value == 4 ||
+              board.fields.field(row, col).character.get.figure.value == 5 ||
+              board.fields.field(row, col).character.get.figure.value == 6 ||
+              board.fields.field(row, col).character.get.figure.value == 7 ||
+              board.fields.field(row, col).character.get.figure.value == 8 ||
+              board.fields.field(row, col).character.get.figure.value == 9 ||
+              board.fields.field(row, col).character.get.figure.value == 10) {
+              return false
+            } else {
+
+            }
+          } else {
+
+          }
+      }
+    true
+    }
+
+  def setPlayers(input: String): List[Player] = {
+    input.split(" ").map(_.trim).toList match{
+      case player1 :: player2 :: Nil =>
+        playerA = playerA.copy(player1, bList)
+        playerB = playerA.copy(player2, rList)
+        val playerList = List[Player](playerA,playerB)
+        playerList
+    }
   }
 
   def move(direction: Char, matchField: MatchFieldInterface, row: Int, col: Int, currentPlayerIndex: Int): MatchFieldInterface = {
@@ -209,6 +269,8 @@ case class Game(playerA: Player, playerB: Player, size: Int, var matchField: Mat
       def strategy7:MatchFieldInterface = matchField.removeChar(rowA, colA)
       def strategy8:MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
 
+
+      val attackOutOfBounds = if (rowA >= size - 1 || rowA < 0 || colA < 0 || colA >= size - 1) return strategy1
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
       val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1
       val enemyAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
