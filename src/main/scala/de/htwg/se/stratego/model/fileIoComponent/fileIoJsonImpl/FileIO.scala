@@ -22,7 +22,7 @@ class FileIO extends FileIOInterface{
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
 
-    val currentPlayerIndex = (json \ "field"\ "currentPlayerIndex").get.toString.toInt
+    val currentPlayerIndex = (json \ "matchField"\ "currentPlayerIndex").get.toString.toInt
 
     for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
       val row = (json \\ "row")(index).as[Int]
@@ -43,11 +43,8 @@ class FileIO extends FileIOInterface{
 
   def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int) = {
     Json.obj(
-      "field"->Json.obj(
-        "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
-
       "matchField"-> Json.toJson(
-        //"currentPlayerIndex" -> JsNumber(currentPlayerIndex),
+        "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
           for{
             row <- 0 until matchField.fields.matrixSize
             col <- 0 until matchField.fields.matrixSize
@@ -67,7 +64,6 @@ class FileIO extends FileIOInterface{
             obj
           }
         )
-      )
     )
   }
 
