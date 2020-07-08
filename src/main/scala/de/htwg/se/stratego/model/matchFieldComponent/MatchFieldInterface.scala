@@ -10,3 +10,10 @@ trait MatchFieldInterface {
   def frame(row:Int):String
   def createNewMatchField:MatchFieldInterface
 }
+
+trait FieldInterface{
+  def isSet:Boolean
+  def character: Option[GameCharacter]
+  def colour: Option[Colour.FigureCol]
+
+}

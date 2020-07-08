@@ -170,6 +170,17 @@ class GameFrame(controller:ControllerInterface) extends Frame{
           redraw
         })
     }
+    contents += new Menu("Game"){
+      mnemonic = Key.E
+      contents+= new MenuItem(Action("Save") {
+        controller.save
+        redraw
+      })
+      contents += new MenuItem(Action("Load") {
+        controller.load
+        redraw
+      })
+    }
   }
 
   def redraw: Unit = {
@@ -178,7 +189,6 @@ class GameFrame(controller:ControllerInterface) extends Frame{
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
     status.text = controller.statusString
-
     repaint
   }
 

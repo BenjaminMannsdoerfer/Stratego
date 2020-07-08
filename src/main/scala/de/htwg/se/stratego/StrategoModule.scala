@@ -28,7 +28,7 @@ class StrategoModule extends AbstractModule with ScalaModule{
     bind[MatchFieldInterface].annotatedWithName("small").toInstance(new MatchField(6, 6, defaultSet))
     bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(10, 10, defaultSet))
 
-    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
 
   }
 
