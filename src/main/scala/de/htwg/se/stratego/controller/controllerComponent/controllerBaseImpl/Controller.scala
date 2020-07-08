@@ -21,12 +21,12 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   val list = CharacterList(matchField.fields.matrixSize)
   var playerBlue = Player("PlayerBlue", list.getCharacterList())
   var playerRed = Player("PlayerRed", list.getCharacterList())
-  val game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
+  var game = Game(playerBlue, playerRed, matchField.fields.matrixSize, matchField)
   var playerList = List[Player](playerBlue,playerRed)
 
   var gameStatus: GameStatus = IDLE
 
-  var currentPlayerIndex: Int = 0
+  var currentPlayerIndex: Int = 1
 
   var state: ControllerState = EnterPlayer(this)
 
@@ -40,7 +40,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
   }
 
-  def setPlayers(input: String): String = {
+  /*def setPlayers(input: String): String = {
     input.split(" ").map(_.trim).toList match{
       case player1 :: player2 :: Nil =>
         playerBlue = playerBlue.copy(player1, list.getCharacterList())
@@ -54,13 +54,23 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
       case _ => "Please enter the names like (player1 player2)"
     }
+  }*/
+
+  def setPlayers(input: String): String = {
+    playerList = game.setPlayers(input)
+    nextState
+    publish(new PlayerChanged)
+    ""
   }
+
 
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
+    game = game.copy(playerBlue,playerRed,size,matchField)
     gameStatus=NEW
     state = EnterPlayer(this)
     publish(new NewGame)
+    currentPlayerIndex=1
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -73,16 +83,20 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
+    if(game.onlyBombAndFlag(matchField) && matchField.fields.field(rowA,colA).isSet &&
+      matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex) {
+      System.exit(0)
+    }
+    /*if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       publish(new GameFinished)
-      currentPlayerIndex=0
+      currentPlayerIndex=1
       nextState
       createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
-    }
-    if (matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
+    }*/
+    if (rowA >= matchField.fields.matrixSize - 1 && rowD >= matchField.fields.matrixSize - 1 && matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
       && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK
@@ -124,13 +138,16 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   def move(dir: Char, row:Int, col:Int): String = {
     if (matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex) {
-        undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
-        if (!matchField.fields.field(row,col).isSet) {
-          currentPlayerIndex = nextPlayer
-          publish(new FieldChanged)
-          publish(new PlayerSwitch)
-        }
+      if(game.onlyBombAndFlag(matchField)) {
+        System.exit(0)
       }
+      undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
+      if (!matchField.fields.field(row,col).isSet) {
+        currentPlayerIndex = nextPlayer
+        publish(new FieldChanged)
+        publish(new PlayerSwitch)
+      }
+    }
     ""
   }
 
@@ -156,6 +173,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def statusString:String = GameStatus.getMessage(gameStatus)
+
   def nextPlayer: Int = if (currentPlayerIndex == 0) 1 else 0
 
   override def getSize: Int = matchField.fields.matrixSize
