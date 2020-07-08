@@ -14,13 +14,15 @@ import scala.io.Source
 class FileIO extends FileIOInterface{
 
 
-  override def load: MatchFieldInterface = {
+  override def load: (MatchFieldInterface,Int) = {
     var matchField: MatchFieldInterface = null
     val source:String = Source.fromFile("matchField.json").getLines().mkString
     val json: JsValue = Json.parse(source)
     //val size = (json \ "matchField" \ "size").get.toString().toInt
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
+
+    val currentPlayerIndex = (json \ "field"\ "currentPlayerIndex").get.toString.toInt
 
     for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
       val row = (json \\ "row")(index).as[Int]
@@ -35,13 +37,17 @@ class FileIO extends FileIOInterface{
 
 
     }
-    matchField
+    (matchField,currentPlayerIndex)
   }
 
 
-  def matchFieldToJson(matchField: MatchFieldInterface) = {
+  def matchFieldToJson(matchField: MatchFieldInterface, currentPlayerIndex: Int) = {
     Json.obj(
+      "field"->Json.obj(
+        "currentPlayerIndex" -> JsNumber(currentPlayerIndex),
+
       "matchField"-> Json.toJson(
+        //"currentPlayerIndex" -> JsNumber(currentPlayerIndex),
           for{
             row <- 0 until matchField.fields.matrixSize
             col <- 0 until matchField.fields.matrixSize
@@ -61,17 +67,19 @@ class FileIO extends FileIOInterface{
             obj
           }
         )
+      )
     )
   }
 
-  override def save(matchField: MatchFieldInterface): Unit = {
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("matchField.json"))
-    pw.write(Json.prettyPrint(matchFieldToJson(matchField)))
+    pw.write(Json.prettyPrint(matchFieldToJson(matchField, currentPlayerIndex)))
     pw.close()
   }
 
 }
+
 
 
 

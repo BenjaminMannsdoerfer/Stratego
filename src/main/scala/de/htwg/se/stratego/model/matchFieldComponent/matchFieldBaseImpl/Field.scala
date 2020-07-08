@@ -7,4 +7,3 @@ case class Field(isSet:Boolean, character: Option[GameCharacter] = None, colour:
   override def toString: String = character.fold(" ")("".+)
 
 }
-

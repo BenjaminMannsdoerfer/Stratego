@@ -163,14 +163,16 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   override def getField: Matrix[Field] = matchField.fields
 
   override def load: String = {
-    matchField = fileIO.load
+    val (newmatchField, newPlayerIndex) = fileIO.load
+    matchField = newmatchField
+    currentPlayerIndex = newPlayerIndex
     //gameStatus= LOADED
     publish(new FieldChanged)
     "load"
   }
 
   override def save: String = {
-    fileIO.save(matchField)
+    fileIO.save(matchField, currentPlayerIndex)
     //gameStatus = SAVED
     publish(new FieldChanged)
     "save"

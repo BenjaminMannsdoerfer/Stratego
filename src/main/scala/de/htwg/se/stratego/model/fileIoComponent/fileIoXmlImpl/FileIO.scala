@@ -9,11 +9,11 @@ import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour,
 import scala.xml.{Node, PrettyPrinter}
 
 class FileIO extends FileIOInterface{
-  override def load: MatchFieldInterface = {
+  override def load: (MatchFieldInterface,Int) = {
     var matchField: MatchFieldInterface = null
     val file = scala.xml.XML.loadFile("matchField.xml")
     val sizeAttr = (file \\ "matchField" \ "@size")
-    val size = sizeAttr.text.toInt
+    val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
 
@@ -27,7 +27,7 @@ class FileIO extends FileIOInterface{
       matchField = matchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)), Colour.FigureCol(colour))
       //val isSet = (field\ "@isSet").text.toBoolean
     }
-    matchField
+    (matchField, currentPlayerIndex)
 
   }
 
@@ -40,8 +40,8 @@ class FileIO extends FileIOInterface{
     }
   }
 
-  def matchFieldToXml(matchField: MatchFieldInterface) ={
-    <matchField size={ matchField.fields.matrixSize.toString}>
+  def matchFieldToXml(matchField: MatchFieldInterface, currentPlayerIndex: Int) ={
+    <matchField  currentPlayerIndex={ currentPlayerIndex.toString}>
       {
       for{
         row <- 0 until matchField.fields.matrixSize
@@ -52,14 +52,14 @@ class FileIO extends FileIOInterface{
 
   }
 
-  def saveString(matchField: MatchFieldInterface): Unit = {
+  def saveString(matchField: MatchFieldInterface, currentPlayerIndex:Int): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("matchField.xml"))
     val prettyPrinter = new PrettyPrinter(120,4)
-    val xml = prettyPrinter.format(matchFieldToXml(matchField))
+    val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex))
     pw.write(xml)
     pw.close
   }
 
-  override def save(matchField: MatchFieldInterface): Unit = saveString(matchField)
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int): Unit = saveString(matchField,currentPlayerIndex)
 }
