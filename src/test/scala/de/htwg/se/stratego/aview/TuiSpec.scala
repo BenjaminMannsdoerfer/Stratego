@@ -18,9 +18,21 @@ class TuiSpec  extends WordSpec with Matchers{
     "quit" in {
       tui.processInputLine("q")
     }
-    "do nothing when input is bullshit" in {
-      tui.processInputLine("bullshit")
+    "undo" in {
+      tui.processInputLine("z")
     }
+    "redo" in {
+      tui.processInputLine("y")
+    }
+    "save" in {
+      tui.processInputLine("s")
+    }
+    "load" in {
+      tui.processInputLine("l")
+    }
+    /*"do nothing when input is bullshit" in {
+      tui.processInputLine("bullshit")
+    }*/
 
 
 

@@ -15,12 +15,14 @@ class MoveCommandSpec extends WordSpec with Matchers {
     val matchField2 = matchField.addChar(1,2, new GameCharacter(FigureVal("9",9)),Colour.FigureCol(0))
     val command2 = new MoveCommand('r', matchField2,1 ,2,0,controller)
     val command3 = new MoveCommand('l', matchField2,1 ,2,0,controller)
+    val command4 = new MoveCommand('d', matchField2,1,2,0,controller)
 
     "created" should {
       "undoStep" in {
-        //command.undoStep should be()
+        command.undoStep should be()
         command2.undoStep should be()
         command3.undoStep should be()
+        command4.undoStep should be()
       }
     }
   }

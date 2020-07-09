@@ -42,8 +42,8 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
   def init(): MatchFieldInterface = {
     var bIdx = 0
     var rIdx = 0
-    bList = Random.shuffle(bList)
-    rList = Random.shuffle(rList)
+    //bList = Random.shuffle(bList)
+    //rList = Random.shuffle(rList)
     for { row <- 0 until matchField.fields.matrixSize
           col <- 0 until matchField.fields.matrixSize }
     {
@@ -270,7 +270,7 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       def strategy8:MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
 
 
-      val attackOutOfBounds = if (rowA >= size - 1 || rowA < 0 || colA < 0 || colA >= size - 1) return strategy1
+      //val attackOutOfBounds = if (rowA >= size - 1 || rowA < 0 || colA < 0 || colA >= size - 1) return strategy1
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
       val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1
       val enemyAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1

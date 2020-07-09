@@ -96,7 +96,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
     }*/
-    if (rowA >= matchField.fields.matrixSize - 1 && rowD >= matchField.fields.matrixSize - 1 && matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
+    if (matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
       && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK

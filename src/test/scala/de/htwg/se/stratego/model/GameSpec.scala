@@ -12,6 +12,13 @@ class GameSpec extends WordSpec with Matchers {
     val playerRed = Player("PlayerRed", characList.getCharacterList())
     val game = Game(playerBlue, playerRed, 4, matchField)
 
+    val matchField4 = new MatchField(4, 4, false)
+    val characList4 = CharacterList(4)
+    val playerBlue4 = Player("PlayerBlue", characList4.getCharacterList())
+    val playerRed4 = Player("PlayerRed", characList4.getCharacterList())
+    val game4 = Game(playerBlue4, playerRed4, 4, matchField4)
+
+
     val matchField6 = new MatchField(6, 6, false)
     val characList6 = CharacterList(6)
     val playerBlue6 = Player("PlayerBlue", characList6.getCharacterList())
@@ -35,17 +42,27 @@ class GameSpec extends WordSpec with Matchers {
       }
     }
 
+    "gets a matchfield with blue and red fields" should {
+      "set with characters" in {
+        game6.set(0, 0, 0, "9").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34m9\u001B[0m  |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game4.set(1, 3, 0, "6").toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  \u001B[0;31m6\u001B[0m  |     |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+      }
+    }
+
     "gets a matchfield with blue Fields" should {
       "set a character" in {
-        game6.setBlue(1,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34mF\u001B[0m  |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game6.setBlue(1,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34m9\u001B[0m  |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34mF\u001B[0m  |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
 
     "gets a matchfield with red Fields" should {
       "set a character" in {
-        game6.setRed(5,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34mF\u001B[0m  |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;31mF\u001B[0m  |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game6.setRed(5,0,"F").toString should be("   0     1     2     3     4     5  \n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34m9\u001B[0m  |     |     |     |     |     | 0\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;34mF\u001B[0m  |     |     |     |     |     | 1\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 2\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 3\n+-----+-----+-----+-----+-----+-----+\n|     |     |     |     |     |     | 4\n+-----+-----+-----+-----+-----+-----+\n|  \u001B[0;31mF\u001B[0m  |     |     |     |     |     | 5\n+-----+-----+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
+        game4.setRed(0,0,"6").toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  \u001B[0;31m6\u001B[0m  |     |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
       }
     }
+
+
 
     "gets a matchfield with a red and a blue List each with filled characters" should {
       val board = game.init

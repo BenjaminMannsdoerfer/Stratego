@@ -29,16 +29,13 @@ class FileIO extends FileIOInterface{
       val row = (json \\ "row")(index).as[Int]
       val col = (json \\ "col")(index).as[Int]
       //val field = (json \\ "field")(index)
-      if(((json \ "matchField")(index) \\ "figName").nonEmpty){
+      if(((json \ "matchField")(index) \\ "figName").nonEmpty) {
         val figName = ((json \ "matchField")(index) \ "figName").as[String]
         val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]
         val colour = ((json \ "matchField")(index) \ "colour").as[Int]
         matchField = matchField.addChar(row, col, GameCharacter(Figure.FigureVal(figName, figValue)), Colour.FigureCol(colour))
       }
-
-
     }
-
     (matchField,currentPlayerIndex)
   }
 

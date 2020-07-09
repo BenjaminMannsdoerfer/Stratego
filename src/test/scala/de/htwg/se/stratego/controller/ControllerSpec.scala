@@ -1,11 +1,13 @@
 package de.htwg.se.stratego.controller
 
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchField
+import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.playerComponent.Player
 import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {
-  /*
+/*
   "A Controller" when {
     "observed by an Observer" should {
       val matchField = new MatchField(4, 4, false)
@@ -75,5 +77,5 @@ class ControllerSpec extends WordSpec with Matchers {
     }
   }
 
-   */
+*/
 }
