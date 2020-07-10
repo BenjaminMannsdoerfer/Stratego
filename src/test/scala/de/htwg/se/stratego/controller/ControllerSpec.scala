@@ -7,75 +7,57 @@ import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {
-/*
   "A Controller" when {
-    "observed by an Observer" should {
+    "created" should {
       val matchField = new MatchField(4, 4, false)
       val controller = new Controller(matchField)
+
+      val controller2 = new Controller(matchField)
+
       val characterList = new CharacterList(4)
       val playerBlue = new Player("PlayerBlue",characterList.getCharacterList())
       val playerRed = new Player("PlayerRed", characterList.getCharacterList())
       val game = new Game(playerBlue,playerRed,4,matchField)
-      val observer = new Observer {
-        var updated: Boolean = updated
 
-        def isUpdated: Boolean = updated
+      "can handle" in {
+        controller.handle("player1 player2") should be ("")
+      }
+      "can welcome" in {
+        controller.welcome() should be ("Welcome to STRATEGO! " +
+          "Please enter first name of Player1 and then of Player2 like (player1 player2)!")
+      }
+      "can set figures" in {
+        controller.set(0,0,"F") should be ("")
+        controller.set(0,1,"9") should be ("")
+        controller.set(0,2,"8") should be ("")
+        controller.set(0,3,"6") should be ("")
+        controller.set(0,3,"F") should be ("")
 
-        override def update(): Unit = updated = true
-      }
-      controller.add(observer)
-      "notify its Observer after an empty matchfield" in {
-        controller.createEmptyMatchfield(4)
-        observer.updated should be(true)
-        controller.matchField.fields.matrixSize should be(4)
-      }
-      "notify its Observer after an set matchfield" in {
-        controller.initMatchfield()
-        observer.updated should be(true)
-      }
+        controller.set(3,3,"6") should be ("")
+        controller.set(3,0,"F") should be ("")
+        controller.set(3,1,"9") should be ("")
+        controller.set(3,2,"8") should be ("Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\nplayer1 it's your turn!")
 
-      "notify its Observer after print matchfield" in {
-        controller.matchFieldToString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|  9  |  8  |  6  |  F  | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n")
-        observer.updated should be(true)
-      }
-      "welcome" in {
-        controller.welcome() should be("Welcome to STRATEGO! Please enter first name of Player1 and then of Player2 like (player1 player2)!")
-      }
-      "set Players" in {
-        controller.setPlayers("p1 p2") should be("Hello p1 and p2!\nSet your figures automatically with (i) or manually with (s row col figure)\nPlayer p1 it's your turn!")
-      }
-      "attack a figure" in {
-        controller.initMatchfield()
-        controller.attack(0, 0, 0, 3) should be("Congratulations p1! You're the winner!\nGame finished! Play new Game with (n)!")
-        controller.attack(0,0,0,1) should be ("p2 it's your turn!")
-      }
-      "set a figure" in {
-        controller.set(0, 0, "F") should be("p2 it's your turn!")
-        controller.set(0, 1, "6") should be("p2 it's your turn!")
-        controller.set(0, 2, "8") should be("p2 it's your turn!")
-        controller.set(0, 3, "9") should be("p2 it's your turn!")
-        controller.set(3,0,"F") should be("p2 it's your turn!")
-        controller.currentPlayerIndex=1
-        controller.set(3,1,"9") should be("p2 it's your turn!")
-        controller.set(3,2,"8") should be("p2 it's your turn!")
-        controller.set(3,3,"6") should be("p2 it's your turn!")
+        controller2.currentPlayerIndex = 0
+        controller2.set(3,3,"6") should be ("")
+        controller2.set(3,0,"F") should be ("")
+        controller2.set(3,1,"9") should be ("")
+        controller2.set(3,3,"9") should be ("")
+
+        controller2.set(0,0,"F") should be ("")
+        controller2.set(0,1,"9") should be ("")
+        controller2.set(0,2,"8") should be ("")
+        controller2.set(0,3,"6") should be ("")
 
       }
-      "move a figure" in {
-        controller.initMatchfield()
-        controller.move('d',0,0) should be ("p1 it's your turn!")
+      "can move" in {
+        controller.move('d', 0 , 0 ) should be ("")
+        controller.move ('d', 1, 1) should be ("")
       }
-      "undo" in {
-        controller.undo should be ("undo")
-        controller.move('u', 3, 0) should be("p2 it's your turn!")
-      }
-      "redo" in {
-        controller.redo should be ("redo")
-      }
+
 
 
     }
   }
 
-*/
 }
