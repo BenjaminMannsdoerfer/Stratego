@@ -25,7 +25,8 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
     else " "
 
   }
-  border = LineBorder(java.awt.Color.BLACK,2)
+  //border = LineBorder(java.awt.Color.BLACK,2)
+  background = new Color(37,138,73)
 
   val figureText = new Button{
     text = fieldText(row,col)
@@ -36,12 +37,12 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
     if(controller.getField.field(row,col).isSet) {
       if (controller.getField.field(row, col).colour.get.value == 0) {
-        background = Color.BLUE
+        background = new Color(37,39,138)
       } else if (controller.getField.field(row, col).colour.get.value == 1) {
-        background = Color.RED
+        background = new Color(138,41,37)
       }
       }else{
-        background = Color.GRAY
+        background = new Color(37,138,73)
     }
 
     listenTo(keys)
@@ -76,6 +77,7 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
   val field = new FlowPanel(){
     contents += figureText
+    background = new Color(37,138,73)
 
     listenTo(figureText)
     reactions += {
@@ -105,12 +107,12 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
     if(controller.getField.field(row,col).isSet) {
       if (controller.getField.field(row, col).colour.get.value == 0) {
-        figureText.background = Color.BLUE
+        figureText.background = new Color(37,39,138)
       } else if (controller.getField.field(row, col).colour.get.value == 1) {
-        figureText.background = Color.RED
+        figureText.background = new Color(138,41,37)
       }
     }else{
-      figureText.background = Color.GRAY
+      figureText.background = new Color(138,124,65)
     }
 
     contents += field

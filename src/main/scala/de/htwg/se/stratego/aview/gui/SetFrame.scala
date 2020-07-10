@@ -1,6 +1,7 @@
 package de.htwg.se.stratego.aview.gui
 
 import java.awt
+import java.awt.{Color, Font}
 import java.awt.event.{KeyEvent, KeyListener}
 import java.nio.Buffer
 
@@ -16,6 +17,7 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   listenTo(controller)
 
   title = "Stratego"
+  resizable= false
   val matchFieldSize = controller.getSize
 
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
@@ -73,22 +75,36 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   redraw
 
   menuBar = new MenuBar {
+    preferredSize = new Dimension(100, 40)
+
     contents += new Menu("File") {
+      font = new Font("Verdana", 1, 20)
+      foreground = new Color(73,82,89)
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
+        font = new Font("Verdana", 1, 10)
+        foreground = new Color(73,82,89)
         controller.createEmptyMatchfield(matchFieldSize)
       })
       contents += new MenuItem(Action("Quit") {
+        font = new Font("Verdana", 1, 10)
+        foreground = new Color(73,82,89)
         System.exit(0)
       })
     }
     contents += new Menu("Edit"){
+      font = new Font("Verdana", 1, 20)
+      foreground = new Color(73,82,89)
       mnemonic = Key.E
       contents+= new MenuItem(Action("Undo") {
+        font = new Font("Verdana", 1, 10)
+        foreground = new Color(73,82,89)
         controller.undo
         redraw
       })
       contents += new MenuItem(Action("Redo") {
+        font = new Font("Verdana", 1, 10)
+        foreground = new Color(73,82,89)
         controller.redo
         redraw
       })

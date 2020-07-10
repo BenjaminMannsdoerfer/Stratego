@@ -26,7 +26,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   var gameStatus: GameStatus = IDLE
 
-  var currentPlayerIndex: Int = 1
+  var currentPlayerIndex: Int = 0
 
   var state: ControllerState = EnterPlayer(this)
 

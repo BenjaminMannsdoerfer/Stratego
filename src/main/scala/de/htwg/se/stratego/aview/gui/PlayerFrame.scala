@@ -10,6 +10,7 @@ import scala.swing.{BorderPanel, BoxPanel, Button, FlowPanel, Frame, Label, Orie
 class PlayerFrame(controller:ControllerInterface) extends Frame{
   listenTo(controller)
   title = "Stratego"
+  resizable= false
 
   object player1 extends TextField {columns = 5}
   object player2 extends TextField {columns = 5}
