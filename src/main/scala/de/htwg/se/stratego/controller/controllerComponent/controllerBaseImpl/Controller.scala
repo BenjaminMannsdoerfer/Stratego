@@ -87,7 +87,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex) {
       System.exit(0)
     }
-    /*if(matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
+    if(rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
+      matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       publish(new GameFinished)
       currentPlayerIndex=1
@@ -95,8 +96,9 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       createEmptyMatchfield(matchField.fields.matrixSize)
       return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
         "Game finished! Play new Game with (n)!"
-    }*/
-    if (matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
+    }
+    if (rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
+      matchField.fields.field(rowA,colA).isSet && matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex
       && matchField.fields.field(rowD,colD).isSet && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex) {
       matchField = game.Context.attack(matchField, rowA, colA, rowD, colD,currentPlayerIndex)
       gameStatus = ATTACK
