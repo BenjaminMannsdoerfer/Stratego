@@ -82,10 +82,10 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
 
   def isRedField(row:Int): Boolean = {
     matchField.fields.matrixSize match {
-      case 4 | 5 => if(row < 3) false else true
-      case 6 | 7 => if(row < 4) false else true
-      case 8 | 9 => if(row < 5) false else true
-      case 10    => if(row < 6) false else true
+      case 4 => if(row < 3) false else true
+      case 5 | 6 => if(row < 4) false else true
+      case 7 | 8 => if(row < 5) false else true
+      case 9 | 10 => if(row < 6) false else true
     }
   }
 
@@ -146,11 +146,7 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
               board.fields.field(row, col).character.get.figure.value == 9 ||
               board.fields.field(row, col).character.get.figure.value == 10) {
               return false
-            } else {
-
             }
-          } else {
-
           }
       }
     true
@@ -179,88 +175,43 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
   }
 
   def moveDown(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
-    if (row == size - 1) {
-      println("The Figure can not set out of bounds!")
-      return matchField
-    }
-    if (isFlagOrBomb(matchField, row,col)) {
-      println("Flag and Bombs can't move!")
-      return matchField
-    }
-    if (matchField.fields.field(row + 1, col).isSet.equals(false)) {
-      matchField.removeChar(row, col).addChar(row + 1, col, matchField.fields.field(row, col).character.get,matchField.fields.field(row,col).colour.get)
-    } else {
-      val f = matchField.fields.field(row + 1, col)
-      println(s"Field (${row + 1},$col) is set with Figure $f!")
+    if (row == size - 1 || matchField.fields.field(row + 1, col).isSet.equals(true) || isFlagOrBomb(matchField, row,col)) {
       matchField
+    } else {
+      matchField.removeChar(row, col).addChar(row + 1, col, matchField.fields.field(row, col).character.get,matchField.fields.field(row,col).colour.get)
     }
   }
 
   def moveUp(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
-    if (row == 0) {
-      println("The Figure can not set out of bounds!")
-      return matchField
-    }
-    if (isFlagOrBomb(matchField, row,col)) {
-      println("Flag and Bombs can't move!")
-      return matchField
-    }
-    if (matchField.fields.field(row - 1, col).isSet.equals(false)) {
-      matchField.removeChar(row, col).addChar(row - 1, col, matchField.fields.field(row, col).character.get, matchField.fields.field(row,col).colour.get)
-    } else {
-      val f = matchField.fields.field(row - 1, col)
-      println(s"Field (${row - 1},$col) is set with Figure $f!")
+    if (row == 0 ||matchField.fields.field(row - 1, col).isSet.equals(true) || isFlagOrBomb(matchField, row,col)) {
       matchField
+    } else {
+      matchField.removeChar(row, col).addChar(row - 1, col, matchField.fields.field(row, col).character.get, matchField.fields.field(row,col).colour.get)
     }
   }
 
   def moveLeft(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
-    if (col == 0) {
-      println("The Figure can not set out of bounds!")
-      return matchField
-    }
-    if (isFlagOrBomb(matchField, row,col)) {
-      println("Flag and Bombs can't move!")
-      return matchField
-    }
-    if (matchField.fields.field(row, col - 1).isSet.equals(false)) {
-      matchField.removeChar(row, col).addChar(row, col - 1, matchField.fields.field(row, col).character.get,matchField.fields.field(row,col).colour.get)
-    } else {
-      val f = matchField.fields.field(row, col - 1)
-      println(s"Field ($row,${col - 1}) is set with Figure $f!")
+    if (col == 0 || matchField.fields.field(row, col - 1).isSet.equals(true) || isFlagOrBomb(matchField,row,col)) {
       matchField
+    } else {
+      matchField.removeChar(row, col).addChar(row, col - 1, matchField.fields.field(row, col).character.get,matchField.fields.field(row,col).colour.get)
     }
   }
 
   def moveRight(matchField: MatchFieldInterface, row: Int, col: Int): MatchFieldInterface = {
-    if (col == size - 1) {
-      println("The Figure can not set out of bounds!")
-      return matchField
-    }
-
-    if (isFlagOrBomb(matchField,row,col)) {
-      println("Flag and Bombs can't move!")
-      return matchField
-    }
-
-    if (matchField.fields.field(row, col + 1).isSet.equals(false)) {
-      matchField.removeChar(row, col).addChar(row, col + 1, matchField.fields.field(row, col).character.get,matchField.fields.field(row,col).colour.get)
-    } else {
-      val f = matchField.fields.field(row, col + 1)
-      println(s"Field ($row,${col + 1}) is set with Figure $f!")
+    if (col == size - 1 || matchField.fields.field(row, col + 1).isSet.equals(true) || isFlagOrBomb(matchField,row,col)) {
       matchField
+    } else {
+      matchField.removeChar(row, col).addChar(row, col + 1, matchField.fields.field(row, col).character.get, matchField.fields.field(row, col).colour.get)
     }
   }
 
-  def figureHasValue(matchF: MatchFieldInterface, row: Int,col: Int): Int = {
-    matchF.fields.field(row,col).character.get.figure.value
-  }
+  def figureHasValue(matchF: MatchFieldInterface, row: Int,col: Int): Int = matchF.fields.field(row,col).character.get.figure.value
 
   def isFlagOrBomb(matchField: MatchFieldInterface, row: Int,col: Int): Boolean = if(matchField.fields.field(row,col).character.get.figure.value == 0 ||
     matchField.fields.field(row,col).character.get.figure.value == 11) true else false
 
   object Context extends Game(playerA: Player, playerB: Player, size: Int, matchField: MatchFieldInterface) {
-    override def figureHasValue(matchF: MatchFieldInterface, row: Int, col: Int): Int = super.figureHasValue(matchF, row, col)
     def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = {
       def strategy1:MatchFieldInterface = matchField
       def strategy3:MatchFieldInterface = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get,matchField.fields.field(rowA,colA).colour.get).removeChar(rowA,colA)

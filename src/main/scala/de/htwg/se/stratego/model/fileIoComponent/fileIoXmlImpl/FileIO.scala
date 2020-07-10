@@ -25,7 +25,6 @@ class FileIO extends FileIOInterface{
       val figValue: Int = (field\ "@figValue").text.toInt
       val colour:Int = (field\ "@colour").text.toInt
       matchField = matchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)), Colour.FigureCol(colour))
-      //val isSet = (field\ "@isSet").text.toBoolean
     }
     (matchField, currentPlayerIndex)
 

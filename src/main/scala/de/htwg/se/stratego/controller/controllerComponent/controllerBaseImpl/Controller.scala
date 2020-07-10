@@ -89,7 +89,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     }
     if(rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
-      && matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
+      && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex &&
+      matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState
