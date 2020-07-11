@@ -20,13 +20,13 @@ class FileIoSpec extends WordSpec with Matchers {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
         val fileIOJson = new FileIO()
         fileIOJson.save(matchField,controller.currentPlayerIndex)
-        fileIOJson.load should be(matchField,controller.currentPlayerIndex)
+        fileIOJson.load should be(matchField,0)
       }
       "save and load the Gamestate with XML" in {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIOXML = new FileIO()
         fileIOXML.save(matchField,controller.currentPlayerIndex)
-        fileIOXML.load should be(matchField,controller.currentPlayerIndex)
+        fileIOXML.load should be(matchField,0)
       }
     }
   }
