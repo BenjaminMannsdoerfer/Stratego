@@ -20,13 +20,21 @@ class FileIoSpec extends WordSpec with Matchers {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
         val fileIOJson = new FileIO()
         fileIOJson.save(matchField,controller.currentPlayerIndex)
-        fileIOJson.load should be(matchField,0)
+        fileIOJson.load.toString() should be("(   0     1     2     3  \n+-----+-----+-----+-----+\n|" +
+          "     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----" +
+          "+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |" +
+          "     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create" +
+          " a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n,0)")
       }
       "save and load the Gamestate with XML" in {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIOXML = new FileIO()
         fileIOXML.save(matchField,controller.currentPlayerIndex)
-        fileIOXML.load should be(matchField,0)
+        fileIOXML.load.toString() should be("(   0     1     2     3  \n+-----+-----+-----+-----+\n|" +
+          "     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+----" +
+          "-+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |    " +
+          " |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   " +
+          "create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n,0)")
       }
     }
   }
