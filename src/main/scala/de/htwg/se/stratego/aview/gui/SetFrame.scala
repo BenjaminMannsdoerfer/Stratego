@@ -10,25 +10,28 @@ import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.swing.BorderFactory
 import javax.swing.border.LineBorder
+import javax.swing.plaf.basic.BasicBorders.MarginBorder
 
 class SetFrame(controller:ControllerInterface) extends Frame {
-
 
   listenTo(controller)
 
   title = "Stratego"
   resizable= false
+
   val matchFieldSize = controller.getSize
-
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
-
   var gameStatus: GameStatus = IDLE
-
   def statusString:String = GameStatus.getMessage(gameStatus)
 
-  def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
+  val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val defaultColor = new Color(143,138,126)
+  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
 
+
+  def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
     for{
       row <- 0 until matchFieldSize
       col <- 0 until matchFieldSize
@@ -40,28 +43,20 @@ class SetFrame(controller:ControllerInterface) extends Frame {
     }
   }
 
-  val defaultFont = new Font("Calibri", Font.BOLD, 30)
-  val defaultColor = new Color(143,138,126)
-  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
-
   val initializeButton = new Button{
     text = "set characters automatically"
     font = defaultFont
     background = defaultColor
     foreground= Color.WHITE
-    border = defaultBorder
   }
 
   listenTo(initializeButton)
   reactions += {
     case ButtonClicked(`initializeButton`) =>
       controller.handle("i")
-      //controller.gameStatus=INIT
   }
 
-
   val status = new TextField(controller.statusString, 20)
-
 
   def statusPanel = new BorderPanel {
     add(status, BorderPanel.Position.Center)
@@ -71,11 +66,11 @@ class SetFrame(controller:ControllerInterface) extends Frame {
     add(initializeButton, BorderPanel.Position.Center)
   }
 
-
   val mainPanel = new BorderPanel{
     add(matchfieldPanel, BorderPanel.Position.North)
     add(buttonPanel, BorderPanel.Position.Center)
     add(statusPanel, BorderPanel.Position.South)
+    border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
 
   mainPanel.requestFocus()
@@ -118,5 +113,4 @@ class SetFrame(controller:ControllerInterface) extends Frame {
       new PlayerFrame(controller)
   }
   pack()
-  //size = new Dimension(800, 600)
 }
