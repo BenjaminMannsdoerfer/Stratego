@@ -1,7 +1,7 @@
 package de.htwg.se.stratego.controller
 
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
-import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
+import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Figure, Game, GameCharacter, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
@@ -10,6 +10,7 @@ class ControllerSpec extends WordSpec with Matchers {
     "created" should {
       val matchField = new MatchField(4, 4, false)
       val controller = new Controller(matchField)
+      val controller1 = new Controller(matchField)
       val controller2 = new Controller(matchField)
       val controller3 = new Controller(matchField)
       controller3.initMatchfield()
@@ -19,6 +20,14 @@ class ControllerSpec extends WordSpec with Matchers {
       val playerBlue = new Player("PlayerBlue",characterList.getCharacterList())
       val playerRed = new Player("PlayerRed", characterList.getCharacterList())
       val game = new Game(playerBlue,playerRed,4,matchField)
+
+      val newCharacterList = Seq[GameCharacter](GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Bomb),
+        GameCharacter(Figure.Flag),
+        GameCharacter(Figure.Spy))
+      val playerBlue1 = new Player("PlayerBlue",newCharacterList)
+      val playerRed1 = new Player("PlayerRed", newCharacterList)
+      val game1 = new Game(playerBlue,playerRed,4,matchField)
 
       "can handle" in {
         controller.handle("player1 player2") should be ("")
@@ -54,6 +63,11 @@ class ControllerSpec extends WordSpec with Matchers {
       "can move" in {
         controller.move('d', 0 , 0 ) should be ("")
         controller.move ('d', 1, 1) should be ("")
+        controller1.move('d', 0,0) should be ("")
+        controller1.move('u',3,0) should be ("")
+        controller1.attack(1,0,2,0)
+        controller1.move('u',3,1) should be("")
+
       }
       "can get matchfield as matrix" in {
         controller.getField.toString should be ("Matrix(Vector(Vector(F, 9, 8, 6), Vector( ,  ,  ,  ), Vector( ,  ,  ,  ), Vector(F, 9, 8, 6)))")
@@ -66,6 +80,9 @@ class ControllerSpec extends WordSpec with Matchers {
       }
       "can save the game" in {
         controller.save should be ("save")
+      }
+      "can load the game" in {
+        controller.load should be("load")
       }
 
     }

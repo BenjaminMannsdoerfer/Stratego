@@ -14,7 +14,7 @@ class FileIoSpec extends WordSpec with Matchers {
       val playerRed = Player("PlayerRed", characList.getCharacterList())
       val game = Game(playerBlue, playerRed, 4, matchField)
       val controller = new Controller(matchField)
-      game.init()
+      //game.init()
 
       "save and load the Gamestate with Json" in {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
