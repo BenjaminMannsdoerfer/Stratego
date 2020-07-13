@@ -20,25 +20,24 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   val strategoImg = ImageIO.read(getClass.getResource("stratego.png"))
   val strategoI = new ImageIcon(strategoImg)
   val defaultColor = new Color(143,138,126)
+  val lightG = new Color(192,192,192)
+  val lightF = new Font("Calibri", 1, 25)
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,10)
   val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
 
   iconImage = iconImg
 
-
-  iconImage = iconImg
-
   val player1 = new TextField("", 20){
-    foreground= defaultColor
-    font = defaultFont
-    border = BorderFactory.createEmptyBorder(0,10,0,0)
+    foreground= lightG
+    font = lightF
+    border = BorderFactory.createEmptyBorder(0,20,0,0)
   }
 
   val player2 = new TextField("", 20){
-    foreground= defaultColor
-    font = defaultFont
-    border = BorderFactory.createEmptyBorder(0,10,0,0)
+    foreground= lightG
+    font = lightF
+    border = BorderFactory.createEmptyBorder(0,20,0,0)
   }
 
   def img = new Label{
