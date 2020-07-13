@@ -1,13 +1,12 @@
 package de.htwg.se.stratego.aview.gui
 
 import java.awt.{BorderLayout, Color, Font}
-
+import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import scala.swing.{Color, _}
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
 import javax.swing.{BorderFactory, JOptionPane, SwingConstants}
 import javax.swing.border.{Border, LineBorder}
-
 
 class GameFrame(controller:ControllerInterface) extends Frame{
 
@@ -19,14 +18,17 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
-
   var gameStatus: GameStatus = IDLE
+
+  val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val defaultColor = new Color(143,138,126)
+  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
+  val grColor = new Color(79,76,70)
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
     background = new Color(37,138,73)
-
     for{
       row <- 0 until matchFieldSize
       col <- 0 until matchFieldSize
@@ -38,10 +40,6 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     }
   }
 
-  val defaultFont = new Font("Calibri", Font.BOLD, 30)
-  val defaultColor = new Color(143,138,126)
-  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
-
   val upButton = new Button{
     text = "\u2191"
     font = defaultFont
@@ -49,6 +47,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     foreground= Color.WHITE
     border = defaultBorder
   }
+
   val downButton = new Button{
     text = "\u2193"
     font = defaultFont
@@ -56,6 +55,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     foreground= Color.WHITE
     border = defaultBorder
   }
+
   val rightButton = new Button{
     text = "\u2192"
     font = defaultFont
@@ -63,6 +63,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     foreground= Color.WHITE
     border = defaultBorder
   }
+
   val leftButton = new Button{
     text = "\u2190"
     font = defaultFont
@@ -114,9 +115,6 @@ class GameFrame(controller:ControllerInterface) extends Frame{
         attackOrMove("r", 0,1)
     }
   }
-
-
-  val grColor = new Color(79,76,70)
 
   val moveButton = new RadioButton{
     text = "move"
@@ -179,9 +177,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   redraw
 
   menuBar = new MenuBar {
-    //preferredSize = new Dimension(100, 40)
     foreground = new Color(73,82,89)
-
     contents += new Menu("File") {
       foreground = new Color(73,82,89)
       mnemonic = Key.F
@@ -249,8 +245,5 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     case event: PlayerSwitch => redraw
   }
 
-
   pack()
-  //size = new Dimension(800, 600)
-
 }

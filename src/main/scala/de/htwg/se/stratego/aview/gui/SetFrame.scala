@@ -1,10 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt
 import java.awt.{Color, Font}
-import java.awt.event.{KeyEvent, KeyListener}
-import java.nio.Buffer
-
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
