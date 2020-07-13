@@ -137,10 +137,6 @@ case class CharacterList(size: Int){
       GameCharacter(Figure.Colonel),
       GameCharacter(Figure.Captain),
       GameCharacter(Figure.Flag))
-    /*case 4 => characterList ++= Seq(GameCharacter(Figure.Bomb),
-      GameCharacter(Figure.Bomb),
-      GameCharacter(Figure.Flag),
-      GameCharacter(Figure.Spy))*/
   }
   def getCharacterList(): Seq[GameCharacter] = {
     characterList
