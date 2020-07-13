@@ -79,17 +79,30 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   }
 
   def initMatchfield(): String = {
-    matchField = game.init()
-    gameStatus=INIT
-    nextState
-    publish(new MachtfieldInitialized)
-    playerList(currentPlayerIndex) + " it's your turn!"
+    var newMatchField = matchField
+    newMatchField = game.init(matchField)
+    if (matchField.equals(newMatchField)) {
+      ""
+    } else {
+      matchField = game.init(matchField)
+      gameStatus=INIT
+      nextState
+      publish(new MachtfieldInitialized)
+      playerList(currentPlayerIndex) + " it's your turn!"
+    }
+
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
-    if(game.onlyBombAndFlag(matchField) && matchField.fields.field(rowA,colA).isSet &&
+    if(game.onlyBombAndFlag(matchField,currentPlayerIndex) && matchField.fields.field(rowA,colA).isSet &&
       matchField.fields.field(rowA,colA).colour.get.value==currentPlayerIndex) {
-      System.exit(0)
+      currentPlayerIndex = nextPlayer
+      publish(new GameFinished)
+      currentPlayerIndex=1
+      nextState
+      createEmptyMatchfield(matchField.fields.matrixSize)
+      return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+        "Game finished! Play new Game with (n)!"
     }
     if(rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
@@ -145,8 +158,14 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   def move(dir: Char, row:Int, col:Int): String = {
     if (matchField.fields.field(row,col).isSet && matchField.fields.field(row,col).colour.get.value==currentPlayerIndex) {
-      if(game.onlyBombAndFlag(matchField)) {
-        System.exit(0)
+      if(game.onlyBombAndFlag(matchField,currentPlayerIndex)) {
+        currentPlayerIndex = nextPlayer
+        publish(new GameFinished)
+        currentPlayerIndex=1
+        nextState
+        createEmptyMatchfield(matchField.fields.matrixSize)
+        return "Congratulations " + playerList(currentPlayerIndex) +"! You're the winner!\n" +
+          "Game finished! Play new Game with (n)!"
       }
       undoManager.doStep(new MoveCommand(dir, matchField, row, col, currentPlayerIndex, this))
       if (!matchField.fields.field(row,col).isSet) {

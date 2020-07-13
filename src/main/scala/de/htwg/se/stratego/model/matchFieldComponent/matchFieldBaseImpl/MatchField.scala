@@ -12,7 +12,6 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def removeChar(row: Int, col: Int): MatchField = copy(fields.updateField(row, col, Field(false,None,None)))
 
-
   def legend():String = {
     val welcome = "**********  STRATEGO  **********\n\n"
     val n = "n:   create a new empty machtfield\n"

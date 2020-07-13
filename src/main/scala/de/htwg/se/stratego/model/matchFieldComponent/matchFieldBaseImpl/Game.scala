@@ -11,42 +11,15 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
   var bList = playerA.characterList
   var rList = playerB.characterList
 
-  /*def init(): MatchFieldInterface = {
-
-    var row = 0
-    var col = 0
-    // shuffle(aList)
-    for (charac <- bList) {
-      if (row.equals(size)) {
-        col += 1
-        row = 0
-      }
-      matchField = matchField.addChar(col, row, charac,Colour.FigureCol(0))
-      row += 1
-    }
-
-    row = 0
-    col = size - 1
-    // shuffle(bList)
-    for (charac <- rList) {
-      if (row.equals(size)) {
-        col -= 1
-        row = 0
-      }
-      matchField = matchField.addChar(col, row, charac,Colour.FigureCol(1))
-      row += 1
-    }
-    matchField
-  }*/
-
-  def init(): MatchFieldInterface = {
+  def init(currentMatchField: MatchFieldInterface): MatchFieldInterface = {
     var bIdx = 0
     var rIdx = 0
-    //bList = Random.shuffle(bList)
-    //rList = Random.shuffle(rList)
     for { row <- 0 until matchField.fields.matrixSize
           col <- 0 until matchField.fields.matrixSize }
     {
+      if (currentMatchField.fields.field(row,col).isSet) {
+        return currentMatchField
+      }
       if(isBlueField(col)) {
         matchField = matchField.addChar(col, row, bList(bIdx),Colour.FigureCol(0))
         bIdx+=1
@@ -131,10 +104,10 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
     false
   }
 
-  def onlyBombAndFlag(board: MatchFieldInterface): Boolean = {
+  def onlyBombAndFlag(board: MatchFieldInterface, currentPlayerIndex: Int): Boolean = {
     for { row <- 0 until board.fields.matrixSize
           col <- 0 until board.fields.matrixSize } {
-          if (board.fields.field(row,col).isSet) {
+          if (board.fields.field(row,col).isSet && board.fields.field(row,col).colour.get.value==currentPlayerIndex) {
             if (board.fields.field(row, col).character.get.figure.value == 1 ||
               board.fields.field(row, col).character.get.figure.value == 2 ||
               board.fields.field(row, col).character.get.figure.value == 3 ||
@@ -215,22 +188,18 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
     def attack(matchField: MatchFieldInterface, rowA: Int, colA: Int, rowD: Int, colD: Int, currentPlayerIndex: Int): MatchFieldInterface = {
       def strategy1:MatchFieldInterface = matchField
       def strategy3:MatchFieldInterface = matchField.removeChar(rowD, colD).addChar(rowD, colD, matchField.fields.field(rowA,colA).character.get,matchField.fields.field(rowA,colA).colour.get).removeChar(rowA,colA)
-      def strategy5 = println("Flag has been found! Game finished!")
       def strategy6:MatchFieldInterface = matchField.removeChar(rowD, colD)
       def strategy7:MatchFieldInterface = matchField.removeChar(rowA, colA)
       def strategy8:MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
 
 
-      //val attackOutOfBounds = if (rowA >= size - 1 || rowA < 0 || colA < 0 || colA >= size - 1) return strategy1
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
       val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1
-      val enemyAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
-      val wrongPlayerAttackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
+      val enemyAttackIsInValid = if(matchField.fields.field(rowD,colD).colour.get.value != currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
+      val wrongPlayerAttack = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value != currentPlayerIndex) return strategy1
       val attackToFarAway = if(((Math.abs(rowA-rowD)>1)||(Math.abs(colA-colD)>1))||((Math.abs(rowA-rowD)==1)&&(Math.abs(colA-colD)==1))) return strategy1
-      val unableToAttack = if(figureHasValue(matchField, rowA,colA).equals(11)|figureHasValue(matchField,rowA,colA).equals(0)) return strategy1
       val isFlagOrBomb = if(matchField.fields.field(rowA,colA).character.get.figure.value == 0 || matchField.fields.field(rowA,colA).character.get.figure.value == 11) return strategy1
       val minerAttackTheBomb = if(figureHasValue(matchField, rowA, colA) == 3 && figureHasValue(matchField, rowD, colD) == 11) return strategy6
-      val attackFlag = if(figureHasValue(matchField,rowD, colD)==0) strategy5
       val spyAttackMarshal = if((figureHasValue(matchField, rowA,colA) == 1) && (figureHasValue(matchField, rowD, colD) == 10)) return strategy3
       val defenceIsStronger = if (figureHasValue(matchField, rowA,colA) < figureHasValue(matchField,rowD, colD)) return strategy7
       val attackIsStronger = if(figureHasValue(matchField, rowA,colA) > figureHasValue(matchField,rowD, colD)) return strategy3
