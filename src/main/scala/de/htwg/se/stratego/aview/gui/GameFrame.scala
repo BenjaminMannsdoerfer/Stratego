@@ -1,17 +1,13 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{Color, Font}
+import java.awt.{BorderLayout, Color, Font}
 
 import scala.swing.{Color, _}
 import scala.swing.event._
-import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
-import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
-import javax.swing.{JOptionPane, SwingConstants}
+import javax.swing.{BorderFactory, JOptionPane, SwingConstants}
 import javax.swing.border.{Border, LineBorder}
 
-//class CellClicked(val row:Int, val column: Int) extends Event
 
 class GameFrame(controller:ControllerInterface) extends Frame{
 
@@ -19,15 +15,12 @@ class GameFrame(controller:ControllerInterface) extends Frame{
 
   title = "Stratego"
   resizable= false
+
   val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
-
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
 
-  //controller.initMatchfield()
-  //controller.handle("i")
   var gameStatus: GameStatus = IDLE
-  //controller.gameStatus=INIT
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
@@ -177,6 +170,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     add(matchfieldPanel, BorderPanel.Position.North)
     add(controllPanel, BorderPanel.Position.Center)
     add(statusPanel, BorderPanel.Position.South)
+    border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
 
   contents = mainPanel
