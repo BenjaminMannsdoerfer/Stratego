@@ -4,7 +4,9 @@ import java.awt.{Color, Font}
 
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
-
+import javax.imageio.ImageIO
+import javax.swing.ImageIcon
+import scala.reflect.io.File
 import scala.swing.FlowPanel.Alignment
 import scala.swing.Swing.LineBorder
 import scala.swing.event.{ButtonClicked, Key, KeyPressed, MouseClicked}
@@ -17,9 +19,19 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   val r = row
   val c = col
 
+
+
   def fieldText(row:Int, col:Int): String ={
     if(controller.getField.field(row,col).isSet){
-      fieldText= controller.getField.field(row, col).character.get.figure.name
+      if(controller.getField.field(row,col).character.get.figure.name.equals("F")){
+        fieldText="\uD83C\uDFF3"
+      }else if(controller.getField.field(row,col).character.get.figure.name.equals("B")){
+        fieldText="\uD83D\uDCA3"
+      }else if(controller.getField.field(row,col).character.get.figure.name.equals("M")){
+        fieldText="\uD83D\uDC82"
+      }else{
+        fieldText= controller.getField.field(row, col).character.get.figure.name
+      }
       fieldText
     }
     else " "
@@ -28,10 +40,27 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   //border = LineBorder(java.awt.Color.BLACK,2)
   background = new Color(37,138,73)
 
+
   val figureText = new Button{
     text = fieldText(row,col)
-    font = new Font("Verdana", 1, 20)
+    //font.getFontName
+    //font = new Font(this.font.getFontName(),1,20)
+    font = font.deriveFont(1, 16)
     foreground = Color.WHITE
+
+    /*
+    if(controller.getField.field(row,col).isSet) {
+      if (controller.getField.field(row, col).character.get.figure.name.equals("F")) {
+
+        val imgFlag = ImageIO.read(getClass.getResource("flag3.png"))
+        val flag = new ImageIcon(imgFlag.getScaledInstance(this.maximumSize.width,this.maximumSize.width, java.awt.Image.SCALE_SMOOTH))
+        this.icon= flag
+
+
+      }
+    }
+    *
+     */
 
     preferredSize = new Dimension(51, 51)
 
@@ -94,8 +123,19 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
     if(controller.getField.field(row,col).isSet){
       if(controller.getField.field(row, col).colour.get.value == controller.currentPlayerIndex){
         figureText.text=fieldText(row,col)
+
+        /*
+        if (controller.getField.field(row, col).character.get.figure.name.equals("F")) {
+          val imgFlag = ImageIO.read(getClass.getResource("flag3.png"))
+          val flag = new ImageIcon(imgFlag.getScaledInstance(this.maximumSize.width,this.maximumSize.width, java.awt.Image.SCALE_SMOOTH))
+          figureText.icon= flag
+        }
+        *
+         */
+
       } else{
         figureText.text=""
+        figureText.icon = null
       }
     }else{
       figureText.text=""

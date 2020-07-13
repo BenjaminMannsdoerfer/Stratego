@@ -12,7 +12,9 @@ import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
-
+/*
+* controller blabla
+ */
 class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
   val injector = Guice.createInjector(new StrategoModule)
@@ -35,6 +37,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   def handle(input: String):String = {
     state.handle(input)
   }
+
+
   def welcome():String = {
     "Welcome to STRATEGO! " +
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
@@ -70,7 +74,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     gameStatus=NEW
     state = EnterPlayer(this)
     publish(new NewGame)
-    currentPlayerIndex=1
+    currentPlayerIndex=0
     "created new matchfield\nPlease enter the names like (player1 player2)"
   }
 
@@ -157,16 +161,20 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   def matchFieldToString: String = matchField.toString
 
   def undo: String = {
+    currentPlayerIndex= nextPlayer
     undoManager.undoStep
     gameStatus = UNDO
     publish(new FieldChanged)
+    publish(new PlayerSwitch)
     "undo"
   }
 
   def redo: String = {
+    currentPlayerIndex=nextPlayer
     undoManager.redoStep
     gameStatus = REDO
     publish(new FieldChanged)
+    publish(new PlayerSwitch)
     "redo"
   }
 

@@ -2,13 +2,13 @@ package de.htwg.se.stratego.aview.gui
 
 import java.awt.{Color, Font}
 
-import scala.swing._
+import scala.swing.{Color, _}
 import scala.swing.event._
 import de.htwg.se.stratego.controller._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
-import javax.swing.JOptionPane
+import javax.swing.{JOptionPane, SwingConstants}
 import javax.swing.border.{Border, LineBorder}
 
 //class CellClicked(val row:Int, val column: Int) extends Event
@@ -45,29 +45,37 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     }
   }
 
+  val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val defaultColor = new Color(143,138,126)
+  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
+
   val upButton = new Button{
     text = "\u2191"
-    font = new Font("Serif", Font.BOLD, 20)
-    background = new Color(113,126,138)
+    font = defaultFont
+    background = defaultColor
     foreground= Color.WHITE
+    border = defaultBorder
   }
   val downButton = new Button{
     text = "\u2193"
-    font = new Font("Serif", Font.BOLD, 20)
-    background = new Color(113,126,138)
+    font = defaultFont
+    background = defaultColor
     foreground= Color.WHITE
+    border = defaultBorder
   }
   val rightButton = new Button{
     text = "\u2192"
-    font = new Font("Serif", Font.BOLD, 20)
-    background = new Color(113,126,138)
+    font = defaultFont
+    background = defaultColor
     foreground= Color.WHITE
+    border = defaultBorder
   }
   val leftButton = new Button{
     text = "\u2190"
-    font = new Font("Serif", Font.BOLD, 20)
-    background = new Color(113,126,138)
+    font = defaultFont
+    background = defaultColor
     foreground= Color.WHITE
+    border = defaultBorder
   }
 
   def attackOrMove(direction: String, rowD:Int, colD:Int):Unit = {
@@ -115,17 +123,21 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
 
+  val grColor = new Color(79,76,70)
+
   val moveButton = new RadioButton{
     text = "move"
     selected = true
-    font = new Font("Verdana", 1, 20)
-    foreground = new Color(73,82,89)
+    font = defaultFont
+    foreground = grColor
+    verticalAlignment=Alignment.Center
   }
 
   val attackButton = new RadioButton{
     text = "attack"
-    font = new Font("Verdana", 1, 20)
-    foreground = new Color(73,82,89)
+    font = defaultFont
+    foreground = grColor
+    verticalAlignment=Alignment.Center
   }
 
   val radioButtons = List(moveButton, attackButton)
@@ -143,6 +155,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
         moveButton.selected = false
         optionAttack= true
     }
+    xLayoutAlignment= 20
   }
 
   val status = new TextField(controller.statusString, 20)
@@ -172,52 +185,45 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   redraw
 
   menuBar = new MenuBar {
-    preferredSize = new Dimension(100, 40)
+    //preferredSize = new Dimension(100, 40)
+    foreground = new Color(73,82,89)
 
     contents += new Menu("File") {
-      font = new Font("Verdana", 1, 20)
       foreground = new Color(73,82,89)
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
-        font = new Font("Verdana", 1, 10)
         foreground = new Color(73,82,89)
         controller.createEmptyMatchfield(matchFieldSize)
       })
       contents += new MenuItem(Action("Quit") {
-        font = new Font("Verdana", 1, 10)
         foreground = new Color(73,82,89)
         System.exit(0)
       })
     }
     contents += new Menu("Edit"){
-      font = new Font("Verdana", 1, 20)
       foreground = new Color(73,82,89)
         mnemonic = Key.E
         contents+= new MenuItem(Action("Undo") {
-          font = new Font("Verdana", 1, 10)
           foreground = new Color(73,82,89)
           controller.undo
           redraw
         })
         contents += new MenuItem(Action("Redo") {
-          font = new Font("Verdana", 1, 10)
           foreground = new Color(73,82,89)
           controller.redo
           redraw
+          foreground = new Color(73,82,89)
         })
     }
     contents += new Menu("Game"){
-      font = new Font("Verdana", 1, 20)
       foreground = new Color(73,82,89)
       mnemonic = Key.E
       contents+= new MenuItem(Action("Save") {
-        font = new Font("Verdana", 1, 10)
         foreground = new Color(73,82,89)
         controller.save
         redraw
       })
       contents += new MenuItem(Action("Load") {
-        font = new Font("Verdana", 1, 10)
         foreground = new Color(73,82,89)
         controller.load
         redraw

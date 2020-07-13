@@ -3,7 +3,6 @@ package de.htwg.se.stratego.controller
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
-import de.htwg.se.stratego.util.{Observable, Observer}
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {
@@ -11,8 +10,10 @@ class ControllerSpec extends WordSpec with Matchers {
     "created" should {
       val matchField = new MatchField(4, 4, false)
       val controller = new Controller(matchField)
-
       val controller2 = new Controller(matchField)
+      val controller3 = new Controller(matchField)
+      controller3.initMatchfield()
+      controller3.move('d', 0 , 0)
 
       val characterList = new CharacterList(4)
       val playerBlue = new Player("PlayerBlue",characterList.getCharacterList())
@@ -54,8 +55,18 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.move('d', 0 , 0 ) should be ("")
         controller.move ('d', 1, 1) should be ("")
       }
-
-
+      "can get matchfield as matrix" in {
+        controller.getField.toString should be ("Matrix(Vector(Vector(F, 9, 8, 6), Vector( ,  ,  ,  ), Vector( ,  ,  ,  ), Vector(F, 9, 8, 6)))")
+      }
+      "can get status as string" in {
+        controller.statusString should be ("")
+      }
+      "can get size" in {
+        controller.getSize should be (4)
+      }
+      "can save the game" in {
+        controller.save should be ("save")
+      }
 
     }
   }

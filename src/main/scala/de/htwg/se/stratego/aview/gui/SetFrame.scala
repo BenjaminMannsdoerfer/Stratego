@@ -10,6 +10,7 @@ import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.swing.border.LineBorder
 
 class SetFrame(controller:ControllerInterface) extends Frame {
 
@@ -27,7 +28,6 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   def statusString:String = GameStatus.getMessage(gameStatus)
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
-    background = java.awt.Color.GRAY
 
     for{
       row <- 0 until matchFieldSize
@@ -40,7 +40,17 @@ class SetFrame(controller:ControllerInterface) extends Frame {
     }
   }
 
-  val initializeButton = new Button("automatically")
+  val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val defaultColor = new Color(143,138,126)
+  val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
+
+  val initializeButton = new Button{
+    text = "set characters automatically"
+    font = defaultFont
+    background = defaultColor
+    foreground= Color.WHITE
+    border = defaultBorder
+  }
 
   listenTo(initializeButton)
   reactions += {
@@ -75,38 +85,13 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   redraw
 
   menuBar = new MenuBar {
-    preferredSize = new Dimension(100, 40)
-
     contents += new Menu("File") {
-      font = new Font("Verdana", 1, 20)
-      foreground = new Color(73,82,89)
       mnemonic = Key.F
       contents += new MenuItem(Action("New Game") {
-        font = new Font("Verdana", 1, 10)
-        foreground = new Color(73,82,89)
         controller.createEmptyMatchfield(matchFieldSize)
       })
       contents += new MenuItem(Action("Quit") {
-        font = new Font("Verdana", 1, 10)
-        foreground = new Color(73,82,89)
         System.exit(0)
-      })
-    }
-    contents += new Menu("Edit"){
-      font = new Font("Verdana", 1, 20)
-      foreground = new Color(73,82,89)
-      mnemonic = Key.E
-      contents+= new MenuItem(Action("Undo") {
-        font = new Font("Verdana", 1, 10)
-        foreground = new Color(73,82,89)
-        controller.undo
-        redraw
-      })
-      contents += new MenuItem(Action("Redo") {
-        font = new Font("Verdana", 1, 10)
-        foreground = new Color(73,82,89)
-        controller.redo
-        redraw
       })
     }
   }

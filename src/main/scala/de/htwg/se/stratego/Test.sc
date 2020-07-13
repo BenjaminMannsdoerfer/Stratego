@@ -1,5 +1,15 @@
+
+
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
+
+import scala.swing.{Button, Font}
+
+
+val bu = new Button{
+  font.deriveFont(1,20)
+}
+
 
 def up(a: Int, b: Int): Unit ={
   println("up")
