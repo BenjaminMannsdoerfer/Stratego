@@ -12,9 +12,7 @@ import de.htwg.se.stratego.util.UndoManager
 
 import scala.swing.Publisher
 
-/*
-* controller blabla
- */
+
 class Controller @Inject()(var matchField:MatchFieldInterface) extends ControllerInterface with Publisher {
 
   val injector = Guice.createInjector(new StrategoModule)
@@ -27,7 +25,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   var playerList = List[Player](playerBlue,playerRed)
 
   var gameStatus: GameStatus = IDLE
-
   var currentPlayerIndex: Int = 0
 
   var state: ControllerState = EnterPlayer(this)
@@ -38,27 +35,10 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     state.handle(input)
   }
 
-
   def welcome():String = {
     "Welcome to STRATEGO! " +
       "Please enter first name of Player1 and then of Player2 like (player1 player2)!"
   }
-
-  /*def setPlayers(input: String): String = {
-    input.split(" ").map(_.trim).toList match{
-      case player1 :: player2 :: Nil =>
-        playerBlue = playerBlue.copy(player1, list.getCharacterList())
-        playerRed = playerRed.copy(player2, list.getCharacterList())
-        playerList = List[Player](playerBlue,playerRed)
-        nextState
-        publish(new PlayerChanged)
-
-        "Hello " + player1 + " and " + player2 + "!\n" + "Set your figures automatically with (i) " +
-          "or manually with (s row col figure)\n"
-
-      case _ => "Please enter the names like (player1 player2)"
-    }
-  }*/
 
   def setPlayers(input: String): String = {
     playerList = game.setPlayers(input)
@@ -66,7 +46,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     publish(new PlayerChanged)
     ""
   }
-
 
   def createEmptyMatchfield(size:Int): String = {
     matchField = new MatchField(size, size, false)
@@ -90,7 +69,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
       publish(new MachtfieldInitialized)
       playerList(currentPlayerIndex) + " it's your turn!"
     }
-
   }
 
   def attack(rowA: Int, colA: Int, rowD:Int, colD:Int): String ={
@@ -135,7 +113,6 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
           currentPlayerIndex=nextPlayer
           publish(new PlayerSwitch)
         }
-
       case 1 =>
         undoManager.doStep(new SetCommand(currentPlayerIndex, row, col, charac, this))
         if(game.rList.size == 0){
@@ -143,11 +120,10 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
           nextState
           publish(new MachtfieldInitialized)
         }
-
     }
     publish(new FieldChanged)
     if(game.rList.size == 0){
-      return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
+        return "Move Figures with (m direction[u,d,r,l] row col) or attack with (a row col row col)\n" +
         playerList(currentPlayerIndex) + " it's your turn!"
     }
     if(game.bList.size == 0){
@@ -214,14 +190,12 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     val (newmatchField, newPlayerIndex) = fileIO.load
     matchField = newmatchField
     currentPlayerIndex = newPlayerIndex
-    //gameStatus= LOADED
     publish(new FieldChanged)
     "load"
   }
 
   override def save: String = {
     fileIO.save(matchField, currentPlayerIndex)
-    //gameStatus = SAVED
     publish(new FieldChanged)
     "save"
   }

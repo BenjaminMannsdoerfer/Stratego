@@ -81,9 +81,6 @@ class ControllerSpec extends WordSpec with Matchers {
       "can save the game" in {
         controller.save should be ("save")
       }
-      "can load the game" in {
-        controller.load should be("load")
-      }
 
     }
   }

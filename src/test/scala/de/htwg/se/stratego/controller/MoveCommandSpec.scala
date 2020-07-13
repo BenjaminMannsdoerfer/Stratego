@@ -18,12 +18,19 @@ class MoveCommandSpec extends WordSpec with Matchers {
     val command4 = new MoveCommand('d', matchField2,1,2,0,controller)
 
     "created" should {
-      "undoStep" in {
+      "could undo Step" in {
         command.undoStep should be()
         command2.undoStep should be()
         command3.undoStep should be()
         command4.undoStep should be()
       }
+      "could redo Step" in {
+        command.redoStep should be()
+      }
+      "could do Step" in {
+        command.doStep should be()
+      }
+
     }
   }
 }

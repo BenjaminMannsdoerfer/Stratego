@@ -5,6 +5,7 @@ import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.MatchFie
 import de.htwg.se.stratego.util.Command
 
 class MoveCommand(dir: Char, matchField: MatchFieldInterface, row: Int, col: Int, currentPlayerIndex: Int, controller: Controller) extends Command {
+
   override def doStep: Unit =   controller.matchField = controller.game.move(dir, matchField, row, col, currentPlayerIndex)
 
   override def undoStep: Unit = controller.matchField =
@@ -13,8 +14,8 @@ class MoveCommand(dir: Char, matchField: MatchFieldInterface, row: Int, col: Int
       case 'd' => controller.game.move('u', matchField, row, col, currentPlayerIndex)
       case 'r' => controller.game.move('l', matchField, row, col, currentPlayerIndex)
       case 'l' => controller.game.move('r', matchField, row, col, currentPlayerIndex)
-
     }
 
   override def redoStep: Unit = controller.matchField = controller.game.move(dir, matchField, row, col, currentPlayerIndex)
+
 }
