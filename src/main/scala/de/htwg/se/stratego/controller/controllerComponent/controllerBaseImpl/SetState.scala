@@ -1,6 +1,7 @@
 package de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl
 
 case class SetState(controller: Controller) extends ControllerState{
+
   override def handle(input: String): String = fixInput(input)
 
   def fixInput(input: String): String = {
@@ -12,5 +13,4 @@ case class SetState(controller: Controller) extends ControllerState{
   }
 
   override def nextState(): ControllerState = GameState(controller)
-
 }
