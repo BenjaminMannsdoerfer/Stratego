@@ -16,11 +16,18 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   resizable= false
   visible= true
 
-  val imgFlag = ImageIO.read(getClass.getResource("stratego.png"))
-  val flag = new ImageIcon(imgFlag)
+
+  val strategoImg = ImageIO.read(getClass.getResource("stratego.png"))
+  val strategoI = new ImageIcon(strategoImg)
   val defaultColor = new Color(143,138,126)
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,10)
+  val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+
+  iconImage = iconImg
+
+
+  iconImage = iconImg
 
   val player1 = new TextField("", 20){
     foreground= defaultColor
@@ -35,7 +42,7 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   }
 
   def img = new Label{
-    icon = flag
+    icon = strategoI
   }
 
   def welcomeString = new Label{
@@ -106,5 +113,4 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
 
   contents = mainPanel
 
-  //size = new Dimension(800, 600)
 }

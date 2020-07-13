@@ -1,10 +1,13 @@
 package de.htwg.se.stratego.aview.gui
 
 import java.awt.{BorderLayout, Color, Font}
+
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
+
 import scala.swing.{Color, _}
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
+import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, JOptionPane, SwingConstants}
 import javax.swing.border.{Border, LineBorder}
 
@@ -20,10 +23,16 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
   var gameStatus: GameStatus = IDLE
 
+
+
+
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val defaultColor = new Color(143,138,126)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
   val grColor = new Color(79,76,70)
+  val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+
+  iconImage = iconImg
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 

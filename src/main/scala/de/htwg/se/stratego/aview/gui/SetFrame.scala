@@ -1,11 +1,13 @@
 package de.htwg.se.stratego.aview.gui
 
 import java.awt.{Color, Font}
+
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
+import javax.imageio.ImageIO
 import javax.swing.BorderFactory
 import javax.swing.border.LineBorder
 import javax.swing.plaf.basic.BasicBorders.MarginBorder
@@ -21,6 +23,10 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
   var gameStatus: GameStatus = IDLE
   def statusString:String = GameStatus.getMessage(gameStatus)
+  val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
+
+  iconImage = iconImg
+
 
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
   val defaultColor = new Color(143,138,126)
