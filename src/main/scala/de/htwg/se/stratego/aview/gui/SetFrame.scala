@@ -6,11 +6,9 @@ import scala.swing._
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import javax.imageio.ImageIO
 import javax.swing.BorderFactory
 import javax.swing.border.LineBorder
-import javax.swing.plaf.basic.BasicBorders.MarginBorder
 
 class SetFrame(controller:ControllerInterface) extends Frame {
 

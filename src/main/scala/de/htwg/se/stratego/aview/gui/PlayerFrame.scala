@@ -1,12 +1,12 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{Color, Dimension, Font}
+import java.awt.{Color, Font}
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerChanged}
 import javax.imageio.ImageIO
-import javax.swing.border.{Border, LineBorder}
+import javax.swing.border.{LineBorder}
 import javax.swing.{BorderFactory, ImageIcon}
-import scala.swing.event.{ButtonClicked, WindowClosing}
-import scala.swing.{BorderPanel, BoxPanel, Button, Dimension, FlowPanel, Frame, GridPanel, Label, Orientation, RadioButton, Swing, TextField}
+import scala.swing.event.{ButtonClicked}
+import scala.swing.{Button, FlowPanel, Frame, GridPanel, Label, TextField}
 
 class PlayerFrame(controller:ControllerInterface) extends Frame{
 

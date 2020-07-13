@@ -14,7 +14,6 @@ class FileIoSpec extends WordSpec with Matchers {
       val playerRed = Player("PlayerRed", characList.getCharacterList())
       val game = Game(playerBlue, playerRed, 4, matchField)
       val controller = new Controller(matchField)
-      //game.init()
 
       "save and load the Gamestate with Json" in {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoJsonImpl.FileIO
@@ -30,11 +29,7 @@ class FileIoSpec extends WordSpec with Matchers {
         import de.htwg.se.stratego.model.fileIoComponent.fileIoXmlImpl.FileIO
         val fileIOXML = new FileIO()
         fileIOXML.save(matchField,controller.currentPlayerIndex)
-        fileIOXML.load.toString() should be("(   0     1     2     3  \n+-----+-----+-----+-----+\n|" +
-          "     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+----" +
-          "-+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |    " +
-          " |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   " +
-          "create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n,0)")
+        fileIOXML.load.toString() should be("(   0     1     2     3  \n+-----+-----+-----+-----+\n|     |     |     |     | 0\n+-----+-----+-----+-----+\n|     |     |     |     | 1\n+-----+-----+-----+-----+\n|     |     |     |     | 2\n+-----+-----+-----+-----+\n|     |     |     |     | 3\n+-----+-----+-----+-----+\n**********  STRATEGO  **********\n\nn:   create a new empty machtfield\nz:   undo\ny:   redo\nq:   quit the programm\n,0)")
       }
     }
   }

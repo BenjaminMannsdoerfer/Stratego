@@ -1,6 +1,6 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{BorderLayout, Color, Font}
+import java.awt.{Color, Font}
 
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 
@@ -8,8 +8,8 @@ import scala.swing.{Color, _}
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
 import javax.imageio.ImageIO
-import javax.swing.{BorderFactory, JOptionPane, SwingConstants}
-import javax.swing.border.{Border, LineBorder}
+import javax.swing.{BorderFactory, JOptionPane}
+import javax.swing.border.{LineBorder}
 
 class GameFrame(controller:ControllerInterface) extends Frame{
 

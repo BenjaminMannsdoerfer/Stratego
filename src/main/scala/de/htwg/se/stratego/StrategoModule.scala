@@ -10,11 +10,9 @@ import de.htwg.se.stratego.model.matchFieldComponent.matchFieldAvancedImpl.Match
 import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.stratego.model.fileIoComponent._
 
-
-
 class StrategoModule extends AbstractModule with ScalaModule{
 
-  val defaultSize:Int = 10
+  val defaultSize:Int = 4
   val defaultSet:Boolean = false
 
   override def configure():Unit = {
@@ -29,7 +27,5 @@ class StrategoModule extends AbstractModule with ScalaModule{
     bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(10, 10, defaultSet))
 
     bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
-
   }
-
 }

@@ -1,9 +1,9 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{Color, Font}
-import scala.swing.event.{ButtonClicked, Key, KeyPressed, MouseClicked}
-import scala.swing.{BorderPanel, BoxPanel, Button, Color, Dimension, FlowPanel, Font, Label, Orientation, Swing}
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
+import java.awt.{Color}
+import scala.swing.event.{ButtonClicked, Key, KeyPressed}
+import scala.swing.{Button, Color, Dimension, FlowPanel}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface}
 
 class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends FlowPanel {
 

@@ -18,17 +18,12 @@ class FileIO extends FileIOInterface{
     var matchField: MatchFieldInterface = null
     val source:String = Source.fromFile("matchField.json").getLines().mkString
     val json: JsValue = Json.parse(source)
-    //val size = (json \ "matchField" \ "size").get.toString().toInt
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
-
-
     val currentPlayerIndex = (json \ "currentPlayerIndex").get.toString().toInt
-
     for(index <- 0 until matchField.fields.matrixSize * matchField.fields.matrixSize){
       val row = (json \\ "row")(index).as[Int]
       val col = (json \\ "col")(index).as[Int]
-      //val field = (json \\ "field")(index)
       if(((json \ "matchField")(index) \\ "figName").nonEmpty) {
         val figName = ((json \ "matchField")(index) \ "figName").as[String]
         val figValue = ((json \ "matchField")(index) \ "figValue").as[Int]

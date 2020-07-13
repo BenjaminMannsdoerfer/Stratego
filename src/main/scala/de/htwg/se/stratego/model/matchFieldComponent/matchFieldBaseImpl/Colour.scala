@@ -7,6 +7,4 @@ object Colour extends Enumeration {
 
   val BLUE = FigureCol(0)
   val RED = FigureCol(1)
-
-
 }

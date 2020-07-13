@@ -1,10 +1,6 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-import com.google.inject.Inject
-
-
 case class Matrix[Field] (rows: Vector[Vector[Field]]) {
-
 
   def this(rowSize: Int, colSize: Int, field: Field) = this(Vector.tabulate(rowSize, colSize) { (row, col) => field })
 
@@ -13,5 +9,4 @@ case class Matrix[Field] (rows: Vector[Vector[Field]]) {
   def matrixSize: Int = rows.size
 
   def updateField(row: Int, col: Int, field: Field): Matrix[Field] = copy(rows.updated(row, rows(row).updated(col, field)))
-
 }

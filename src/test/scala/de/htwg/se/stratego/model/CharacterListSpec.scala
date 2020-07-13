@@ -48,28 +48,28 @@ class CharacterListSpec extends WordSpec with Matchers {
     val characterlist = CharacterList(6)
     "have a list"  in {
       characterlist.characterList should be(Seq(GameCharacter(Figure.Bomb),
-        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.Miner),
         GameCharacter(Figure.General),
         GameCharacter(Figure.Colonel),
         GameCharacter(Figure.Major),
         GameCharacter(Figure.Captain),
         GameCharacter(Figure.Lieutenant),
         GameCharacter(Figure.Sergeant),
-        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Marshal),
         GameCharacter(Figure.Scout),
         GameCharacter(Figure.Spy),
         GameCharacter(Figure.Flag)))
     }
     "can get the CharacterList" in{
       characterlist.getCharacterList() should be (Seq(GameCharacter(Figure.Bomb),
-        GameCharacter(Figure.Marshal),
+        GameCharacter(Figure.Miner),
         GameCharacter(Figure.General),
         GameCharacter(Figure.Colonel),
         GameCharacter(Figure.Major),
         GameCharacter(Figure.Captain),
         GameCharacter(Figure.Lieutenant),
         GameCharacter(Figure.Sergeant),
-        GameCharacter(Figure.Miner),
+        GameCharacter(Figure.Marshal),
         GameCharacter(Figure.Scout),
         GameCharacter(Figure.Spy),
         GameCharacter(Figure.Flag)))

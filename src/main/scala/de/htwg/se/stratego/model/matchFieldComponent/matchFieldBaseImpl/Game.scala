@@ -1,11 +1,7 @@
 package de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl
 
-import java.lang.System
-
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.playerComponent.Player
-
-import scala.util.Random
 
 case class Game(var playerA: Player, var playerB: Player, size: Int, var matchField: MatchFieldInterface) {
   var bList = playerA.characterList
@@ -191,7 +187,6 @@ case class Game(var playerA: Player, var playerB: Player, size: Int, var matchFi
       def strategy6:MatchFieldInterface = matchField.removeChar(rowD, colD)
       def strategy7:MatchFieldInterface = matchField.removeChar(rowA, colA)
       def strategy8:MatchFieldInterface = matchField.removeChar(rowA, colA).removeChar(rowD, colD)
-
 
       val fieldIsSet = if(matchField.fields.field(rowA, colA).isSet.equals(false) || matchField.fields.field(rowD, colD).isSet.equals(false)) return strategy1
       val attackIsValid = if(matchField.fields.field(rowD,colD).colour.get.value == currentPlayerIndex && matchField.fields.field(rowA,colA).colour.get.value == currentPlayerIndex) return strategy1

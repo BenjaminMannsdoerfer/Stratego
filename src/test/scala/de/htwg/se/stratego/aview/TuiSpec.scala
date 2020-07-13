@@ -27,22 +27,8 @@ class TuiSpec  extends WordSpec with Matchers{
     "save" in {
       tui.processInputLine("s")
     }
-    /*
     "load" in {
       tui.processInputLine("l")
     }
-
-     */
-    /*"do nothing when input is bullshit" in {
-      tui.processInputLine("bullshit")
-    }*/
-
-
-
-
-
   }
-
-
-
 }

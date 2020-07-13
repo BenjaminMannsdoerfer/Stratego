@@ -6,13 +6,12 @@ import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
 
-import scala.xml.{Node, PrettyPrinter}
+import scala.xml.{PrettyPrinter}
 
 class FileIO extends FileIOInterface{
   override def load: (MatchFieldInterface,Int) = {
     var matchField: MatchFieldInterface = null
     val file = scala.xml.XML.loadFile("matchField.xml")
-    val sizeAttr = (file \\ "matchField" \ "@size")
     val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
