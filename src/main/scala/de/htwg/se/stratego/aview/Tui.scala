@@ -1,7 +1,6 @@
 package de.htwg.se.stratego.aview
 
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, MatchFieldSizeChanged, NewGame, PlayerChanged, PlayerSwitch}
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 
 import scala.swing.Reactor
 
