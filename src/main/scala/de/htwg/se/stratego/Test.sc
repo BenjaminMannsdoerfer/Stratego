@@ -3,7 +3,7 @@
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{CharacterList, Game, MatchField}
 import de.htwg.se.stratego.model.playerComponent.Player
 
-import scala.swing.{Button, Font}
+import scala.swing.{Button}
 
 
 val bu = new Button{
