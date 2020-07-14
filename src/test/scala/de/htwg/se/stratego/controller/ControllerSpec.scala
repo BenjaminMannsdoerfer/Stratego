@@ -14,7 +14,7 @@ class ControllerSpec extends WordSpec with Matchers {
       val controller2 = new Controller(matchField)
       val controller3 = new Controller(matchField)
       controller3.initMatchfield()
-      controller3.move('d', 0 , 0)
+
 
       val characterList = new CharacterList(4)
       val playerBlue = new Player("PlayerBlue",characterList.getCharacterList())
@@ -63,11 +63,26 @@ class ControllerSpec extends WordSpec with Matchers {
       "can move" in {
         controller.move('d', 0 , 0 ) should be ("")
         controller.move ('d', 1, 1) should be ("")
-        controller1.move('d', 0,0) should be ("")
-        controller1.move('u',3,0) should be ("")
-        controller1.attack(1,0,2,0)
-        controller1.move('u',3,1) should be("")
-
+        controller3.move('d', 0 , 0)
+        controller3.move('u',3,0) should be ("")
+        controller3.attack(1,0,2,0) should be("")
+        controller3.move('u',3,2) should be("")
+        controller3.move('u',2,2) should be("")
+        controller3.move('r',1,2) should be("")
+        controller3.attack(1,3,0,3) should be("")
+      }
+      "can attack" in {
+        controller3.move('d', 0 , 0)
+        controller3.move('u',3,0) should be ("")
+        controller3.attack(1,0,2,0) should be("")
+        controller3.move('u',3,1) should be ("")
+        controller3.move('d', 0 , 1)
+        controller3.attack(2,1,1,1) should be("")
+        controller3.move('d', 0 , 2)
+        controller3.move('u',3,2) should be ("")
+        controller3.attack(1,2,2,2) should be("")
+        controller3.attack(0,3,1,3) should be("")
+        controller3.attack(3,3,2,3) should be("")
       }
       "can get matchfield as matrix" in {
         controller.getField.toString should be ("Matrix(Vector(Vector(F, 9, 8, 6), Vector( ,  ,  ,  ), Vector( ,  ,  ,  ), Vector(F, 9, 8, 6)))")
