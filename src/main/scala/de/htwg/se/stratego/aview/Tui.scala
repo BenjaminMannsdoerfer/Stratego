@@ -4,7 +4,7 @@ import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, 
 
 import scala.swing.Reactor
 
-class TextUI(controller: ControllerInterface) extends Reactor {
+class Tui(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
   val size = controller.getSize
