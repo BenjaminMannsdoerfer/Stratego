@@ -18,7 +18,6 @@ class GameSpec extends WordSpec with Matchers {
     val playerRed4 = Player("PlayerRed", characList4.getCharacterList())
     val game4 = Game(playerBlue4, playerRed4, 4, matchField4)
 
-
     val matchField6 = new MatchField(6, 6, false)
     val characList6 = CharacterList(6)
     val playerBlue6 = Player("PlayerBlue", characList6.getCharacterList())
