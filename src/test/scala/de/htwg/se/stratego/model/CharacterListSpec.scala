@@ -77,8 +77,6 @@ class CharacterListSpec extends WordSpec with Matchers {
     "has a size" in {
       characterlist.size should be (6)
     }
-
-
   }
   "new with size 7" should {
     val characterlist = CharacterList(7)
