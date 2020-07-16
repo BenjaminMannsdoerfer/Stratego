@@ -3,7 +3,6 @@ package de.htwg.se.stratego
 import com.google.inject.AbstractModule
 import com.google.inject.name.Names
 import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
-import de.htwg.se.stratego.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldAvancedImpl.MatchField
