@@ -1,8 +1,4 @@
 
-
-[![Coverage Status](https://coveralls.io/repos/github/BenjaminMannsdoerfer/Stratego/badge.svg?branch=master)](https://coveralls.io/github/BenjaminMannsdoerfer/Stratego?branch=master)
-
-
 # STRATEGO
 
 A little info about our project STRATEGO of our class Software Engineering in HTWG Konstanz.
@@ -18,6 +14,8 @@ Build status of continus integration
 ## Code Status
 
 with coveralls.io
+
+[![Coverage Status](https://coveralls.io/repos/github/BenjaminMannsdoerfer/Stratego/badge.svg?branch=master)](https://coveralls.io/github/BenjaminMannsdoerfer/Stratego?branch=master)
 
 
 ## Gameplay
