@@ -40,10 +40,12 @@ The figures are ranked from highest to lowest as follows:
 12. Flag        (🏳️)
 
 
-You can see creenshots of the GUI below:
+## Graphical UI
+
+You can see screenshots of the GUI below:
 
 ![game_test1](https://user-images.githubusercontent.com/64639703/87685319-8b4ddb00-c783-11ea-884c-0fb8eb3b158d.PNG)
-
+![game_2](https://user-images.githubusercontent.com/64639703/87685947-3e1e3900-c784-11ea-9caa-65b27421e755.PNG)
 
 
 
