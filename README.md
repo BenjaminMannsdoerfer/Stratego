@@ -25,7 +25,7 @@ with coveralls.io
 Stratego is a strategy board game for two players. Each player has 40 pieces representing different characters.
 
 We modified the game a little bit so you can walk with all characters (except flag and bomb) just one field up, down, to the right or to the left.
-You also can attack with youre figures. To win the game you have to attack the flag of your enemy.
+You also can attack with your figures the oppenents. To win the game you have to find and attack the flag of your enemy.
 
 The figures are ranked from highest to lowest as follows:
 
