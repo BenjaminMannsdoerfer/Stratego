@@ -26,11 +26,8 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
 
   var gameStatus: GameStatus = IDLE
   var currentPlayerIndex: Int = 0
-
-  var state: ControllerState = EnterPlayer(this)
-
   private val undoManager = new UndoManager
-
+  var state: ControllerState = EnterPlayer(this)
   def handle(input: String):String = {
     state.handle(input)
   }
@@ -85,7 +82,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     if(rowD <= matchField.fields.matrixSize - 1 && rowD >= 0 && colD >= 0 && colD <= matchField.fields.matrixSize - 1 &&
       matchField.fields.field(rowA, colA).isSet.equals(true) && matchField.fields.field(rowD, colD).isSet.equals(true)
       && matchField.fields.field(rowD,colD).colour.get.value!= currentPlayerIndex &&
-      matchField.fields.field(rowD,colD).character.get.figure.value==0){ //both fields are set and attacked figure is flag
+      matchField.fields.field(rowD,colD).character.get.figure.value==0){
       publish(new GameFinished)
       currentPlayerIndex=1
       nextState

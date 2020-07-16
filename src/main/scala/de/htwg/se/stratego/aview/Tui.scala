@@ -1,11 +1,10 @@
 package de.htwg.se.stratego.aview
 
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, MatchFieldSizeChanged, NewGame, PlayerChanged, PlayerSwitch}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, MachtfieldInitialized, NewGame, PlayerChanged, PlayerSwitch}
 
 import scala.swing.Reactor
 
 class Tui(controller: ControllerInterface) extends Reactor {
-
   listenTo(controller)
   val size = controller.getSize
 
@@ -22,7 +21,6 @@ class Tui(controller: ControllerInterface) extends Reactor {
   }
 
   reactions +={
-    case event: MatchFieldSizeChanged => printTui
     case event: FieldChanged => printTui
     case event: PlayerChanged => println("Hello " + controller.playerList(0) + " and "+ controller.playerList(1) + "!")
     case event: MachtfieldInitialized => println("Matchfield initialized")

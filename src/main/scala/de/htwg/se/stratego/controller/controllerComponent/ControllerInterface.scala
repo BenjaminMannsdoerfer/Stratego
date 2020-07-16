@@ -6,7 +6,7 @@ import de.htwg.se.stratego.model.playerComponent.Player
 
 import scala.swing.Publisher
 
-trait ControllerInterface extends Publisher{
+trait ControllerInterface extends Publisher {
   def handle(input:String):String
   def welcome:String
   def setPlayers(input:String):String
@@ -40,7 +40,6 @@ class PlayerChanged extends Event
 class MachtfieldInitialized extends Event
 class GameFinished extends Event
 class PlayerSwitch extends Event
-case class MatchFieldSizeChanged(newSize: Int) extends Event
 
 
 
