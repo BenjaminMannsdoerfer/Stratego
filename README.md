@@ -3,24 +3,24 @@
 [![Coverage Status](https://coveralls.io/repos/github/BenjaminMannsdoerfer/Stratego/badge.svg?branch=master)](https://coveralls.io/github/BenjaminMannsdoerfer/Stratego?branch=master)
 
 
-## STRATEGO
+# STRATEGO
 
 A little info about our project STRATEGO of our class Software Engineering in HTWG Konstanz.
 
 
-# Build Status
+## Build Status
 
 Build status of continus integration
 
 [![Build Status](https://travis-ci.com/BenjaminMannsdoerfer/Stratego.svg?branch=master)](https://travis-ci.com/BenjaminMannsdoerfer/Stratego)
 
 
-# Code Status
+## Code Status
 
 with coveralls.io
 
 
-# Gameplay
+## Gameplay
 
 Stratego is a strategy board game for two players. Each player has 40 pieces representing different characters.
 
