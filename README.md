@@ -41,6 +41,9 @@ The figures are ranked from highest to lowest as follows:
 
 
 ![game_test1](https://user-images.githubusercontent.com/64639703/87685319-8b4ddb00-c783-11ea-884c-0fb8eb3b158d.PNG)
-Screenshot of GUI
+
+
+
+Screenshots of GUI
 
 
