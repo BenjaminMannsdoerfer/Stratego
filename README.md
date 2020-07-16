@@ -1,7 +1,7 @@
 ![stratego](https://user-images.githubusercontent.com/64639703/87684761-e9c68980-c782-11ea-91d6-d04b58b7a369.png)
 
 
-A little info about our project STRATEGO of our class Software Engineering in HTWG Konstanz.
+A little info about our project STRATEGO for our class Software Engineering at HTWG Konstanz.
 
 ## Build Status
 
