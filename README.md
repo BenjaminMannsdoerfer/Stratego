@@ -1,4 +1,3 @@
-
 # STRATEGO
 
 A little info about our project STRATEGO of our class Software Engineering in HTWG Konstanz.
@@ -6,7 +5,7 @@ A little info about our project STRATEGO of our class Software Engineering in HT
 
 ## Build Status
 
-Build status of continus integration
+Build status of continus integration with travis
 
 [![Build Status](https://travis-ci.com/BenjaminMannsdoerfer/Stratego.svg?branch=master)](https://travis-ci.com/BenjaminMannsdoerfer/Stratego)
 
@@ -27,16 +26,16 @@ You also can attack with your figures the oppenents. To win the game you have to
 
 The figures are ranked from highest to lowest as follows:
 
-1.  Bomb (💣)
-2.  Marshal (💂)
-3.  General (9)
-4.  Colonel (8)
-5.  Major (7)
-6.  Captain (6)
-7.  Lieutenant (5)
-8.  Sergeant (4)
-9.  Miner (3)
-10. Scout (2)
-11. Spy (1)
-12. Flag (🏳️)
+1.  Bomb        (💣)
+2.  Marshal     (💂)
+3.  General     (9)
+4.  Colonel     (8)
+5.  Major       (7)
+6.  Captain     (6)
+7.  Lieutenant  (5)
+8.  Sergeant    (4)
+9.  Miner       (3)
+10. Scout       (2)
+11. Spy         (1)
+12. Flag        (🏳️)
 
