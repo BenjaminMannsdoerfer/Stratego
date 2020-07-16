@@ -45,7 +45,7 @@ Important rules:
 - Miner and Bomb: only the miner can defuse the Bomb
 - Every other figure loses against the Bomb
 - Spy and Marshal: only Spy can beat the Marshal except the bomb
-- Flag and Bomb can’t move  
+- Flag and Bomb can’t be moved
 
 
 ## Graphical UI
