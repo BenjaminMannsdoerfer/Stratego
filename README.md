@@ -56,11 +56,11 @@ You can see screenshots of the GUI below:
 ![game_2](https://user-images.githubusercontent.com/64639703/87685947-3e1e3900-c784-11ea-9caa-65b27421e755.PNG)
 
 
-# Contributors
+## Contributors
 
 [![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/BenjaminMannsdoerfer/Stratego/graphs/contributors)
 
-# Disclaimer
+## Disclaimer
 
 This project only uses parts of the gameplay logic and media of STRATEGO without any commercial interest and is only for educational purposes.
 
