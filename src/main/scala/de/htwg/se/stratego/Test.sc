@@ -35,7 +35,6 @@ val playerBlue = Player("PlayerBlue", characList.getCharacterList())
 val playerRed = Player("PlayerRed", characList.getCharacterList())
 val game = Game(playerBlue, playerRed, 4, matchField)
 
-game.moveDown(matchField, 0, 0)
 
 
 

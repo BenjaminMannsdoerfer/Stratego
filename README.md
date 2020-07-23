@@ -1,7 +1,7 @@
 ![stratego](https://user-images.githubusercontent.com/64639703/87684761-e9c68980-c782-11ea-91d6-d04b58b7a369.png)
 
 
-A little info about our project STRATEGO for our class Software Engineering at HTWG Konstanz.
+A little info about our project STRATEGO for our class Software Engineering at the University of Applied Science HTWG Konstanz.
 
 ## Build Status
 
@@ -22,7 +22,7 @@ with coveralls.io
 Stratego is a strategy board game for two players. Each player has 40 pieces representing different characters.
 
 We modified the game a little bit so you can walk with all characters (except flag and bomb) just one field up, down, to the right or to the left.
-You also can attack with your figures the oppenents. To win the game you have to find and attack the flag of your enemy.
+You also can attack the oppenents with your figures. To win the game you have to find and attack the flag of your enemy.
 
 The figures are ranked from highest to lowest as follows:
 
@@ -56,6 +56,12 @@ You can see screenshots of the GUI below:
 ![game_2](https://user-images.githubusercontent.com/64639703/87685947-3e1e3900-c784-11ea-9caa-65b27421e755.PNG)
 
 
+## Contributors
 
+[![GitHub contributors](https://img.shields.io/github/contributors/Naereen/StrapDown.js.svg)](https://github.com/BenjaminMannsdoerfer/Stratego/graphs/contributors)
+
+## Disclaimer
+
+This project only uses parts of the gameplay logic and media of STRATEGO without any commercial interest and is only for educational purposes.
 
 
