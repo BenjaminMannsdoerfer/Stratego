@@ -28,6 +28,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
   var currentPlayerIndex: Int = 0
   private val undoManager = new UndoManager
   var state: ControllerState = EnterPlayer(this)
+
   def handle(input: String):String = {
     state.handle(input)
   }

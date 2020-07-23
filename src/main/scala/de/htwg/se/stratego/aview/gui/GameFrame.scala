@@ -8,25 +8,30 @@ import scala.swing.{Color, _}
 import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameFinished, GameStatus, NewGame, PlayerSwitch}
 import javax.imageio.ImageIO
-import javax.swing.{BorderFactory, JOptionPane}
-import javax.swing.border.{LineBorder}
+import javax.swing.{BorderFactory, JOptionPane, WindowConstants}
+import javax.swing.border.LineBorder
 
 class GameFrame(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
   title = "Stratego"
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  //peer.setLocationRelativeTo(null)
   resizable= false
 
   val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
   var gameStatus: GameStatus = IDLE
+  val colRed = new Color(138,41,37)
+  val colBlue = new Color(37,39,138)
+  val colGreen = new Color(37,138,73)
 
 
 
 
-  val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val defaultFont = new Font("Calibri", Font.BOLD, 40)
   val defaultColor = new Color(143,138,126)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
   val grColor = new Color(79,76,70)
@@ -37,7 +42,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   def statusString:String = GameStatus.getMessage(gameStatus)
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
-    background = new Color(37,138,73)
+    background = colGreen
     for{
       row <- 0 until matchFieldSize
       col <- 0 until matchFieldSize
@@ -126,17 +131,17 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   }
 
   val moveButton = new RadioButton{
-    text = "move"
+    text = "  \uD83C\uDFC3 MOVE"
     selected = true
-    font = defaultFont
-    foreground = grColor
+    font= font.deriveFont(1, 40)
+    foreground = defaultColor
     verticalAlignment=Alignment.Center
   }
 
   val attackButton = new RadioButton{
-    text = "attack"
-    font = defaultFont
-    foreground = grColor
+    text = "  \uD83D\uDC4A ATTACK"
+    font= font.deriveFont(1, 40)
+    foreground = defaultColor
     verticalAlignment=Alignment.Center
   }
 
@@ -155,10 +160,18 @@ class GameFrame(controller:ControllerInterface) extends Frame{
         moveButton.selected = false
         optionAttack= true
     }
+    border = BorderFactory.createEmptyBorder(0,60,0,0)
     xLayoutAlignment= 20
   }
 
   val status = new TextField(controller.statusString, 20)
+
+  val message = new Label{
+    text= "<html>"+controller.playerList(controller.currentPlayerIndex) +"<br>It's your turn!</html>"
+    foreground= colBlue
+    font = defaultFont
+  }
+
 
   def optionPanel = new BorderPanel{
     add(radioPanel, BorderPanel.Position.Center)
@@ -168,14 +181,21 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     add(status, BorderPanel.Position.Center)
   }
 
-  def controllPanel = new GridPanel(1,2){
+  def messagePanel = new BorderPanel{
+    add(message, BorderPanel.Position.Center)
+  }
+
+  def controllPanel = new GridPanel(3,1){
+    contents += messagePanel
     contents += directionsPanel
     contents += optionPanel
+    border = BorderFactory.createEmptyBorder(0,15,0,0)
+    preferredSize = new Dimension(400, 100)
   }
 
   val mainPanel = new BorderPanel{
-    add(matchfieldPanel, BorderPanel.Position.North)
-    add(controllPanel, BorderPanel.Position.Center)
+    add(matchfieldPanel, BorderPanel.Position.Center)
+    add(controllPanel, BorderPanel.Position.East)
     add(statusPanel, BorderPanel.Position.South)
     border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
@@ -252,7 +272,15 @@ class GameFrame(controller:ControllerInterface) extends Frame{
       deafTo(controller)
       close()
       new PlayerFrame(controller)
-    case event: PlayerSwitch => redraw
+    case event: PlayerSwitch =>
+      redraw
+      message.text = "<html>"+controller.playerList(controller.currentPlayerIndex) +"<br>It's your turn!</html>"
+      if(controller.currentPlayerIndex.equals(1)){
+        message.foreground= colRed
+      }else{
+        message.foreground= colBlue
+      }
+
   }
 
   pack()

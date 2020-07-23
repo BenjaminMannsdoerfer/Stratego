@@ -1,9 +1,12 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{Color}
-import scala.swing.event.{ButtonClicked, Key, KeyPressed}
+import java.awt.Color
+import java.awt.event.MouseListener
+
+import scala.swing.event.{ButtonClicked, Key, KeyPressed, MouseClicked}
 import scala.swing.{Button, Color, Dimension, FlowPanel}
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface}
+import de.htwg.se.stratego.controller.controllerComponent.ControllerInterface
+import javax.swing.border.LineBorder
 
 class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends FlowPanel {
 
@@ -11,8 +14,13 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
   var isClicked = false
   val r = row
   val c = col
+  val  bor = new LineBorder(Color.WHITE, 2)
+  val colBlue = new Color(37,39,138)
+  val colRed = new Color(138,41,37)
+  val colGreen = new Color(37,138,73)
+  val colBrown = new Color(138,124,65)
 
-  background = new Color(37,138,73)
+  background = colGreen
 
   def fieldText(row:Int, col:Int): String ={
     if(controller.getField.field(row,col).isSet){
@@ -37,14 +45,15 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
     foreground = Color.WHITE
     preferredSize = new Dimension(60, 60)
 
+
     if(controller.getField.field(row,col).isSet) {
       if (controller.getField.field(row, col).colour.get.value == 0) {
-        background = new Color(37,39,138)
+        background = colBlue
       } else if (controller.getField.field(row, col).colour.get.value == 1) {
-        background = new Color(138,41,37)
+        background = colRed
       }
       }else{
-        background = new Color(37,138,73)
+        background = colGreen
     }
 
     listenTo(keys)
@@ -78,7 +87,7 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
   val field = new FlowPanel(){
     contents += figureText
-    background = new Color(37,138,73)
+    background = colGreen
 
     listenTo(figureText)
     reactions += {
@@ -91,6 +100,8 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
   def redraw ={
     contents.clear()
+
+    isClicked = false
 
     if(controller.getField.field(row,col).isSet){
       if(controller.getField.field(row, col).colour.get.value == controller.currentPlayerIndex){
@@ -105,12 +116,12 @@ class FieldPanel (row:Int, col: Int, controller: ControllerInterface) extends Fl
 
     if(controller.getField.field(row,col).isSet) {
       if (controller.getField.field(row, col).colour.get.value == 0) {
-        figureText.background = new Color(37,39,138)
+        figureText.background = colBlue
       } else if (controller.getField.field(row, col).colour.get.value == 1) {
-        figureText.background = new Color(138,41,37)
+        figureText.background = colRed
       }
     }else{
-      figureText.background = new Color(138,124,65)
+      figureText.background = colBrown
     }
     contents += field
     repaint

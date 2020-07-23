@@ -7,7 +7,7 @@ import scala.swing.event._
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import javax.imageio.ImageIO
-import javax.swing.BorderFactory
+import javax.swing.{BorderFactory, WindowConstants}
 import javax.swing.border.LineBorder
 
 class SetFrame(controller:ControllerInterface) extends Frame {
@@ -15,7 +15,11 @@ class SetFrame(controller:ControllerInterface) extends Frame {
   listenTo(controller)
 
   title = "Stratego"
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   resizable= false
+  //peer.setLocationRelativeTo(null)
+  visible=true
+
 
   val matchFieldSize = controller.getSize
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
@@ -64,12 +68,15 @@ class SetFrame(controller:ControllerInterface) extends Frame {
 
   val buttonPanel = new BorderPanel {
     add(initializeButton, BorderPanel.Position.Center)
+    border = BorderFactory.createEmptyBorder(10,0,10,0)
   }
 
   val mainPanel = new BorderPanel{
+
     add(matchfieldPanel, BorderPanel.Position.North)
     add(buttonPanel, BorderPanel.Position.Center)
     add(statusPanel, BorderPanel.Position.South)
+
     border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
 
@@ -112,5 +119,4 @@ class SetFrame(controller:ControllerInterface) extends Frame {
       close()
       new PlayerFrame(controller)
   }
-  pack()
 }

@@ -1,19 +1,25 @@
 package de.htwg.se.stratego.aview.gui
 
-import java.awt.{Color, Font}
+import java.awt.{Color, Font, Point, Toolkit}
+
 import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, PlayerChanged}
 import javax.imageio.ImageIO
-import javax.swing.border.{LineBorder}
-import javax.swing.{BorderFactory, ImageIcon}
-import scala.swing.event.{ButtonClicked}
-import scala.swing.{Button, FlowPanel, Frame, GridPanel, Label, TextField}
+import javax.swing.border.LineBorder
+import javax.swing.{BorderFactory, ImageIcon, JFrame, WindowConstants}
+
+import scala.swing.event.ButtonClicked
+import scala.swing.{Button, Dimension, FlowPanel, Frame, GridPanel, Label, TextField}
 
 class PlayerFrame(controller:ControllerInterface) extends Frame{
 
+
   listenTo(controller)
 
+
   title = "Stratego"
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
   resizable= false
+  //peer.setLocationRelativeTo(null)
   visible= true
 
 
