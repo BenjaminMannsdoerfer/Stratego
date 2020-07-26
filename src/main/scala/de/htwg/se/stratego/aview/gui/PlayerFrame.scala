@@ -15,14 +15,6 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
-
-  title = "Stratego"
-  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-  resizable= false
-  //peer.setLocationRelativeTo(null)
-  visible= true
-
-
   val strategoImg = ImageIO.read(getClass.getResource("stratego.png"))
   val strategoI = new ImageIcon(strategoImg)
   val defaultColor = new Color(143,138,126)
@@ -32,7 +24,12 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,10)
   val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
 
+  title = "Stratego"
   iconImage = iconImg
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  resizable= false
+  //peer.setLocationRelativeTo(null)
+  visible= true
 
   val player1 = new TextField("", 20){
     foreground= lightG
@@ -85,12 +82,31 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
     foreground= Color.WHITE
   }
 
+  val load = new Button{
+    text = "Load Game"
+    font = defaultFont
+    background = lightG
+    foreground = Color.WHITE
+  }
+
+  val quit = new Button{
+    text = "Quit"
+    font = defaultFont
+    background = lightG
+    foreground = Color.WHITE
+  }
+
   def emptyPanel = new FlowPanel
 
-  def buttonPanel = new GridPanel(1,2) {
-    border = BorderFactory.createEmptyBorder(30,0,70,0)
+  def buttonPanel = new GridPanel(3,2) {
+    border = BorderFactory.createEmptyBorder(40,0,0,0)
+    vGap = 30
     contents += emptyPanel
     contents += next
+    contents += emptyPanel
+    contents += load
+    contents += emptyPanel
+    contents += quit
   }
 
   listenTo(next)
@@ -108,12 +124,28 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
       new SetFrame(controller)
   }
 
+  listenTo(load)
+  reactions += {
+    case ButtonClicked(`load`) =>
+      controller.load
+      visible = false
+      deafTo(controller)
+      close()
+      new GameFrame(controller)
+  }
+
+  listenTo(quit)
+  reactions += {
+    case ButtonClicked(`quit`) =>
+      System.exit(0)
+  }
+
   val mainPanel = new GridPanel(3,1) {
     contents += img
-    vGap = 40
+    vGap = 30
     contents += setPanel
     contents += buttonPanel
-    border = BorderFactory.createEmptyBorder(0,0,0,80)
+    border = BorderFactory.createEmptyBorder(0,0,80,90)
   }
 
   contents = mainPanel

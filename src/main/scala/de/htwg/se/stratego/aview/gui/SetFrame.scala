@@ -4,7 +4,7 @@ import java.awt.{Color, Font}
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame}
+import de.htwg.se.stratego.controller.controllerComponent.{ControllerInterface, FieldChanged, GameStatus, MachtfieldInitialized, NewGame, PlayerSwitch}
 import de.htwg.se.stratego.controller.controllerComponent.GameStatus._
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, WindowConstants}
@@ -14,26 +14,22 @@ class SetFrame(controller:ControllerInterface) extends Frame {
 
   listenTo(controller)
 
-  title = "Stratego"
-  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-  resizable= false
-  //peer.setLocationRelativeTo(null)
-  visible=true
-
-
   val matchFieldSize = controller.getSize
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
   var gameStatus: GameStatus = IDLE
   def statusString:String = GameStatus.getMessage(gameStatus)
   val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
-
-  iconImage = iconImg
-
-
   val defaultFont = new Font("Calibri", Font.BOLD, 30)
+  val legendFont = new Font("Calibri", Font.BOLD, 15)
   val defaultColor = new Color(143,138,126)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
 
+  title = "Stratego"
+  iconImage = iconImg
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  resizable= false
+  //peer.setLocationRelativeTo(null)
+  visible=true
 
   def matchfieldPanel = new GridPanel(matchFieldSize,matchFieldSize){
     for{
@@ -64,19 +60,49 @@ class SetFrame(controller:ControllerInterface) extends Frame {
 
   def statusPanel = new BorderPanel {
     add(status, BorderPanel.Position.Center)
+    border = BorderFactory.createEmptyBorder(15,0,0,0)
   }
 
   val buttonPanel = new BorderPanel {
     add(initializeButton, BorderPanel.Position.Center)
-    border = BorderFactory.createEmptyBorder(10,0,10,0)
+    border = BorderFactory.createEmptyBorder(300,0,10,0)
+  }
+
+  val message = new Label{
+    text= "<html>"+ "Welcome to STRATEGO!<br><br> " + controller.playerList(0).toString + " it's your turn. " +
+      "Set your figures on the blue fields with following keystrokes:<br><br>" +
+      "Bomb        (\uD83D\uDCA3) with B<br>" +
+      "Marshal     (\uD83D\uDC82) with M<br>" +
+      "General     (9) with 9<br>" +
+      "Colonel     (8) with 8<br>" +
+      "Major       (7) with 7<br>" +
+      "Captain     (6) with 6<br>" +
+      "Lieutenant  (5) with 5<br>" +
+      "Sergeant    (4) with 4<br>" +
+      "Miner       (3) with 3<br>" +
+      "Scout       (2) with 2<br>" +
+      "Spy         (1) with 1<br>" +
+      "Flag        (\uD83C\uDFF3) with F<br><br>"+
+      "The figures can also be set automatically by pressing the button below \uD83D\uDC47</html>"
+    foreground= defaultColor
+    font = legendFont
+  }
+
+  def messagePanel = new BorderPanel{
+    add(message, BorderPanel.Position.Center)
+  }
+
+  def legendPanel = new GridPanel(2,1){
+    contents += messagePanel
+    contents += buttonPanel
+    border = BorderFactory.createEmptyBorder(0,15,0,0)
+    preferredSize = new Dimension(400, 100)
   }
 
   val mainPanel = new BorderPanel{
-
-    add(matchfieldPanel, BorderPanel.Position.North)
-    add(buttonPanel, BorderPanel.Position.Center)
+    add(matchfieldPanel, BorderPanel.Position.Center)
+    add(legendPanel, BorderPanel.Position.East)
     add(statusPanel, BorderPanel.Position.South)
-
     border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
 
@@ -118,5 +144,30 @@ class SetFrame(controller:ControllerInterface) extends Frame {
       deafTo(controller)
       close()
       new PlayerFrame(controller)
+    case event: PlayerSwitch =>
+      /*
+      legendPanel.contents.clear()
+      legendPanel.contents += messagePanel
+      legendPanel.border = BorderFactory.createEmptyBorder(0,15,0,0)
+      legendPanel.preferredSize = new Dimension(400, 100)
+      *
+       */
+
+      message.text= "<html>"+ controller.playerList(1).toString + " now it's your turn. " +
+        "Set your figures on the red fields with following keystrokes:<br><br>" +
+        "Bomb        (\uD83D\uDCA3) with B<br>" +
+        "Marshal     (\uD83D\uDC82) with M<br>" +
+        "General     (9) with 9<br>" +
+        "Colonel     (8) with 8<br>" +
+        "Major       (7) with 7<br>" +
+        "Captain     (6) with 6<br>" +
+        "Lieutenant  (5) with 5<br>" +
+        "Sergeant    (4) with 4<br>" +
+        "Miner       (3) with 3<br>" +
+        "Scout       (2) with 2<br>" +
+        "Spy         (1) with 1<br>" +
+        "Flag        (\uD83C\uDFF3) with F"+
+        "</html>"
+
   }
 }

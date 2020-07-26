@@ -15,11 +15,6 @@ class GameFrame(controller:ControllerInterface) extends Frame{
 
   listenTo(controller)
 
-  title = "Stratego"
-  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
-  //peer.setLocationRelativeTo(null)
-  resizable= false
-
   val matchFieldSize = controller.getSize
   var optionAttack = false //if set to false -> move, else attack
   var fields = Array.ofDim[FieldPanel](matchFieldSize, matchFieldSize)
@@ -27,17 +22,17 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   val colRed = new Color(138,41,37)
   val colBlue = new Color(37,39,138)
   val colGreen = new Color(37,138,73)
-
-
-
-
   val defaultFont = new Font("Calibri", Font.BOLD, 40)
   val defaultColor = new Color(143,138,126)
   val defaultBorder = new LineBorder(java.awt.Color.WHITE,1)
   val grColor = new Color(79,76,70)
   val iconImg = ImageIO.read(getClass.getResource("iconS.png"))
 
+  title = "Stratego"
   iconImage = iconImg
+  peer.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
+  //peer.setLocationRelativeTo(null)
+  resizable= false
 
   def statusString:String = GameStatus.getMessage(gameStatus)
 
@@ -167,11 +162,10 @@ class GameFrame(controller:ControllerInterface) extends Frame{
   val status = new TextField(controller.statusString, 20)
 
   val message = new Label{
-    text= "<html>"+controller.playerList(controller.currentPlayerIndex) +"<br>It's your turn!</html>"
+    text= "<html>"+controller.playerList(controller.currentPlayerIndex) +"!<br>It's your turn!</html>"
     foreground= colBlue
     font = defaultFont
   }
-
 
   def optionPanel = new BorderPanel{
     add(radioPanel, BorderPanel.Position.Center)
@@ -179,6 +173,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
 
   def statusPanel = new BorderPanel {
     add(status, BorderPanel.Position.Center)
+    border = BorderFactory.createEmptyBorder(15,0,0,0)
   }
 
   def messagePanel = new BorderPanel{
@@ -256,6 +251,14 @@ class GameFrame(controller:ControllerInterface) extends Frame{
       column <- 0 until matchFieldSize
     } fields(row)(column).redraw
     status.text = controller.statusString
+
+    message.text = "<html>"+controller.playerList(controller.currentPlayerIndex) +"!<br>It's your turn!</html>"
+    if(controller.currentPlayerIndex.equals(1)){
+      message.foreground= colRed
+    }else{
+      message.foreground= colBlue
+    }
+
     repaint
   }
 
@@ -274,14 +277,9 @@ class GameFrame(controller:ControllerInterface) extends Frame{
       new PlayerFrame(controller)
     case event: PlayerSwitch =>
       redraw
-      message.text = "<html>"+controller.playerList(controller.currentPlayerIndex) +"<br>It's your turn!</html>"
-      if(controller.currentPlayerIndex.equals(1)){
-        message.foreground= colRed
-      }else{
-        message.foreground= colBlue
-      }
 
   }
 
   pack()
+
 }

@@ -5,14 +5,16 @@ import de.htwg.se.stratego.StrategoModule
 import de.htwg.se.stratego.model.fileIoComponent.FileIOInterface
 import de.htwg.se.stratego.model.matchFieldComponent.MatchFieldInterface
 import de.htwg.se.stratego.model.matchFieldComponent.matchFieldBaseImpl.{Colour, Figure, GameCharacter}
+import de.htwg.se.stratego.model.playerComponent.Player
 
-import scala.xml.{PrettyPrinter}
+import scala.xml.PrettyPrinter
 
 class FileIO extends FileIOInterface{
-  override def load: (MatchFieldInterface,Int) = {
+  override def load: (MatchFieldInterface,Int,String) = {
     var matchField: MatchFieldInterface = null
     val file = scala.xml.XML.loadFile("matchField.xml")
     val currentPlayerIndex = (file \\ "matchField" \ "@currentPlayerIndex").text.toInt
+    val playerS = (file \\ "matchField" \ "@players").text
     val injector = Guice.createInjector(new StrategoModule)
     matchField = injector.getInstance(classOf[MatchFieldInterface])
 
@@ -26,7 +28,7 @@ class FileIO extends FileIOInterface{
       matchField = matchField.addChar(row, col, new GameCharacter(Figure.FigureVal(figName,figValue)),
         Colour.FigureCol(colour))
     }
-    (matchField, currentPlayerIndex)
+    (matchField, currentPlayerIndex,playerS)
 
   }
 
@@ -39,8 +41,8 @@ class FileIO extends FileIOInterface{
     }
   }
 
-  def matchFieldToXml(matchField: MatchFieldInterface, currentPlayerIndex: Int) ={
-    <matchField  currentPlayerIndex={ currentPlayerIndex.toString}>
+  def matchFieldToXml(matchField: MatchFieldInterface, currentPlayerIndex: Int, playerS: String) ={
+    <matchField  currentPlayerIndex={ currentPlayerIndex.toString} players={playerS}>
       {
       for{
         row <- 0 until matchField.fields.matrixSize
@@ -51,14 +53,15 @@ class FileIO extends FileIOInterface{
 
   }
 
-  def saveString(matchField: MatchFieldInterface, currentPlayerIndex:Int): Unit = {
+  def saveString(matchField: MatchFieldInterface, currentPlayerIndex:Int, players: List[Player]): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("matchField.xml"))
     val prettyPrinter = new PrettyPrinter(120,4)
-    val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex))
+    val playerS = players(0) + " " + players(1)
+    val xml = prettyPrinter.format(matchFieldToXml(matchField, currentPlayerIndex, playerS))
     pw.write(xml)
     pw.close
   }
 
-  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int): Unit = saveString(matchField,currentPlayerIndex)
+  override def save(matchField: MatchFieldInterface, currentPlayerIndex: Int, players: List[Player]): Unit = saveString(matchField,currentPlayerIndex,players)
 }
