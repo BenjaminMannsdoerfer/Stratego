@@ -4,7 +4,7 @@ import de.htwg.se.stratego.model.matchFieldComponent.matchFieldAvancedImpl.Match
 import org.scalatest.{Matchers, WordSpec}
 
 class MatchFieldSpec extends WordSpec with Matchers{
-  "An MatchField" should {
+  "A MatchField" should {
     val matchField = new MatchField(4, 4, false)
     "have beend created new" in {
       matchField.createNewMatchField.toString should be("   0     1     2     3  \n+-----+-----+-----+-----+\n|" +

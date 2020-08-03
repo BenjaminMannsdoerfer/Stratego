@@ -29,7 +29,7 @@ case class MatchField @Inject() (fields: Matrix[Field]) extends MatchFieldInterf
 
   def createNewMatchField: MatchFieldInterface = new MatchField(fields.matrixSize,fields.matrixSize,false)
 
-   override def toString:String = {
+  override def toString:String = {
     val col = fields.matrixSize
     val row = fields.matrixSize
     val n = fields.matrixSize - 1
