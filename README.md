@@ -52,8 +52,10 @@ Important rules:
 
 You can see screenshots of the GUI below:
 
-![game_test1](https://user-images.githubusercontent.com/64639703/87685319-8b4ddb00-c783-11ea-884c-0fb8eb3b158d.PNG)
-![game_2](https://user-images.githubusercontent.com/64639703/87685947-3e1e3900-c784-11ea-9caa-65b27421e755.PNG)
+![Screenshot (107)](https://user-images.githubusercontent.com/64639703/95326955-ac662980-08a3-11eb-8fe8-4fe526de1c18.png)
+![Screenshot (108)](https://user-images.githubusercontent.com/64639703/95326958-ad975680-08a3-11eb-975b-4d5df879dbda.png)
+![Screenshot (109)](https://user-images.githubusercontent.com/64639703/95326960-ad975680-08a3-11eb-85be-b9866d650317.png)
+![Screenshot (110)](https://user-images.githubusercontent.com/64639703/95326961-ae2fed00-08a3-11eb-9630-75c53012e80e.png)
 
 
 ## Contributors
