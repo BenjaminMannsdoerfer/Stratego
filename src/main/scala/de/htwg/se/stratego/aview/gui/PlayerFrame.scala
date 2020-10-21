@@ -12,7 +12,6 @@ import scala.swing.{Button, Dimension, FlowPanel, Frame, GridPanel, Label, TextF
 
 class PlayerFrame(controller:ControllerInterface) extends Frame{
 
-
   listenTo(controller)
 
   val strategoImg = ImageIO.read(getClass.getResource("stratego.png"))
@@ -114,7 +113,10 @@ class PlayerFrame(controller:ControllerInterface) extends Frame{
   reactions += {
     case ButtonClicked(`next`) =>
         listenTo(controller)
-        controller.handle(player1.text+ " "+ player2.text)
+      if(player1.text.isEmpty || player2.text.isEmpty) {
+        controller.handle("Player1"+ " "+ "Player2")
+      }
+      controller.handle(player1.text+ " "+ player2.text)
   }
   reactions += {
     case event: PlayerChanged     =>

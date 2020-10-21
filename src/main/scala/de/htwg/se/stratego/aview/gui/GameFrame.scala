@@ -192,7 +192,7 @@ class GameFrame(controller:ControllerInterface) extends Frame{
     add(matchfieldPanel, BorderPanel.Position.Center)
     add(controllPanel, BorderPanel.Position.East)
     add(statusPanel, BorderPanel.Position.South)
-    border = BorderFactory.createEmptyBorder(20,20,20,20)
+    //border = BorderFactory.createEmptyBorder(20,20,20,20)
   }
 
   contents = mainPanel

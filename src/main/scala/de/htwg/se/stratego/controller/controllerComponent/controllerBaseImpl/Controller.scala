@@ -189,6 +189,7 @@ class Controller @Inject()(var matchField:MatchFieldInterface) extends Controlle
     matchField = newmatchField
     currentPlayerIndex = newPlayerIndex
     playerList = game.setPlayers(newPlayers)
+    state = GameState(this)
     publish(new FieldChanged)
     "load"
   }

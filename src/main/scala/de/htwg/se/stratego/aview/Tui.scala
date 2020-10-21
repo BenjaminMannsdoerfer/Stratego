@@ -10,7 +10,7 @@ class Tui(controller: ControllerInterface) extends Reactor {
 
   def processInputLine(input: String):String = {
     input match {
-      case "q" =>"Bye bye! :)"
+      case "q" =>"Bye bye!"
       case "n" => controller.createEmptyMatchfield(size)
       case "z" => controller.undo
       case "y" => controller.redo
