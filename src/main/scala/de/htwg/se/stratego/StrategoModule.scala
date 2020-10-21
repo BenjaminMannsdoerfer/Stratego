@@ -15,6 +15,7 @@ class StrategoModule extends AbstractModule with ScalaModule{
   val defaultSet:Boolean = false
 
   override def configure():Unit = {
+
     bindConstant().annotatedWith(Names.named("DefaultSize")).to(defaultSize)
     bindConstant().annotatedWith(Names.named("DefaultSet")).to(defaultSet)
     bind[MatchFieldInterface].to[MatchField]
@@ -25,5 +26,7 @@ class StrategoModule extends AbstractModule with ScalaModule{
     bind[MatchFieldInterface].annotatedWithName("normal").toInstance(new MatchField(10, 10, defaultSet))
 
     bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+
   }
+
 }
