@@ -33,7 +33,8 @@ class ControllerSpec extends WordSpec with Matchers {
         controller.handle("player1 player2") should be ("")
       }
       "can welcome" in {
-        controller.welcome() should be ("Welcome to STRATEGO! " +
+        controller.welcome() should be (
+          "Welcome to STRATEGO! " +
           "Please enter first name of Player1 and then of Player2 like (player1 player2)!")
       }
       "can set figures" in {
